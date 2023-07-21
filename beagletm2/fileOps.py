@@ -15,7 +15,6 @@ console = Console()
 def openFile(data_file: str) -> list:
     """function to open and read the keyword file (text). Returns data as list of words"""
 
-    # contents_list = data_file.read_text().split()
     with open(data_file, 'r') as file:
         contents_list = []
         for line in file:
