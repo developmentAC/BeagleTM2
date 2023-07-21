@@ -63,9 +63,6 @@ jobs:
             echo __________ ls -l __________
             ls -l
 
-#            echo ____________ cd beagletm2 ___________
-#            cd beagletm2
-
             echo __________ ls -l __________
             ls -l
 
