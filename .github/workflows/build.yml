@@ -59,7 +59,7 @@ jobs:
           run: |
             cd BeagleTM2
             poetry install
-            poetry run beagletm2 --bighelp
+            poetry run beagletm2 --help
         # Run the black code formatter in checking mode
    #     - name: Run Black Code Formatter
    #       run: |
