@@ -1,0 +1,82 @@
+# --> check the Python program
+# - datasummarizer/datasummarizer/main.py:
+#   - description: Ensure that the main.py file exists in the datasummarizer/datasummarizer directory
+#     check: ConfirmFileExists
+#   - description: Complete all TODOs, remove the TODO markers in the main.py
+#     check: MatchFileFragment
+#     options:
+#       fragment: TODO
+#       count: 0
+#       exact: true
+#   - description: Call the transform_string_to_number_list function once in the main.py
+#     check: MatchFileFragment
+#     options:
+#       fragment: "transform.transform_string_to_number_list"
+#       count: 1
+#       exact: true
+#   - description: Call the compute_mean function once in the main.py
+#     check: MatchFileFragment
+#     options:
+#       fragment: "summarize.compute_mean"
+#       count: 1
+#       exact: true
+#   - description: Create a sufficient number of docstring (i.e., multiple-line) comments in the main.py
+#     check: CountMultipleLineComments
+#     options:
+#       language: "Python"
+#       count: 2
+#       exact: false
+#   - description: Create a sufficient number of single-line comments in the main.py
+#     check: CountSingleLineComments
+#     options:
+#       language: "Python"
+#       count: 4
+#       exact: false
+
+# --> check the Python program
+- gcs/gcs/main.py:
+  - description: Ensure that the main.py file exists in the gcs/gcs directory
+    check: ConfirmFileExists
+  # - description: Complete all TODOs, remove the TODO markers in the summarize.py
+  #   check: MatchFileFragment
+  #   options:
+  #     fragment: TODO
+  #     count: 0
+  #     exact: true
+  # - description: Indicate one return type float in the summarize.py
+  #   check: MatchFileFragment
+  #   options:
+  #     fragment: "-> float"
+  #     count: 1
+  #     exact: true
+  # - description: Create one List of type float in the summarize.py
+  #   check: MatchFileFragment
+  #   options:
+  #     fragment: "List[float]"
+  #     count: 1
+  #     exact: true
+  # - description: Include correct statement to import List in the summarize.py
+  #   check: MatchFileFragment
+  #   options:
+  #     fragment: "from typing import List"
+  #     count: 1
+  #     exact: true
+  # - description: Create a sufficient number of docstring (i.e., multiple-line) comments in the summarize.py
+  #   check: CountMultipleLineComments
+  #   options:
+  #     language: "Python"
+  #     count: 2
+  #     exact: false
+  # - description: Create a sufficient number of single-line comments in the summarize.py
+  #   check: CountSingleLineComments
+  #   options:
+  #     language: "Python"
+  #     count: 5
+  #     exact: false
+
+# --> check that the number of commits in the Git repository is beyond a threshold
+# count number of commits in the GitHub repository
+#- description: Have at least a specific minimum number of commits (5) in repository
+#  check: CountCommits
+#  options:
+#    count: 5
