@@ -57,11 +57,22 @@ jobs:
         - name: Run Python Program
           if: always()
           run: |
+            echo __________ pwd __________
             pwd
+
+            echo __________ ls -l __________
             ls -l
+
+            echo ____________ cd beagletm2 ___________
             cd beagletm2
+
+            echo __________ ls -l __________
             ls -l
+
+            echo __________ poetry install __________
             poetry install
+
+            echo _______________ poetry run beagletm2 --help ______________
             poetry run beagletm2 --help
         # Run the black code formatter in checking mode
    #     - name: Run Black Code Formatter
