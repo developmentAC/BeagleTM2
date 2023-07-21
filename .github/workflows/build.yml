@@ -57,6 +57,8 @@ jobs:
         - name: Run Python Program
           if: always()
           run: |
+            pwd
+            ls -l
             cd beagleTM2
             poetry install
             poetry run beagletm2 --help
