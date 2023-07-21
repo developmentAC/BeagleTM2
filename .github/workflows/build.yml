@@ -59,7 +59,7 @@ jobs:
           run: |
             pwd
             ls -l
-            cd beagleTM2
+#            cd beagletm2
             poetry install
             poetry run beagletm2 --help
         # Run the black code formatter in checking mode
