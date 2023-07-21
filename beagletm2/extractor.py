@@ -303,7 +303,7 @@ class parserEngine(object):
 
     # end of getReferences()
 
-    def getTitlesOfCols(self):
+    def oldgetTitlesOfCols(self):
         """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
 
         #  We are appending this list to the top of the main list of article details. The header list is collected each time the parser methods are run.
@@ -323,7 +323,7 @@ class parserEngine(object):
 
         return headers_list
 
-    # end of getTitlesOfCols()
+    # end of oldgetTitlesOfCols()
 
     def getYear(self, task_str=None):
             """gets the year of main article in the xml doc"""
