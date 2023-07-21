@@ -57,6 +57,7 @@ jobs:
         - name: Run Python Program
           if: always()
           run: |
+            cd BeagleTM2
             poetry install
             poetry run beagletm2 --bighelp
         # Run the black code formatter in checking mode
