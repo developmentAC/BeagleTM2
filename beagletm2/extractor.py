@@ -83,9 +83,8 @@ class parserEngine(object):
 
             #######################
             # If the abstract contains a keyword, then keep the article details, otherwise ditch them.
-            foundKeyWords_list = (
-                []
-            )  # contains keywords that were found in the current article
+
+            foundKeyWords_list = [] # contains keywords that were found in the current article
 
             for kw_str in self.keyword_list:
                 # print("\t \U0001f5ff Searching keyword <{}> in abstract: \n".format(kw_str))
@@ -97,13 +96,13 @@ class parserEngine(object):
 
 
     # abstracts only
-                if self.abs_only:
+                if self.abs_only: #checking only abstracts
                     try:
                         searchabletext_str = self.abstract_str
                     except Exception:
                         pass
 
-                else:
+                else: # checking the whole article
                     searchabletext_str = self.contents_str
 
                 # console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
@@ -114,6 +113,7 @@ class parserEngine(object):
                     if kw_str.lower() in searchabletext_str.lower():
 
                         foundKeyWords_list.append(kw_str)  # keep found word in a list
+                        console.print(f"[bold yellow] found keyword: {kw_str}")
 
                 except:  # general exception for badly formatted files.
                     # print(f"Error in file... skipping <{self.fileName_str}>")
@@ -139,7 +139,7 @@ class parserEngine(object):
                     wordlistAs_str = wordlistAs_str + str(f) + ","
                 wordlistAs_str = wordlistAs_str[:len(wordlistAs_str)-1]
 
-                # console.print(f"[bold purple] wordlistAs_str :{wordlistAs_str}")
+                console.print(f"[bold purple] wordlistAs_str :{wordlistAs_str}")
 
                 docDetails_list.append(
                     wordlistAs_str
