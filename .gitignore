@@ -228,3 +228,4 @@ $RECYCLE.BIN/
 data/
 0_outAnalysis/
 0_out/
+poetry.lock

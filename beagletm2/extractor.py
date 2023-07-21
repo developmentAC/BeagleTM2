@@ -8,6 +8,9 @@ import re, typer
 cli = typer.Typer()
 console = Console()
 
+# globals
+myCHARSLIMIT = 10
+
 
 class parserEngine(object):
     def __init__(self, filename_str, contents_str, keyword_list, abs_only, save_less):
@@ -47,7 +50,7 @@ class parserEngine(object):
             if self.save_less != False:
                 shortAbs_str = "" # save a shorter version of abstract
                 try:
-                    shortAbs_str = self.abstract_str[:200]
+                    shortAbs_str = self.abstract_str[:myCHARSLIMIT] # set above in globals
                 except TypeError:
                     shortAbs_str = None
                 # console.print(f"\t[bold red][ADD FULL ABSTRACT]: {shortAbs_str}")
@@ -303,27 +306,6 @@ class parserEngine(object):
 
     # end of getReferences()
 
-    def oldgetTitlesOfCols(self):
-        """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
-
-        #  We are appending this list to the top of the main list of article details. The header list is collected each time the parser methods are run.
-
-        headers_list = []
-        # get the names of the data's headers. (i.e,. the titles of the columns)
-        headers_list.append(self.getTitle("headerCall"))
-        headers_list.append(self.getAbstract("headerCall"))
-        headers_list.append(self.getPmid("headerCall"))
-        headers_list.append(self.getJournal("headerCall"))
-        headers_list.append(self.getYear("headerCall"))
-        headers_list.append(self.getReferences("headerCall"))
-
-        # we have to add some column headers manually... :-(
-        headers_list.append("Keyword")
-        headers_list.append("Counts")
-
-        return headers_list
-
-    # end of oldgetTitlesOfCols()
 
     def getYear(self, task_str=None):
             """gets the year of main article in the xml doc"""

@@ -70,7 +70,7 @@ jobs:
             poetry install
 
             echo _______________ poetry run beagletm2 --help ______________
-            poetry run beagletm2 --help
+            poetry run beagletm2 --bighelp
         # Run the black code formatter in checking mode
    #     - name: Run Black Code Formatter
    #       run: |
