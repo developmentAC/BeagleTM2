@@ -86,7 +86,7 @@ poetry run beagletm2 --bighelp
 
 ## Run a series of tasks
 
-If you want to run several different jobs using the same corpus, create a batch file (unix) with the code shown below.
+If you want to run several different jobs using the same corpus, create a batch file (unix) with the code shown below. Note, all updates from the running code are stored in the 'log/' directory.
 
 File: __command.sh__
 
