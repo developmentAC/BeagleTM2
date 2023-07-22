@@ -1,5 +1,13 @@
 #### keyword
+observed
+observe
+africa
+central
+patterns
+virus
+mRNA
 evolutionary
+first opportunity
 Anomaly
 Anthropogenic global warming
 Carbon dioxide

@@ -49,35 +49,18 @@ class parserEngine(object):
             # console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
-        console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
-        # console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
-        # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
+        # console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
+#        # console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
+#        # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
 
-    # check each keyWord against this string
-    # loop through every single keyword
-        if len(searchabletext_str) == 0:
-            print("\t Empty file...")
+        if len(searchabletext_str) != 0:
+            console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
+        else:
+            # console.print(f"\t :thumbsdown: Empty file...")
             return None
 
-
-        kwBank_dic = {} # keep track of which keywords appear in the text
-        for kw in self.keyword_list:
-            # print(f"{kw}", end = ",")
-            kwBank_dic[kw] = searchabletext_str.count(kw)
-        console.print(f"kwBank_dic = [bold yellow] {kwBank_dic}")
-
-
-
-
-        # try:
-        #     if kw_str.lower() in searchabletext_str.lower():
-
-        #         foundKeyWords_list.append(kw_str)  # keep found word in a list
-        #         console.print(f"[bold yellow] found keyword: {kw_str}")
-
-        # except:  # general exception for badly formatted files.
-        #     # print(f"Error in file... skipping <{self.fileName_str}>")
-        #     pass
+    # check each keyWord against searchabletext_str
+        foundKeywords_list, foundKeywordCounts_list = self.getWordCount(searchabletext_str)
 
 
 
@@ -86,6 +69,26 @@ class parserEngine(object):
 
 
 
+    def getWordCount(self, searchabletext_str) -> dict:
+        """ Method to check all words in a text sample. Return two lists: FoundKeywords, FoundKeywordCounts """
+
+        kwBank_dic = {} # keep track of which keywords appear in the text
+        for kw in self.keyword_list:
+            # print(f"{kw}", end = ",")
+            kwBank_dic[kw] = searchabletext_str.count(kw)
+        # console.print(f"kwBank_dic = [bold yellow] {kwBank_dic}")
+
+        # extract word and count information from the dic
+        foundKeywords_list = []
+        foundKeywordCounts_list = []
+        for i in kwBank_dic:
+            if kwBank_dic[i] != 0:
+                console.print(f"\t :sparkles: {i} : {kwBank_dic[i]}")
+                foundKeywords_list.append(i)
+                foundKeywordCounts_list.append(kwBank_dic[i])
+        return foundKeywords_list, foundKeywordCounts_list
+        # end of getWordCount()
+#
 # *******************************************************************************************************
 
 
@@ -231,49 +234,6 @@ class parserEngine(object):
 
     # end of old_getInformationOfKwInDocs()
 
-    def extractTextFromElement0(self, childTag):
-        """Pulls element from tag.child. Usage: extractTextFromElement('tag2', XML_data)"""
-        # print("\n\t + extractTextFromElement0()")
-        try:
-            tree = ET.fromstring(self.contents_str)
-        except ET.ParseError as err:
-            # printErrorByPlatform("Error detected in current File")
-            return None
-
-        # for child in tree.getiterator(): # formerly for Python 3.8
-        for child in tree.iter():  # Python 3.10
-            tmp_str = (
-                "child.tag: "
-                + str(child.tag)
-                + str(type(child.tag))
-                + "\n child.attrib :"
-                + str(child.attrib)
-                + "\n child.text :"
-                + str(child.text)
-                + "\n child.tail :"
-                + str(child.tail)
-            )
-# debugging info
-            # console.print(f"[bold blue]{tmp_str}")
-            # print("child.tag: ",child.tag, type(child.tag))
-            # print("child.attrib :", child.attrib) # dict
-            # print("child.text :", child.text) #attrib
-            # print("child.tail :", child.tail)
-            # 		if child.tag == childTag:
-            if childTag in child.tag:
-                # print("tag found...",child.tag, type(child.tag), childTag)
-                len = (
-                    ET.tostring(child)
-                    .decode("utf-8")
-                    .replace("\n", " ")
-                    .replace("  ", "")
-                    .strip()
-                )
-                # print("len type :",type(len))
-                return re.sub(r"<.*?>", "", len)
-
-    # end of extractTextFromElement0()
-
 
     def getTitlesOfCols(self):
         """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
@@ -296,6 +256,7 @@ class parserEngine(object):
         return headers_list
 
     # end of getTitlesOfCols()
+
 
     def getTitle(self, task_str=None):
         """Method to get the title of article in the xml doc. The task_str is a command to only return the column header f the method and will be used in the CVS file creation."""
@@ -388,6 +349,50 @@ class parserEngine(object):
             return f_str
 
         # end of getYear()
+
+    def extractTextFromElement0(self, childTag):
+        """Pulls element from tag.child. Usage: extractTextFromElement('tag2', XML_data)"""
+        # print("\n\t + extractTextFromElement0()")
+        try:
+            tree = ET.fromstring(self.contents_str)
+        except ET.ParseError as err:
+            # printErrorByPlatform("Error detected in current File")
+            return None
+
+        # for child in tree.getiterator(): # formerly for Python 3.8
+        for child in tree.iter():  # Python 3.10
+            tmp_str = (
+                "child.tag: "
+                + str(child.tag)
+                + str(type(child.tag))
+                + "\n child.attrib :"
+                + str(child.attrib)
+                + "\n child.text :"
+                + str(child.text)
+                + "\n child.tail :"
+                + str(child.tail)
+            )
+# debugging info
+            # console.print(f"[bold blue]{tmp_str}")
+            # print("child.tag: ",child.tag, type(child.tag))
+            # print("child.attrib :", child.attrib) # dict
+            # print("child.text :", child.text) #attrib
+            # print("child.tail :", child.tail)
+            # 		if child.tag == childTag:
+            if childTag in child.tag:
+                # print("tag found...",child.tag, type(child.tag), childTag)
+                len = (
+                    ET.tostring(child)
+                    .decode("utf-8")
+                    .replace("\n", " ")
+                    .replace("  ", "")
+                    .strip()
+                )
+                # print("len type :",type(len))
+                return re.sub(r"<.*?>", "", len)
+
+    # end of extractTextFromElement0()
+
 
     def extractTextFromElement1(self, childTag, attribTag_str):
         """Pulls element from tag.child. Works with lists. Usage: extractTextFromElement('tag2', XML_data, attribTag_str)"""
