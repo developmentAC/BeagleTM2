@@ -1,6 +1,6 @@
 The Readme file
 # BeagleTM2: PubMed Interactive Knowledge Discovery
-## Date: 19 July 2023
+## Date: 22 July 2023
 ### Oliver Bonham-Carter, [Allegheny College](https://allegheny.edu/)
 ### email: obonhamcarter@allegheny.edu
 
