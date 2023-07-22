@@ -5,20 +5,22 @@ from rich.console import Console
 import xml.etree.ElementTree as ET
 
 import re, typer
+
 cli = typer.Typer()
 console = Console()
 
 # globals
 # myCHARSLIMIT = 10
-MAXCHARS = 80 # size of text to include in output
+MAXCHARS = 80  # size of text to include in output
+
 
 class parserEngine(object):
     def __init__(self, filename_str, contents_str, keyword_list, abs_only, save_less):
-        self.filename_str = filename_str # name of keyword file
-        self.contents_str = contents_str # the article's text
-        self.keyword_list =  keyword_list # the listing of keywords to parse in article
-        self.abs_only = abs_only # boolean, searching abstracts only or the whole article (all contents of the nxml file?)
-        self.save_less = save_less # boolean, save less data in results?
+        self.filename_str = filename_str  # name of keyword file
+        self.contents_str = contents_str  # the article's text
+        self.keyword_list = keyword_list  # the listing of keywords to parse in article
+        self.abs_only = abs_only  # boolean, searching abstracts only or the whole article (all contents of the nxml file?)
+        self.save_less = save_less  # boolean, save less data in results?
 
     # end of __init__()
 
@@ -29,66 +31,67 @@ class parserEngine(object):
 
         pmid_str = self.getPmid()
 
-        searchabletext_str = "" # variable to hold the text (abs or whole contents) to scan
+        searchabletext_str = (
+            ""  # variable to hold the text (abs or whole contents) to scan
+        )
 
-
-    # get the text to work on 
+        # get the text to work on
 
         # get abstracts only
-        if self.abs_only: #checking only abstracts
+        if self.abs_only:  # checking only abstracts
             searchabletext_str = self.getAbstract()
 
-        else: # get full article. This text is all between <abstract> and the <references>.
+        else:  # get full article. This text is all between <abstract> and the <references>.
             try:
-                searchabletext_str = self.contents_str[self.contents_str.find("<abstract>"):self.contents_str.find("<ref-list>")]
+                searchabletext_str = self.contents_str[
+                    self.contents_str.find("<abstract>") : self.contents_str.find(
+                        "<ref-list>"
+                    )
+                ]
             except Exception:
                 searchabletext_str = None
-
 
         if searchabletext_str == None:
             ## console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
-
-    #### for debugging
+        #### for debugging
         if len(searchabletext_str) != 0:
             # console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
             pass
         else:
             # console.print(f"\t :thumbsdown: Empty file...[bold green] {self.filename_str},")
             return None
-    #### end of debugging output
+        #### end of debugging output
 
+        # check each keyWord against searchabletext_str
+        foundKeywords_list, foundKeywordCounts_list = self.getWordCount(
+            searchabletext_str
+        )
 
-
-    # check each keyWord against searchabletext_str
-        foundKeywords_list, foundKeywordCounts_list = self.getWordCount(searchabletext_str)
-
-
-    # get the other pieces of information
-    # tmp_list = [Title, Abstract, PMID, Journal, Year, References, FoundKeywords, FoundKeywordCounts]
+        # get the other pieces of information
+        # tmp_list = [Title, Abstract, PMID, Journal, Year, References, FoundKeywords, FoundKeywordCounts]
 
         title_str = self.getTitle()
         # see above: pmid_str
-        abstract_str = searchabletext_str[:MAXCHARS] # MAXCHARS defined as global above  
+        abstract_str = searchabletext_str[:MAXCHARS]  # MAXCHARS defined as global above
         journal_str = self.getJournal()
         refs_list = self.getReferences()
         year_int = self.getYear()
         # see above: foundKeywords_list, foundKeywordCounts_list
 
-
         # console.print(f"""
         #     [bold cyan]title_str: [bold yellow]{title_str},
         #     [bold cyan]pmid_str: [bold yellow]{pmid_str},
-        #     [bold cyan]abstract_str: [bold yellow]{abstract_str}, 
-        #     [bold cyan]journal_str: [bold yellow]{journal_str}, 
+        #     [bold cyan]abstract_str: [bold yellow]{abstract_str},
+        #     [bold cyan]journal_str: [bold yellow]{journal_str},
         #     [bold cyan]refs_list: [bold yellow]{refs_list},
         #     [bold cyan]year_int: [bold yellow]{year_int},
         #     [bold cyan]foundKeywords_list: [bold yellow]{foundKeywords_list},
         #     [bold cyan]foundKeywordCounts_list:[bold yellow] {foundKeywordCounts_list}
         #     """)
 
-    # combine all this data into one list (Title,Abstract,PMID,Journal,Year,References,Keyword,Counts) to return
+        # combine all this data into one list (Title,Abstract,PMID,Journal,Year,References,Keyword,Counts) to return
         tmp_list = []
         tmp_list.append(title_str)
         tmp_list.append(abstract_str)
@@ -101,16 +104,14 @@ class parserEngine(object):
 
         # console.print(f"[bold green] {tmp_list}")
 
-
         return tmp_list
+
     # end of getInformationOfKwInDocs
 
-
-
     def getWordCount(self, searchabletext_str) -> dict:
-        """ Method to check all words in a text sample. Return two lists: FoundKeywords, FoundKeywordCounts """
+        """Method to check all words in a text sample. Return two lists: FoundKeywords, FoundKeywordCounts"""
 
-        kwBank_dic = {} # keep track of which keywords appear in the text
+        kwBank_dic = {}  # keep track of which keywords appear in the text
         for kw in self.keyword_list:
             # print(f"{kw}", end = ",")
             kwBank_dic[kw] = searchabletext_str.count(kw)
@@ -126,10 +127,9 @@ class parserEngine(object):
                 foundKeywordCounts_list.append(kwBank_dic[i])
         return foundKeywords_list, foundKeywordCounts_list
         # end of getWordCount()
-#
-# *******************************************************************************************************
 
-
+    #
+    # *******************************************************************************************************
 
     def old_getInformationOfKwInDocs(self):
         """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
@@ -143,34 +143,29 @@ class parserEngine(object):
         # console.print(f"\t[bold red][TITLE]: {self.title_str}")
 
         if self.title_str != None:  # working title found?
-
             docDetails_list.append(self.title_str)
 
             # print("docDetails_list : {}".format(docDetails_list))
 
-
-
-# 14 July 2023: removed for save_less option.
-# dont want to save the entire abstract each time?
+            # 14 July 2023: removed for save_less option.
+            # dont want to save the entire abstract each time?
             self.abstract_str = self.getAbstract()
 
-
             if self.save_less != False:
-                shortAbs_str = "" # save a shorter version of abstract
+                shortAbs_str = ""  # save a shorter version of abstract
                 try:
-                    shortAbs_str = self.abstract_str[:myCHARSLIMIT] # set above in globals
+                    shortAbs_str = self.abstract_str[
+                        :myCHARSLIMIT
+                    ]  # set above in globals
                 except TypeError:
                     shortAbs_str = None
                 # console.print(f"\t[bold red][ADD FULL ABSTRACT]: {shortAbs_str}")
                 docDetails_list.append(shortAbs_str)
 
-
-            else: # save full abstract
+            else:  # save full abstract
                 self.abstract_str = self.getAbstract()
                 # console.print(f"\t[bold green][ADD FULL ABSTRACT]: {self.abstract_str}")
                 docDetails_list.append(self.abstract_str)
-
-
 
             self.pmid_str = self.getPmid()
             # console.print(f"\t[bold red][PMID]: {self.pmid_str}")
@@ -184,7 +179,6 @@ class parserEngine(object):
             # console.print(f"\t[bold red][YEAR]: {self.year_str}")
             docDetails_list.append(self.year_str)
 
-
             self.ref_list = self.getReferences()
             # console.print(f"\t[bold red][REFERENCES]: {self.ref_list}")
             docDetails_list.append(self.ref_list)
@@ -192,34 +186,35 @@ class parserEngine(object):
             #######################
             # If the abstract contains a keyword, then keep the article details, otherwise ditch them.
 
-            foundKeyWords_list = [] # contains keywords that were found in the current article
+            foundKeyWords_list = (
+                []
+            )  # contains keywords that were found in the current article
 
             for kw_str in self.keyword_list:
                 # print("\t \U0001f5ff Searching keyword <{}> in abstract: \n".format(kw_str))
                 printFlag = 0
 
-# TODO: are we processing the abstracts or the whole contents?
+                # TODO: are we processing the abstracts or the whole contents?
 
-                searchabletext_str = "" # variable to hold the text (abs or whole contents) to scan
+                searchabletext_str = (
+                    ""  # variable to hold the text (abs or whole contents) to scan
+                )
 
-
-    # abstracts only
-                if self.abs_only: #checking only abstracts
+                # abstracts only
+                if self.abs_only:  # checking only abstracts
                     try:
                         searchabletext_str = self.abstract_str
                     except Exception:
                         pass
 
-                else: # checking the whole article
+                else:  # checking the whole article
                     searchabletext_str = self.contents_str
 
                 # console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
 
                 try:
-
                     # if kw_str.lower() in self.abstract_str.lower():
                     if kw_str.lower() in searchabletext_str.lower():
-
                         foundKeyWords_list.append(kw_str)  # keep found word in a list
                         console.print(f"[bold yellow] found keyword: {kw_str}")
 
@@ -227,39 +222,30 @@ class parserEngine(object):
                     # print(f"Error in file... skipping <{self.fileName_str}>")
                     pass
 
-
-
-
-
             wordCount_list = (
                 []
             )  # keep track of how many counts of each word were found in abstract
             if (
                 len(foundKeyWords_list) > 0
             ):  # is there at least one found word in the list?
-
                 for w in foundKeyWords_list:
                     count = searchabletext_str.count(w)
                     # count = self.abstract_str.count(w)
                     wordCount_list.append(count)
                     # console.print(f"\t :rocket: [bold green] Found: {w}, {type(w)}")
 
-                wordlistAs_str = "" # a sting listing of the found keywords.
+                wordlistAs_str = ""  # a sting listing of the found keywords.
 
                 for f in foundKeyWords_list:
                     wordlistAs_str = wordlistAs_str + str(f) + ","
-                wordlistAs_str = wordlistAs_str[:len(wordlistAs_str)-1]
+                wordlistAs_str = wordlistAs_str[: len(wordlistAs_str) - 1]
 
                 console.print(f"[bold purple] wordlistAs_str :{wordlistAs_str}")
 
-                docDetails_list.append(
-                    wordlistAs_str
-                )  # get the words in the abstract
-
+                docDetails_list.append(wordlistAs_str)  # get the words in the abstract
 
                 docDetails_list.append(
-                    wordCount_list # counts of the keywords themselves?
-                    
+                    wordCount_list  # counts of the keywords themselves?
                 )  # get the count of words in abstract
 
                 return docDetails_list  # return the whole set of details and kw counts for this article
@@ -271,7 +257,6 @@ class parserEngine(object):
             # print("\t [-] Improper: <{}>".format(self.fileName_str))
 
     # end of old_getInformationOfKwInDocs()
-
 
     def getTitlesOfCols(self):
         """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
@@ -294,7 +279,6 @@ class parserEngine(object):
         return headers_list
 
     # end of getTitlesOfCols()
-
 
     def getTitle(self, task_str=None):
         """Method to get the title of article in the xml doc. The task_str is a command to only return the column header f the method and will be used in the CVS file creation."""
@@ -375,18 +359,17 @@ class parserEngine(object):
 
     # end of getReferences()
 
-
     def getYear(self, task_str=None):
-            """gets the year of main article in the xml doc"""
-            # abstract, get abstract from child.tag
-            if task_str == "headerCall":
-                return "Year"
+        """gets the year of main article in the xml doc"""
+        # abstract, get abstract from child.tag
+        if task_str == "headerCall":
+            return "Year"
 
-            childTag = "year"
-            f_str = self.extractTextFromElement0(childTag)
-            return f_str
+        childTag = "year"
+        f_str = self.extractTextFromElement0(childTag)
+        return f_str
 
-        # end of getYear()
+    # end of getYear()
 
     def extractTextFromElement0(self, childTag):
         """Pulls element from tag.child. Usage: extractTextFromElement('tag2', XML_data)"""
@@ -410,7 +393,7 @@ class parserEngine(object):
                 + "\n child.tail :"
                 + str(child.tail)
             )
-# debugging info
+            # debugging info
             # console.print(f"[bold blue]{tmp_str}")
             # print("child.tag: ",child.tag, type(child.tag))
             # print("child.attrib :", child.attrib) # dict
@@ -430,7 +413,6 @@ class parserEngine(object):
                 return re.sub(r"<.*?>", "", len)
 
     # end of extractTextFromElement0()
-
 
     def extractTextFromElement1(self, childTag, attribTag_str):
         """Pulls element from tag.child. Works with lists. Usage: extractTextFromElement('tag2', XML_data, attribTag_str)"""
@@ -465,5 +447,5 @@ class parserEngine(object):
 
     # end of extractTextFromElement1()
 
- 
-#end of parserEngine()
+
+# end of parserEngine()
