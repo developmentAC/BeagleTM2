@@ -42,10 +42,10 @@ def main(dataFile_str: str, abs_only: bool, make_db: bool, save_less: bool) -> N
     )
 
     # save the results from master_dic
-    csv_file = fileOps.saveResultsFromDic(
+    csv_file, wordCsv_file = fileOps.saveResultsFromDic(
         master_dic, dataFile_str, headers_list, abs_only, save_less
     )
-    return csv_file  # return filename of analysis for database maker.
+    return csv_file,wordCsv_file  # return filenames of analysis for database maker.
 
 
 # end of main()

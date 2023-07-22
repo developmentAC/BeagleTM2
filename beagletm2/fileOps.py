@@ -56,18 +56,19 @@ def saveResultsFromDic(
     # console.print(f"headers_list: {headers_list}")
     # console.print(f"master_dic: {master_dic}")
 
-    # set up large list to dump into csv file
-    data_list = []
-
 # master_dic record looks like:
 # saveResultsFromDic() 17183658,['Triose Phosphate Isomerase Deficiency Is Caused by Altered Dimerization&#8211;Not Catalytic Inactivity&#8211;of the Mutant Enzymes', '<abstract><p>Triosephosphate isomerase (TPI) deficiency is an autosomal recessiv', 17183658, 'PLoS One', '2006', [14242501, 10916682, 8807088, 12023819, 8571957, 3447514, 7155666, 6381286, 3358419, 6946452, 113220, 2693209, 8944178, 2876430, 9338582, 1339398, 10910933, 8503454, 8244340, 9871806, 9294216, 7816830, 10655478, 7737504, 16842759, 9483801, 15383276, 2692852, 8879153, 12039737, 378952, 15001397, 15102338, 16115810, 15489199, 16116786, 5542016, 16221686, 11698297, 14608502, 7708701, 15959805, 9322041, 11674994, 7565735, 10998258, 11251834, 10330404, 10601882, 1959537, 12359716, 5076768, 4434738, 16381912, 15606901, 16081222, 10851077, 15501681, 16086671, 5353890, 7651192, 15087496, 12755685, 11053248, 12446208, 10082531, 8181459, 7929187, 7586028, 15862094, 11213485, 1870650], ['observed', 'observe', 'mRNA'], [18, 19, 6]]
 # saveResultsFromDic() 17183679,['Concentration of the Most-Cited Papers in the Scientific Literature: Analysis of Journal Ecosystems', '<abstract><sec><title>Background</title><p>A minority of scientific journals pub', 17183679, 'PLoS One', '2006', [16391221, 15173104, 15254529, 15169550, 16690827, 15819606, 12038930, 16701337, 16701421, 14633274, 15118046, 15900006, 16014596, 16749869, 16275915], ['central'], [2]]
+
+    # set up large list to dump into csv file
+    data_list = []
 
     for i in master_dic:
         # print(f"saveResultsFromDic() {i},{master_dic[i]}")
         data_list.append(master_dic[i])
 
-    secondDB_list = buildWordBase(master_dic)
+
+    # setup filenames
 
     # place contents into csv file
     absOnlyTag_str = ""
@@ -84,8 +85,12 @@ def saveResultsFromDic(
     # csv_file =  dir_str + kwFileName_str + addToFilename_str + "_analysis_out.csv"
     csv_file = dir_str + kwFileName_str + "_analysis_out" + addToFilename_str + ".csv"
 
+    wordCsv_file = dir_str + kwFileName_str + "_analysis_out" + addToFilename_str + "_wordCount.csv"
+
     checkDataDir(dir_str)  # does the data directory exist? If not make it exist.
 
+
+# master_dic -> csv file
     try:
         with open(csv_file, "w") as csvfile:
             write = csv.writer(csvfile)
@@ -97,13 +102,32 @@ def saveResultsFromDic(
         exit()
     console.print(f"\n\t :Rocket:[bold yellow] File saved to: {csv_file}")
 
-    return csv_file  # return file name for database maker
 
+# word count dic -> csv file
+    wordCount_dic = buildWordCountBase(master_dic)
+
+    try:
+        with open(wordCsv_file, 'w') as f:
+            # Write all the dictionary keys in a file with commas separated.
+            f.write(f"keyword,count")
+            tmp_str = ""
+            for i in wordCount_dic:
+                tmp_str = tmp_str + "\n" + f"{i}, {wordCount_dic[i]}".strip()
+            # console.print(f"\t[bold red] {tmp_str}")
+            f.write(tmp_str)
+            f.write('\n') # Add a new line
+    except IOError:
+        console.print("\t :scream: [bold red] Input/Output error")
+        exit()
+    console.print(f"\n\t :Rocket:[bold yellow] File saved to: {csv_file}")
+
+
+    return csv_file,wordCsv_file  # return filenames for database maker
 
 # end of saveResultsFromDic()
 
-def buildWordBase(master_dic):
-    """ function to build a smaller db: [word (pk)|count|pmid] """
+def buildWordCountBase(master_dic):
+    """ function to build a smaller db: [word (pk)|count] """
 
 # saveResultsFromDic() 17183679,
 # [
@@ -117,23 +141,24 @@ def buildWordBase(master_dic):
 # [2]
 # ]
 
-
-    word_dic = {}
+# word and counts
+    wordCount_dic = {}
     for row in master_dic:
-        console.print(f"[bold green]row = {row}")
+        # console.print(f"[bold green]row = {row}")
     # 6th element is word
         wordRow_list = master_dic[row][6] 
-        console.print(f"[bold green]wordRow_list = {wordRow_list}")
+        # console.print(f"[bold green]wordRow_list = {wordRow_list}")
     # 7th element is count,
         countRow_list = master_dic[row][7]
-        console.print(f"[bold green]countRow_list = {countRow_list}\n")
+        # console.print(f"[bold green]countRow_list = {countRow_list}\n")
         for w in range(len(wordRow_list)):
-            console.print(f"[bold yellow] word_dic = {word_dic}")
-            if wordRow_list[w] not in word_dic:
-                word_dic[wordRow_list[w]] = countRow_list[w]
+            # console.print(f"[bold yellow] wordCount_dic = {wordCount_dic}")
+            if wordRow_list[w] not in wordCount_dic:
+                wordCount_dic[wordRow_list[w]] = countRow_list[w]
             else:
-                word_dic[wordRow_list[w]] = word_dic[wordRow_list[w]] + countRow_list[w]
+                wordCount_dic[wordRow_list[w]] = wordCount_dic[wordRow_list[w]] + countRow_list[w]
 
+    return wordCount_dic
 
 
     # end of buildWordBase()

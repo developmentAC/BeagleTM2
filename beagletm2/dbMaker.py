@@ -13,21 +13,26 @@ dir_str = fileOps.dir_str
 console = Console()
 
 
-def main(fname_str: str) -> None:
+def main(csv_file:str, wordCsv_file:str) -> None:
     """driver function"""
     tableName_str = "main"
-    builder(fname_str, tableName_str) # build the first database
+    dbfname_str = csv_file.replace(".csv", ".sqlite3") #database filename
+    builder(dbfname_str, csv_file, tableName_str) # build the first database
+
+    tableName_str = "counts"
+    # dbfname_str = wordCsv_file.replace(".csv", ".sqlite3") #database filename
+    builder(dbfname_str, wordCsv_file, tableName_str) # build the first database
 
     # end of main()
 
 
-def builder(fname_str: str, tableName_str : str) -> None:
+def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 
     """driver function"""
-    # console.print(f"\n\t :sparkles:[bold cyan] Making a SQL database from resutls.")
+    # console.print(f"\n\t :sparkles:[bold cyan] Making a SQL database from results.")
 
     console.print(
-        f"\n\t :package:[bold green] Making a SQL database from cvs file :{fname_str}"
+        f"\n\t :package:[bold green] Making a SQL database from cvs file :{dbfname_str}"
     )
 
     # fname = input("Enter name of the analysis file: ")
@@ -36,20 +41,17 @@ def builder(fname_str: str, tableName_str : str) -> None:
         dir_str
     )  # does the data directory exist? If not make it exist.
 
-    dbfname_str = fname_str.replace(".csv", ".sqlite3")
+    # dbfname_str = fname_str.replace(".csv", ".sqlite3")
 
-    console.print(f"\t [bold purple] --> Opening csv file: [bold cyan]{fname_str}")
+    console.print(f"\t [bold purple] --> Opening csv file: [bold cyan]{dbfname_str}")
 
     # Connect to SQLite database
     conn = sqlite3.connect(dbfname_str)
 
     # Load CSV data into Pandas DataFrame
-    student_data = pd.read_csv(fname_str)
-
-    # console.print(f"\t [bold purple] Data :: {student_data}, {type(student_data)}")
+    student_data = pd.read_csv(csvFile_str)
 
     # Write the data to a sqlite table
-    # student_data.to_sql("student", conn, if_exists="replace", index=False)
     student_data.to_sql(tableName_str, conn, if_exists="replace", index=False)
 
     # Create a cursor object
