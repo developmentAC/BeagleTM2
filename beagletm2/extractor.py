@@ -25,30 +25,37 @@ class parserEngine(object):
     def getInformationOfKwInDocs(self):
         """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
 
-        console.print(f"____ getInformationOfKwInDocs() _____")
+        # console.print(f"____ getInformationOfKwInDocs() _____")
 
         pmid_str = self.getPmid()
-        console.print(f"\t [bold cyan] PMID : {pmid_str}")
 
         searchabletext_str = "" # variable to hold the text (abs or whole contents) to scan
 
-    # abstracts only
+
+    # get the text to work on 
+
+        # get abstracts only
         if self.abs_only: #checking only abstracts
+            searchabletext_str = self.getAbstract()
+
+        else: # get full article. This text is all between <abstract> and the <references>.
             try:
-                searchabletext_str = self.getAbstract()
-
-                # searchabletext_str = self.abstract_str
+                searchabletext_str = self.contents_str[self.contents_str.find("<abstract>"):self.contents_str.find("<ref-list>")]
             except Exception:
-                pass
+                searchabletext_str = None
 
-        else: # checking the whole article: capture all between abstract and the references.
-            searchabletext_str = self.contents_str[self.contents_str.find("<abstract>"):self.contents_str.find("<ref-list>")]
 
-        console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
-        console.print(f"\t [bold cyan] self.abs_only = {searchabletext_str}")
-        console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
+        if searchabletext_str == None:
+            console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
+            searchabletext_str = ""
 
-        input()
+        console.print(f"\n\t [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
+        # console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
+        # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
+
+
+
+
         # try:
         #     if kw_str.lower() in searchabletext_str.lower():
 
