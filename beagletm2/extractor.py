@@ -25,11 +25,58 @@ class parserEngine(object):
     def getInformationOfKwInDocs(self):
         """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
 
+        console.print(f"____ getInformationOfKwInDocs() _____")
+
+        pmid_str = self.getPmid()
+        console.print(f"\t [bold cyan] PMID : {pmid_str}")
+
+        searchabletext_str = "" # variable to hold the text (abs or whole contents) to scan
+
+    # abstracts only
+        if self.abs_only: #checking only abstracts
+            try:
+                searchabletext_str = self.getAbstract()
+
+                # searchabletext_str = self.abstract_str
+            except Exception:
+                pass
+
+        else: # checking the whole article: capture all between abstract and the references.
+            searchabletext_str = self.contents_str[self.contents_str.find("<abstract>"):self.contents_str.find("<ref-list>")]
+
+        console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
+        console.print(f"\t [bold cyan] self.abs_only = {searchabletext_str}")
+        console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
+
+        input()
+        # try:
+        #     if kw_str.lower() in searchabletext_str.lower():
+
+        #         foundKeyWords_list.append(kw_str)  # keep found word in a list
+        #         console.print(f"[bold yellow] found keyword: {kw_str}")
+
+        # except:  # general exception for badly formatted files.
+        #     # print(f"Error in file... skipping <{self.fileName_str}>")
+        #     pass
+
+
+
+        return None
+    # end of getInformationOfKwInDocs
+
+
+
+# *******************************************************************************************************
+
+
+
+    def old_getInformationOfKwInDocs(self):
+        """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
+
         # console.print(f"self.abs_only : {self.abs_only}")
         # print("\n\t Searching abstract: {} \n".format(self.abstract_str))
         # Get the details of the current article; used later if keywords are found.
         docDetails_list = []
-        stats_dic = {}
 
         self.title_str = self.getTitle()  # check to see whether the file is good
         # console.print(f"\t[bold red][TITLE]: {self.title_str}")
@@ -120,6 +167,9 @@ class parserEngine(object):
                     pass
 
 
+
+
+
             wordCount_list = (
                 []
             )  # keep track of how many counts of each word were found in abstract
@@ -159,7 +209,7 @@ class parserEngine(object):
             pass
             # print("\t [-] Improper: <{}>".format(self.fileName_str))
 
-    # end of getInformationOfKwInDocs()
+    # end of old_getInformationOfKwInDocs()
 
     def extractTextFromElement0(self, childTag):
         """Pulls element from tag.child. Usage: extractTextFromElement('tag2', XML_data)"""

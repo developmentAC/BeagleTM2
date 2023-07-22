@@ -22,7 +22,7 @@ def openFile(data_file: str) -> list:
             contents_list.append(line)
     
     # console.print(f" [bold green] contents_list = {contents_list}")
-  
+ 
     return contents_list
 
 # end of openFile()
