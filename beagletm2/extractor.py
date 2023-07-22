@@ -54,7 +54,7 @@ class parserEngine(object):
 #        # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
 
         if len(searchabletext_str) != 0:
-            console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
+            console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
         else:
             # console.print(f"\t :thumbsdown: Empty file...")
             return None
@@ -83,7 +83,7 @@ class parserEngine(object):
         foundKeywordCounts_list = []
         for i in kwBank_dic:
             if kwBank_dic[i] != 0:
-                console.print(f"\t :sparkles: {i} : {kwBank_dic[i]}")
+                console.print(f"\t    :sparkles: {i} : {kwBank_dic[i]}")
                 foundKeywords_list.append(i)
                 foundKeywordCounts_list.append(kwBank_dic[i])
         return foundKeywords_list, foundKeywordCounts_list
