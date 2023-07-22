@@ -46,14 +46,20 @@ class parserEngine(object):
 
 
         if searchabletext_str == None:
-            # console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
+            ## console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
+
+    #### for debugging
         if len(searchabletext_str) != 0:
-            console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
+            # console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
+            pass
         else:
-            # console.print(f"\t :thumbsdown: Empty file...")
+            # console.print(f"\t :thumbsdown: Empty file...[bold green] {self.filename_str},")
             return None
+    #### end of debugging output
+
+
 
     # check each keyWord against searchabletext_str
         foundKeywords_list, foundKeywordCounts_list = self.getWordCount(searchabletext_str)
@@ -63,12 +69,12 @@ class parserEngine(object):
     # tmp_list = [Title, Abstract, PMID, Journal, Year, References, FoundKeywords, FoundKeywordCounts]
 
         title_str = self.getTitle()
-        #see above: pmid_str
+        # see above: pmid_str
         abstract_str = searchabletext_str[:MAXCHARS] # MAXCHARS defined as global above  
         journal_str = self.getJournal()
         refs_list = self.getReferences()
         year_int = self.getYear()
-        #see above: foundKeywords_list, foundKeywordCounts_list
+        # see above: foundKeywords_list, foundKeywordCounts_list
 
 
         # console.print(f"""
@@ -96,7 +102,7 @@ class parserEngine(object):
         # console.print(f"[bold green] {tmp_list}")
 
 
-        return None
+        return tmp_list
     # end of getInformationOfKwInDocs
 
 
@@ -115,7 +121,7 @@ class parserEngine(object):
         foundKeywordCounts_list = []
         for i in kwBank_dic:
             if kwBank_dic[i] != 0:
-                console.print(f"\t    :sparkles: {i} : {kwBank_dic[i]}")
+                # console.print(f"\t    :sparkles: {i} : {kwBank_dic[i]}")
                 foundKeywords_list.append(i)
                 foundKeywordCounts_list.append(kwBank_dic[i])
         return foundKeywords_list, foundKeywordCounts_list

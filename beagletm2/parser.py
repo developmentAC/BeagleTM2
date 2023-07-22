@@ -92,13 +92,8 @@ def goThruFiles(inFile0_str:str, keyWord_list:list, abs_only: bool, save_less: b
 
         tmp_list = p.getInformationOfKwInDocs()
 
-# freeze tmp_list for debugging
-        # console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
-        # input()
-
-
         if tmp_list != None:
-            console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
+            # console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
 
             console.print(f"\n\t :dog: [bold cyan]{tmp_list[2]}[white],[bold green] {thisFile}")
             console.print(f"\t :sparkles: Parsed: {tmp_list[6]} <- [bold yellow] {tmp_list[7]}")
