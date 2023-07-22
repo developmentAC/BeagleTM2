@@ -84,7 +84,24 @@ poetry run beagletm2 --bighelp
     poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less
     ```
 
+## Run a series of tasks
 
+If you want to run several different jobs using the same corpus, create a batch file (unix) with the code shown below.
+
+File: __command.sh__
+
+```
+mkdir log
+mkdir 0_out
+poetry run beagletm2 --client parser --data-file kw_genPurposeEthics.md --make-db --no-abs-only --save-less  1>log/1_gen.md 2>log/2_gen.md &
+poetry run beagletm2 --client parser --data-file kwClimateChange_i.md --make-db --no-abs-only --save-less 1>log/1_climate.md 2>log/2_climate.md &
+```
+
+To run the file using a unix OS, use the following command.
+
+```
+sh command.sh
+```
 
 ## A work in progress
 
