@@ -9,8 +9,8 @@ cli = typer.Typer()
 console = Console()
 
 # globals
-myCHARSLIMIT = 10
-
+# myCHARSLIMIT = 10
+MAXCHARS = 80 # size of text to include in output
 
 class parserEngine(object):
     def __init__(self, filename_str, contents_str, keyword_list, abs_only, save_less):
@@ -49,10 +49,6 @@ class parserEngine(object):
             # console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
-        # console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
-#        # console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
-#        # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
-
         if len(searchabletext_str) != 0:
             console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
         else:
@@ -62,6 +58,42 @@ class parserEngine(object):
     # check each keyWord against searchabletext_str
         foundKeywords_list, foundKeywordCounts_list = self.getWordCount(searchabletext_str)
 
+
+    # get the other pieces of information
+    # tmp_list = [Title, Abstract, PMID, Journal, Year, References, FoundKeywords, FoundKeywordCounts]
+
+        title_str = self.getTitle()
+        #see above: pmid_str
+        abstract_str = searchabletext_str[:MAXCHARS] # MAXCHARS defined as global above  
+        journal_str = self.getJournal()
+        refs_list = self.getReferences()
+        year_int = self.getYear()
+        #see above: foundKeywords_list, foundKeywordCounts_list
+
+
+        # console.print(f"""
+        #     [bold cyan]title_str: [bold yellow]{title_str},
+        #     [bold cyan]pmid_str: [bold yellow]{pmid_str},
+        #     [bold cyan]abstract_str: [bold yellow]{abstract_str}, 
+        #     [bold cyan]journal_str: [bold yellow]{journal_str}, 
+        #     [bold cyan]refs_list: [bold yellow]{refs_list},
+        #     [bold cyan]year_int: [bold yellow]{year_int},
+        #     [bold cyan]foundKeywords_list: [bold yellow]{foundKeywords_list},
+        #     [bold cyan]foundKeywordCounts_list:[bold yellow] {foundKeywordCounts_list}
+        #     """)
+
+    # combine all this data into one list (Title,Abstract,PMID,Journal,Year,References,Keyword,Counts) to return
+        tmp_list = []
+        tmp_list.append(title_str)
+        tmp_list.append(abstract_str)
+        tmp_list.append(pmid_str)
+        tmp_list.append(journal_str)
+        tmp_list.append(year_int)
+        tmp_list.append(refs_list)
+        tmp_list.append(foundKeywords_list)
+        tmp_list.append(foundKeywordCounts_list)
+
+        # console.print(f"[bold green] {tmp_list}")
 
 
         return None
