@@ -46,12 +46,25 @@ class parserEngine(object):
 
 
         if searchabletext_str == None:
-            console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
+            # console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
-        console.print(f"\n\t [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
+        console.print(f"\n\t[bold cyan] PMID: {pmid_str},[bold green] {self.filename_str}, [bold yellow] Size: {len(searchabletext_str)}")
         # console.print(f"\t [bold purple] self.abs_only = {self.abs_only}")
         # console.print(f"\t [bold cyan] searchabletext_str = {searchabletext_str[:20]}<--End")
+
+    # check each keyWord against this string
+    # loop through every single keyword
+        if len(searchabletext_str) == 0:
+            print("\t Empty file...")
+            return None
+
+
+        kwBank_dic = {} # keep track of which keywords appear in the text
+        for kw in self.keyword_list:
+            # print(f"{kw}", end = ",")
+            kwBank_dic[kw] = searchabletext_str.count(kw)
+        console.print(f"kwBank_dic = [bold yellow] {kwBank_dic}")
 
 
 
