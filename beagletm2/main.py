@@ -73,9 +73,9 @@ def main(
             exit()  # :thumbs_down:
 
         csv_file = p.main(
-            data_file, abs_only, make_db, save_less
+            data_file, abs_only, make_db, save_less # csv_file is filename
         )  # pass word list and run parser, pass abstract or full journal scanning option
-
+        print(f"CSV FILE = {csv_file}")
         # make a SQL DB file from the output?
         if make_db == True:
             dbMaker.main(csv_file)

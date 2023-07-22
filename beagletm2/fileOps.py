@@ -58,8 +58,16 @@ def saveResultsFromDic(
 
     # set up large list to dump into csv file
     data_list = []
+
+# master_dic record looks like:
+# saveResultsFromDic() 17183658,['Triose Phosphate Isomerase Deficiency Is Caused by Altered Dimerization&#8211;Not Catalytic Inactivity&#8211;of the Mutant Enzymes', '<abstract><p>Triosephosphate isomerase (TPI) deficiency is an autosomal recessiv', 17183658, 'PLoS One', '2006', [14242501, 10916682, 8807088, 12023819, 8571957, 3447514, 7155666, 6381286, 3358419, 6946452, 113220, 2693209, 8944178, 2876430, 9338582, 1339398, 10910933, 8503454, 8244340, 9871806, 9294216, 7816830, 10655478, 7737504, 16842759, 9483801, 15383276, 2692852, 8879153, 12039737, 378952, 15001397, 15102338, 16115810, 15489199, 16116786, 5542016, 16221686, 11698297, 14608502, 7708701, 15959805, 9322041, 11674994, 7565735, 10998258, 11251834, 10330404, 10601882, 1959537, 12359716, 5076768, 4434738, 16381912, 15606901, 16081222, 10851077, 15501681, 16086671, 5353890, 7651192, 15087496, 12755685, 11053248, 12446208, 10082531, 8181459, 7929187, 7586028, 15862094, 11213485, 1870650], ['observed', 'observe', 'mRNA'], [18, 19, 6]]
+# saveResultsFromDic() 17183679,['Concentration of the Most-Cited Papers in the Scientific Literature: Analysis of Journal Ecosystems', '<abstract><sec><title>Background</title><p>A minority of scientific journals pub', 17183679, 'PLoS One', '2006', [16391221, 15173104, 15254529, 15169550, 16690827, 15819606, 12038930, 16701337, 16701421, 14633274, 15118046, 15900006, 16014596, 16749869, 16275915], ['central'], [2]]
+
     for i in master_dic:
+        print(f"saveResultsFromDic() {i},{master_dic[i]}")
         data_list.append(master_dic[i])
+
+
 
     # place contents into csv file
     absOnlyTag_str = ""
@@ -93,6 +101,9 @@ def saveResultsFromDic(
 
 
 # end of saveResultsFromDic()
+
+
+
 
 
 def checkDataDir(dir_str):

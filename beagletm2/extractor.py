@@ -128,136 +128,7 @@ class parserEngine(object):
         return foundKeywords_list, foundKeywordCounts_list
         # end of getWordCount()
 
-    #
-    # *******************************************************************************************************
-
-    def old_getInformationOfKwInDocs(self):
-        """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
-
-        # console.print(f"self.abs_only : {self.abs_only}")
-        # print("\n\t Searching abstract: {} \n".format(self.abstract_str))
-        # Get the details of the current article; used later if keywords are found.
-        docDetails_list = []
-
-        self.title_str = self.getTitle()  # check to see whether the file is good
-        # console.print(f"\t[bold red][TITLE]: {self.title_str}")
-
-        if self.title_str != None:  # working title found?
-            docDetails_list.append(self.title_str)
-
-            # print("docDetails_list : {}".format(docDetails_list))
-
-            # 14 July 2023: removed for save_less option.
-            # dont want to save the entire abstract each time?
-            self.abstract_str = self.getAbstract()
-
-            if self.save_less != False:
-                shortAbs_str = ""  # save a shorter version of abstract
-                try:
-                    shortAbs_str = self.abstract_str[
-                        :myCHARSLIMIT
-                    ]  # set above in globals
-                except TypeError:
-                    shortAbs_str = None
-                # console.print(f"\t[bold red][ADD FULL ABSTRACT]: {shortAbs_str}")
-                docDetails_list.append(shortAbs_str)
-
-            else:  # save full abstract
-                self.abstract_str = self.getAbstract()
-                # console.print(f"\t[bold green][ADD FULL ABSTRACT]: {self.abstract_str}")
-                docDetails_list.append(self.abstract_str)
-
-            self.pmid_str = self.getPmid()
-            # console.print(f"\t[bold red][PMID]: {self.pmid_str}")
-            docDetails_list.append(self.pmid_str)
-
-            self.journal_str = self.getJournal()
-            # console.print(f"\t[bold red][JOURNAL]: {self.journal_str}")
-            docDetails_list.append(self.journal_str)
-
-            self.year_str = self.getYear()
-            # console.print(f"\t[bold red][YEAR]: {self.year_str}")
-            docDetails_list.append(self.year_str)
-
-            self.ref_list = self.getReferences()
-            # console.print(f"\t[bold red][REFERENCES]: {self.ref_list}")
-            docDetails_list.append(self.ref_list)
-
-            #######################
-            # If the abstract contains a keyword, then keep the article details, otherwise ditch them.
-
-            foundKeyWords_list = (
-                []
-            )  # contains keywords that were found in the current article
-
-            for kw_str in self.keyword_list:
-                # print("\t \U0001f5ff Searching keyword <{}> in abstract: \n".format(kw_str))
-                printFlag = 0
-
-                # TODO: are we processing the abstracts or the whole contents?
-
-                searchabletext_str = (
-                    ""  # variable to hold the text (abs or whole contents) to scan
-                )
-
-                # abstracts only
-                if self.abs_only:  # checking only abstracts
-                    try:
-                        searchabletext_str = self.abstract_str
-                    except Exception:
-                        pass
-
-                else:  # checking the whole article
-                    searchabletext_str = self.contents_str
-
-                # console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
-
-                try:
-                    # if kw_str.lower() in self.abstract_str.lower():
-                    if kw_str.lower() in searchabletext_str.lower():
-                        foundKeyWords_list.append(kw_str)  # keep found word in a list
-                        console.print(f"[bold yellow] found keyword: {kw_str}")
-
-                except:  # general exception for badly formatted files.
-                    # print(f"Error in file... skipping <{self.fileName_str}>")
-                    pass
-
-            wordCount_list = (
-                []
-            )  # keep track of how many counts of each word were found in abstract
-            if (
-                len(foundKeyWords_list) > 0
-            ):  # is there at least one found word in the list?
-                for w in foundKeyWords_list:
-                    count = searchabletext_str.count(w)
-                    # count = self.abstract_str.count(w)
-                    wordCount_list.append(count)
-                    # console.print(f"\t :rocket: [bold green] Found: {w}, {type(w)}")
-
-                wordlistAs_str = ""  # a sting listing of the found keywords.
-
-                for f in foundKeyWords_list:
-                    wordlistAs_str = wordlistAs_str + str(f) + ","
-                wordlistAs_str = wordlistAs_str[: len(wordlistAs_str) - 1]
-
-                console.print(f"[bold purple] wordlistAs_str :{wordlistAs_str}")
-
-                docDetails_list.append(wordlistAs_str)  # get the words in the abstract
-
-                docDetails_list.append(
-                    wordCount_list  # counts of the keywords themselves?
-                )  # get the count of words in abstract
-
-                return docDetails_list  # return the whole set of details and kw counts for this article
-            else:
-                return None
-
-        else:
-            pass
-            # print("\t [-] Improper: <{}>".format(self.fileName_str))
-
-    # end of old_getInformationOfKwInDocs()
-
+ 
     def getTitlesOfCols(self):
         """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
 
@@ -449,3 +320,135 @@ class parserEngine(object):
 
 
 # end of parserEngine()
+
+
+
+    # The following code is obsolete but is left in the project for reference.
+    # *******************************************************************************************************
+    
+    def old_getInformationOfKwInDocs(self):
+        """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
+
+        # console.print(f"self.abs_only : {self.abs_only}")
+        # print("\n\t Searching abstract: {} \n".format(self.abstract_str))
+        # Get the details of the current article; used later if keywords are found.
+        docDetails_list = []
+
+        self.title_str = self.getTitle()  # check to see whether the file is good
+        # console.print(f"\t[bold red][TITLE]: {self.title_str}")
+
+        if self.title_str != None:  # working title found?
+            docDetails_list.append(self.title_str)
+
+            # print("docDetails_list : {}".format(docDetails_list))
+
+            # 14 July 2023: removed for save_less option.
+            # dont want to save the entire abstract each time?
+            self.abstract_str = self.getAbstract()
+
+            if self.save_less != False:
+                shortAbs_str = ""  # save a shorter version of abstract
+                try:
+                    shortAbs_str = self.abstract_str[
+                        :myCHARSLIMIT
+                    ]  # set above in globals
+                except TypeError:
+                    shortAbs_str = None
+                # console.print(f"\t[bold red][ADD FULL ABSTRACT]: {shortAbs_str}")
+                docDetails_list.append(shortAbs_str)
+
+            else:  # save full abstract
+                self.abstract_str = self.getAbstract()
+                # console.print(f"\t[bold green][ADD FULL ABSTRACT]: {self.abstract_str}")
+                docDetails_list.append(self.abstract_str)
+
+            self.pmid_str = self.getPmid()
+            # console.print(f"\t[bold red][PMID]: {self.pmid_str}")
+            docDetails_list.append(self.pmid_str)
+
+            self.journal_str = self.getJournal()
+            # console.print(f"\t[bold red][JOURNAL]: {self.journal_str}")
+            docDetails_list.append(self.journal_str)
+
+            self.year_str = self.getYear()
+            # console.print(f"\t[bold red][YEAR]: {self.year_str}")
+            docDetails_list.append(self.year_str)
+
+            self.ref_list = self.getReferences()
+            # console.print(f"\t[bold red][REFERENCES]: {self.ref_list}")
+            docDetails_list.append(self.ref_list)
+
+            #######################
+            # If the abstract contains a keyword, then keep the article details, otherwise ditch them.
+
+            foundKeyWords_list = (
+                []
+            )  # contains keywords that were found in the current article
+
+            for kw_str in self.keyword_list:
+                # print("\t \U0001f5ff Searching keyword <{}> in abstract: \n".format(kw_str))
+                printFlag = 0
+
+                # TODO: are we processing the abstracts or the whole contents?
+
+                searchabletext_str = (
+                    ""  # variable to hold the text (abs or whole contents) to scan
+                )
+
+                # abstracts only
+                if self.abs_only:  # checking only abstracts
+                    try:
+                        searchabletext_str = self.abstract_str
+                    except Exception:
+                        pass
+
+                else:  # checking the whole article
+                    searchabletext_str = self.contents_str
+
+                # console.print(f"\t [bold red] length of text is : {len(searchabletext_str)}")
+
+                try:
+                    # if kw_str.lower() in self.abstract_str.lower():
+                    if kw_str.lower() in searchabletext_str.lower():
+                        foundKeyWords_list.append(kw_str)  # keep found word in a list
+                        console.print(f"[bold yellow] found keyword: {kw_str}")
+
+                except:  # general exception for badly formatted files.
+                    # print(f"Error in file... skipping <{self.fileName_str}>")
+                    pass
+
+            wordCount_list = (
+                []
+            )  # keep track of how many counts of each word were found in abstract
+            if (
+                len(foundKeyWords_list) > 0
+            ):  # is there at least one found word in the list?
+                for w in foundKeyWords_list:
+                    count = searchabletext_str.count(w)
+                    # count = self.abstract_str.count(w)
+                    wordCount_list.append(count)
+                    # console.print(f"\t :rocket: [bold green] Found: {w}, {type(w)}")
+
+                wordlistAs_str = ""  # a sting listing of the found keywords.
+
+                for f in foundKeyWords_list:
+                    wordlistAs_str = wordlistAs_str + str(f) + ","
+                wordlistAs_str = wordlistAs_str[: len(wordlistAs_str) - 1]
+
+                console.print(f"[bold purple] wordlistAs_str :{wordlistAs_str}")
+
+                docDetails_list.append(wordlistAs_str)  # get the words in the abstract
+
+                docDetails_list.append(
+                    wordCount_list  # counts of the keywords themselves?
+                )  # get the count of words in abstract
+
+                return docDetails_list  # return the whole set of details and kw counts for this article
+            else:
+                return None
+
+        else:
+            pass
+            # print("\t [-] Improper: <{}>".format(self.fileName_str))
+
+    # end of old_getInformationOfKwInDocs()

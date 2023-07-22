@@ -15,6 +15,15 @@ console = Console()
 
 def main(fname_str: str) -> None:
     """driver function"""
+    tableName_str = "main"
+    builder(fname_str, tableName_str) # build the first database
+
+    # end of main()
+
+
+def builder(fname_str: str, tableName_str : str) -> None:
+
+    """driver function"""
     # console.print(f"\n\t :sparkles:[bold cyan] Making a SQL database from resutls.")
 
     console.print(
@@ -40,7 +49,8 @@ def main(fname_str: str) -> None:
     # console.print(f"\t [bold purple] Data :: {student_data}, {type(student_data)}")
 
     # Write the data to a sqlite table
-    student_data.to_sql("student", conn, if_exists="replace", index=False)
+    # student_data.to_sql("student", conn, if_exists="replace", index=False)
+    student_data.to_sql(tableName_str, conn, if_exists="replace", index=False)
 
     # Create a cursor object
     cur = conn.cursor()
@@ -73,4 +83,4 @@ def main(fname_str: str) -> None:
 # select keyword from student where Keyword LIKE '%analysis%' AND keyword LIKE '%research%';
 # select pmid,keyword from student where Keyword LIKE '%gene%';
 
-# end of main()
+# end of builder()

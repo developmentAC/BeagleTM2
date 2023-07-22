@@ -86,6 +86,7 @@ def goThruFiles(
     headers_list = []
     pmidsubNumber = 0  # used for files having no pmid
     fileCount_int = 0  # used to keep track of the number of processes files.
+
     for thisFile in file_list:
         contents_str = ""
         contents_str = fileOps.openArticleFile(thisFile)
@@ -110,6 +111,7 @@ def goThruFiles(
         #     # Counts <class 'str'> [7]
 
         tmp_list = p.getInformationOfKwInDocs()
+        # tmp_list = p.getInformationOfKwInDocs()
 
         if tmp_list != None:
             # console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
@@ -137,6 +139,8 @@ def goThruFiles(
                 master_dic[
                     tmp_list[2]
                 ] = tmp_list  # place in dic; pmid as key, record as value
+
+            # console.print(f"[bold purple] tmp_list ==> {tmp_list}")
 
     return master_dic, headers_list
 
