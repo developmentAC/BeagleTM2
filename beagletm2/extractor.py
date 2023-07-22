@@ -69,9 +69,6 @@ class parserEngine(object):
             searchabletext_str
         )
 
-        # get the other pieces of information
-        # tmp_list = [Title, Abstract, PMID, Journal, Year, References, FoundKeywords, FoundKeywordCounts]
-
         title_str = self.getTitle()
         # see above: pmid_str
         abstract_str = searchabletext_str[:MAXCHARS]  # MAXCHARS defined as global above

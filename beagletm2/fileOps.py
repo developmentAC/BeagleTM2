@@ -64,10 +64,10 @@ def saveResultsFromDic(
 # saveResultsFromDic() 17183679,['Concentration of the Most-Cited Papers in the Scientific Literature: Analysis of Journal Ecosystems', '<abstract><sec><title>Background</title><p>A minority of scientific journals pub', 17183679, 'PLoS One', '2006', [16391221, 15173104, 15254529, 15169550, 16690827, 15819606, 12038930, 16701337, 16701421, 14633274, 15118046, 15900006, 16014596, 16749869, 16275915], ['central'], [2]]
 
     for i in master_dic:
-        print(f"saveResultsFromDic() {i},{master_dic[i]}")
+        # print(f"saveResultsFromDic() {i},{master_dic[i]}")
         data_list.append(master_dic[i])
 
-
+    secondDB_list = buildWordBase(master_dic)
 
     # place contents into csv file
     absOnlyTag_str = ""
@@ -101,6 +101,42 @@ def saveResultsFromDic(
 
 
 # end of saveResultsFromDic()
+
+def buildWordBase(master_dic):
+    """ function to build a smaller db: [word (pk)|count|pmid] """
+
+# saveResultsFromDic() 17183679,
+# [
+# 'Concentration of the Most-Cited Papers in the Scientific Literature:',
+# '<abstract><sec><title>Background</title><p>A minority of scientific journals pub',
+# 17183679,
+# 'PLoS One',
+# '2006',
+# [ 16690827, 15819606, 12038930, 16701337, 16701421, 14633274, 15118046, 15900006, 16014596, 16749869, 16275915],
+# ['central'],
+# [2]
+# ]
+
+
+    word_dic = {}
+    for row in master_dic:
+        console.print(f"[bold green]row = {row}")
+    # 6th element is word
+        wordRow_list = master_dic[row][6] 
+        console.print(f"[bold green]wordRow_list = {wordRow_list}")
+    # 7th element is count,
+        countRow_list = master_dic[row][7]
+        console.print(f"[bold green]countRow_list = {countRow_list}\n")
+        for w in range(len(wordRow_list)):
+            console.print(f"[bold yellow] word_dic = {word_dic}")
+            if wordRow_list[w] not in word_dic:
+                word_dic[wordRow_list[w]] = countRow_list[w]
+            else:
+                word_dic[wordRow_list[w]] = word_dic[wordRow_list[w]] + countRow_list[w]
+
+
+
+    # end of buildWordBase()
 
 
 
