@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 DATE = "22 July 2023"
-VERSION = "0.18.0"
+VERSION = "0.20.0"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
