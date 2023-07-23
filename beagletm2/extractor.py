@@ -71,7 +71,11 @@ class parserEngine(object):
 
         title_str = self.getTitle()
         # see above: pmid_str
-        abstract_str = searchabletext_str[:MAXCHARS]  # MAXCHARS defined as global above
+
+        abstract_str = self.getAbstract()
+        if self.save_less:
+            abstract_str = searchabletext_str[:MAXCHARS]  # MAXCHARS defined as global above
+
         journal_str = self.getJournal()
         refs_list = self.getReferences()
         year_int = self.getYear()
