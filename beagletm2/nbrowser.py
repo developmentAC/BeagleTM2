@@ -55,9 +55,9 @@ def main() -> None:
         # We must add path information to filename (path_in), file_upload does not add this info!!!!
         c = dbOps.loadDbGetConn(DATADIR+path_in) 
 
-        st.text(f"{path_in}, {c}")
-        st.write("Filename")
-        st.success(f"path_in ---> {path_in}")
+        # st.text(f"{path_in}, {c}")
+        # st.write("Filename")
+        # st.success(f"path_in ---> {path_in}")
 
 
         # menu system
@@ -72,16 +72,9 @@ def main() -> None:
         )
     
         if doThis_sb == "Show_Tables":
-            st.write("Showing tables of database ...")
+            st.title("Showing tables of database ...")
             result_str = dbOps.getTablesListing(c)
-            # st.text(f"main() myConn ::: {c}, result :::: {result_str}")
         
-
-            with st.expander("Pretty Table"):
-                query_df = pd.DataFrame(result_str)
-                st.dataframe(query_df)
-
-
         if doThis_sb == "Balloons":
             st.balloons()
 
