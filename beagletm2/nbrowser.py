@@ -44,21 +44,19 @@ def main() -> None:
     # myConn = None # define variable for conn from database which is given later
 
 
-###
-
+### upload field with button
     st.sidebar.text("Drag and Drop in a file to provide path information.")
-    f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
-    if f is not None:
-        path_in = f.name
-        # st.text(f"f.getvalue -> {f.getvalue()} ") #show the file as text
+    # f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
+
+    dataFile = fo.grabFile()
+
+    if dataFile is not None:
+        
 
         # We must add path information to filename (path_in), file_upload does not add this info!!!!
-        c = dbOps.loadDbGetConn(DATADIR+path_in) 
+        c = dbOps.loadDbGetConn(dataFile) 
 
-        # st.text(f"{path_in}, {c}")
-        # st.write("Filename")
-        # st.success(f"path_in ---> {path_in}")
-
+        st.success(f"{dataFile}")
 
         # menu system
         doThis_sb = None

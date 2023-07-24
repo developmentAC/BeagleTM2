@@ -194,6 +194,11 @@ def checkDataDir(dir_str):
 
 ######################### BROWSER #########################
 ######################### BROWSER #########################
+def grabFileUploadField():
+        f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
+        return f
+    # end of grabFileUploadField()
+
 
 def grabFile():
     """Function to allow user to pick data file"""
