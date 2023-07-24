@@ -105,6 +105,7 @@ def loadDbGetConn(myDBFile_str):
     return c
 #     # end of loadDbGetConn()
 
+
 def getTablesListing(myConn):
     """ Prepare a query to get table names in SQL db, run query, display results as pretty table."""
     myQuery_str = "SELECT name FROM sqlite_master WHERE type='table'"
@@ -133,7 +134,6 @@ def listCleaner(in_list) -> list:
         tmp_list.append(i[0])
     # st.success(tmp_list)
     return tmp_list
-
     #end of listCleaner()
 
 
@@ -149,17 +149,41 @@ def selectAllKwsInArticles(myConn):
     keyWords_list = listCleaner(keyWords_list)
     # st.success(f"selectAllKwsInArticles() : keywords_list --> {keyWords_list}")
 
-
-
     selectedKws_list = st.multiselect(
         "Check and Build network",
         keyWords_list,
         [],
     )  # the selected keywords from the user.
 
-
+# what are the keywords to select from?
     wordNetwork_btn = st.button(
         "Find articles containing ALL selected keywords in abstracts. Click for all keywords in set."
     )
+
+
+
+# query pmids from entered keywords
+
+    # st.success(f"Selected keywords :'%{selectedKws_list}%' ")
+    myQuery_str = ""
+    tmp_str = ""
+    try:
+        myQuery_str =f"SELECT Pmid,\"References\" FROM main WHERE keyword LIKE '%{selectedKws_list[0]}%'"
+        if len(selectedKws_list) > 1:# the list of selected words
+            for i in range(1, len(selectedKws_list),1):
+                tmp_str = tmp_str + f" AND keyword LIKE '%{selectedKws_list[i]}%'"
+    except Exception:
+        pass
+
+    # myQuery_str =  "SELECT Pmid,keyword FROM main WHERE keyword like "%mRNA%" and keyword like "%observe%";"
+    myQuery_str = myQuery_str + tmp_str
+    st.write("Query Code")
+    st.code(myQuery_str, language = 'bash')
+
+    pmids_list = sql_executor(myConn, myQuery_str)
+    # pmids_list = listCleaner(pmids_list)
+    pmids_list = prettyTabler(pmids_list)
+
+
 
     # end of selectAllKwsInArticles()
