@@ -50,40 +50,54 @@ def main() -> None:
 
     dataFile = fo.grabFile()
 
+    # st.subheader("Database Output")
+
+    # # Columns/Layout
+    # myCol1, myCol2 = st.columns(2)
+
     if dataFile is not None:
         
 
         # We must add path information to filename (path_in), file_upload does not add this info!!!!
         c = dbOps.loadDbGetConn(dataFile) 
-
+        st.subheader("File:")
         st.success(f"{dataFile}")
 
         # menu system
         doThis_sb = None
+        menu_list = [
+                "Show_Tables",
+                "Find_articles_containing_ALL_selected_keywords",
+                "Balloons",
+                "Snow",
+               ]
         doThis_sb = st.sidebar.selectbox(
             "What are we doing with this data?",
-            [
-                "Show_Tables",
-                "Balloons",
-                "Snow"
-            ],
+            menu_list
         )
     
-        if doThis_sb == "Show_Tables":
+        if doThis_sb == menu_list[0]: # putting munu options in this format makes it easier to customize menu option language
             st.title("Showing tables of database ...")
+            # st.header(f"{menu_list[0]}")
+
+            st.text(f"Option: {menu_list[0]}")
             result_str = dbOps.getTablesListing(c)
-        
-        if doThis_sb == "Balloons":
+
+        if doThis_sb == menu_list[1]:
+            st.text(f"Option: {menu_list[1]}")
+            result_str = dbOps.selectAllKwsInArticles(c)
+
+
+        if doThis_sb == menu_list[2]:
+            st.text(f"Option: {menu_list[2]}")
             st.balloons()
 
-        if doThis_sb == "Snow":
+        if doThis_sb == menu_list[3]:
+            st.text(f"Option: {menu_list[0]}")
             st.snow()
-
-
-
     else:
         path_in = None 
-    
+
     # end of main()
 
 

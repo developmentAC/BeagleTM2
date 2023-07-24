@@ -88,6 +88,13 @@ def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 
 
 
+# Fxn Make Execution
+def sql_executor(myConn,myCommand_str):
+    """ function to complete the query and parse results from a query."""
+    thisResult = myConn.execute(myCommand_str)
+    data = myConn.fetchall()
+    return data
+# end of sql_executor()
 
 
 # # @st.cache_data
@@ -99,22 +106,60 @@ def loadDbGetConn(myDBFile_str):
 #     # end of loadDbGetConn()
 
 def getTablesListing(myConn):
+    """ Prepare a query to get table names in SQL db, run query, display results as pretty table."""
     myQuery_str = "SELECT name FROM sqlite_master WHERE type='table'"
     st.write("Query Code")
     st.code(myQuery_str, language = 'bash')
     results = sql_executor(myConn,myQuery_str)
-    with st.expander("Pretty Table of database tables"):
-        query_df = pd.DataFrame(results)
-        st.dataframe(query_df)
-
+    prettyTabler(results)
     return results
     # end of getTablesListing()
 
 
-# Fxn Make Execution
-def sql_executor(myConn,myCommand_str):
-    """ function to complete the query and parse results from a query."""
-    thisResult = myConn.execute(myCommand_str)
-    data = myConn.fetchall()
-    return data
-# end of sql_executor()
+def prettyTabler(results):
+    """Show results in pretty table formatting."""
+    st.write("Results of query")
+    with st.expander("Pretty Table of database tables"):
+        query_df = pd.DataFrame(results)
+        st.dataframe(query_df)
+    # end of prettyTabler()
+
+
+
+def listCleaner(in_list) -> list:
+    """Function to remove extra textual clutter from returned lists from queries."""
+    tmp_list = []
+    for i in in_list:
+        tmp_list.append(i[0])
+    # st.success(tmp_list)
+    return tmp_list
+
+    #end of listCleaner()
+
+
+def selectAllKwsInArticles(myConn):
+    """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
+    # write query to determine available keywords.
+    myQuery_str =  "SELECT keyword FROM 'counts';"
+    st.write("Query Code")
+    st.code(myQuery_str, language = 'bash')
+
+    keyWords_list = sql_executor(myConn, myQuery_str)
+    prettyTabler(keyWords_list)
+    keyWords_list = listCleaner(keyWords_list)
+    # st.success(f"selectAllKwsInArticles() : keywords_list --> {keyWords_list}")
+
+
+
+    selectedKws_list = st.multiselect(
+        "Check and Build network",
+        keyWords_list,
+        [],
+    )  # the selected keywords from the user.
+
+
+    wordNetwork_btn = st.button(
+        "Find articles containing ALL selected keywords in abstracts. Click for all keywords in set."
+    )
+
+    # end of selectAllKwsInArticles()
