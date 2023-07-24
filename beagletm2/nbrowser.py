@@ -28,7 +28,6 @@ banner0_str = """
 # c = conn.cursor()
 
 
-# Fxn Make Execution
 def sql_executor(myCommand_str):
 	""" function to complete the query and parse results from a query."""
 	c.execute(myCommand_str)
@@ -46,31 +45,40 @@ def main() -> None:
     try:
         data = fo.load_big_data(myFile_str)
         # create a dictionary having headers as keys and values as lists of column data.
-        data_dic = hc.createMasterDataDic(data)
     except:
         st.sidebar.error("No data entered...")
 
-    # # menu system
-    # doThis_sb = st.sidebar.selectbox(
-    #     "What are we doing with this data?",
-    #     [
-    #         "ReadMe",
-    #         "Show_data",
-    #         "Article inter-connectivity",
-    #         "Articles containing ANY of the selected keywords",
-    #         "Articles containing ALL of the selected keywords",
-    #         "Heatmaps of keyword saturation",
-    #         "Make Simple Heatmaps",
-    #         "Statistics",
-    #     ],
-    # )
-    # if doThis_sb == "ReadMe":
-    #     with open("README.md") as readme_file:
-    #         # Note : the FILE README.MD is assumed to be in the directory behind this one.
-    #         st.markdown(readme_file.read())
 
+    # menu system
+    doThis_sb = st.sidebar.selectbox(
+        "What are we doing with this data?",
+        [
+            "Show_data",
+            "Balloons",
+        ],
+    )
+    
+    if doThis_sb == "Show_data":
+        st.text("Loading an sqlite3 file")
+        
+
+
+    if doThis_sb == "Balloons":
+        st.balloons()
 
     # end of main()
+
+
+def showData(data):
+    """shows the data in a table"""
+    st.title("Dataframe")
+    query_df = pd.DataFrame(data)
+    st.dataframe(query_df)
+
+
+# end fo showData()
+
+
 
 
 

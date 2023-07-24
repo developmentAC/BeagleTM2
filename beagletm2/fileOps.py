@@ -8,7 +8,7 @@ import streamlit as st # for grabfile()
 # globals
 dir_str = "0_out/"
 # global variables
-FILE_EXTENTION = "csv"
+FILE_EXTENTION = "sqlite3"
 # DATADIR = "data/"
 OUTDATADIR = "0_outAnalysis/"  # output directory
 
@@ -17,6 +17,9 @@ OUTDATADIR = "0_outAnalysis/"  # output directory
 cli = typer.Typer()
 console = Console()
 
+
+######################### PARSER #########################
+######################### PARSER #########################
 
 def openFile(data_file: str) -> list:
     """function to open and read the keyword file (text). Returns data as list of words"""
@@ -189,7 +192,8 @@ def checkDataDir(dir_str):
 
 # end of checkDataDir()
 
-
+######################### BROWSER #########################
+######################### BROWSER #########################
 
 def grabFile():
     """Function to allow user to pick data file"""
@@ -197,7 +201,7 @@ def grabFile():
     st.sidebar.text("Default data directory is :{}".format(dir_str))
     dataDir_str = st.sidebar.text_input("Enter the path to data file.", dir_str)
     files_list = getFileListing(dataDir_str)
-    myFile_str = st.sidebar.selectbox("Choose the ANALYSIS file to load", files_list)
+    myFile_str = st.sidebar.selectbox("Load an sqlite3 file", files_list)
 
     return myFile_str
     # end of grabFile()
@@ -215,5 +219,17 @@ def getFileListing(corpusDir):
     # st.text(" getfileListing : files_list :{}".format(files_list))
     return files_list
 
-
 # end of getFileListing
+
+
+
+@st.cache_data
+def load_big_data(myFile_str):
+    """Loads the inputted data file"""
+    data = pd.read_csv(myFile_str, low_memory=False)
+    # 	st.text("Please load data")
+    lowercase = lambda x: str(x).lower()
+    data.rename(lowercase, axis="columns", inplace=True)
+    return data
+
+# end of load_big_data()

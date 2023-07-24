@@ -4,7 +4,7 @@
 from rich.console import Console
 import random, typer, os
 from beagletm2 import parser as p
-from beagletm2 import dbMaker
+from beagletm2 import dbOps # database operations
 from pathlib import Path
 
 
@@ -85,7 +85,7 @@ def main(
 
         # make a SQL DB file from the output?
         if make_db == True:
-            dbMaker.main(csv_file,wordCsv_file )
+            dbOps.main(csv_file,wordCsv_file )
 
     elif bighelp:
         bigHelp()
