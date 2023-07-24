@@ -64,7 +64,7 @@ def main(
         console.print("\t :thumbsup: [bold cyan]Preparing new browser app ...")
         # Change 200MB to larger size in parameter below as necessary.
         console.print(f"\t [bold green]Command: [bold yellow]poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200")
-        # os.system("poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200") 
+        os.system("poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200") 
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")
