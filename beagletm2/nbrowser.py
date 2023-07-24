@@ -25,8 +25,8 @@ banner0_str = """
 
 
 myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
-conn = sqlite3.connect(myDBFile_str)
-myConn = conn.cursor()
+# conn = sqlite3.connect(myDBFile_str)
+# myConn = conn.cursor()
 
 
 
@@ -50,12 +50,12 @@ def main() -> None:
     # uploaded_file = st.sidebar.file_uploader("Choose a file",accept_multiple_files=False)
     # myConn = None
     # if uploaded_file is not None:
-    #     filename = str(uploaded_file.name)
-    #     st.success(f"{filename}")
+    #     myDBFile_str = str(uploaded_file.name)
+    #     st.success(f"{myDBFile_str}")
     #     st.success(f"main() file -> {uploaded_file.name}")
-    #     # myConn = dbOps.loadDbGetConn(filename)
+    myConn = dbOps.loadDbGetConn(myDBFile_str)
     #     st.text(f"myConn == {myConn}")
-    #     conn = sqlite3.connect(filename)
+    #     conn = sqlite3.connect(myDBFile_str)
     #     st.text("loadDbGetConn() : returning cursor")
     #     myConn = conn.cursor()
 

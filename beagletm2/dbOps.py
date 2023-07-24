@@ -91,13 +91,13 @@ def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 
 
 # # @st.cache_data
-# def loadDbGetConn(myDBFile_str:str):
-#     """ Function to load an sqlite3 file and then return conn."""
-#     # st.text("dbOps::loadDBGetConn()")
-#     st.text(f"received filename :{myDBFile_str}")
-#     conn = sqlite3.connect(myDBFile_str)
-#     st.text("loadDbGetConn() : returning cursor")
-#     return(conn.cursor())
+def loadDbGetConn(myDBFile_str:str):
+    """ Function to load an sqlite3 file and then return conn."""
+    # st.text("dbOps::loadDBGetConn()")
+    st.text(f"received filename :{myDBFile_str}")
+    conn = sqlite3.connect(myDBFile_str)
+    st.text("loadDbGetConn() : returning cursor")
+    return(conn.cursor())
 
 #     # end of loadDbGetConn()
 
