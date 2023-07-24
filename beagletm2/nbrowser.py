@@ -72,9 +72,9 @@ def main() -> None:
         )
     
         if doThis_sb == "Show_Tables":
-            st.text("Showing tables of database ...")
+            st.write("Showing tables of database ...")
             result_str = dbOps.getTablesListing(c)
-            st.text(f"main() myConn ::: {c}, result :::: {result_str}")
+            # st.text(f"main() myConn ::: {c}, result :::: {result_str}")
         
 
             with st.expander("Pretty Table"):
@@ -100,8 +100,7 @@ def main() -> None:
 def getTablesListing(myConn)->None:
     """ function to show tables on new page"""
     st.title("Tables")
-    # myCursor=myConn.cursor()
-    # end of getTablesListing()
+
     with st.form(key='query_form'):
 
         myCommand_str = st.text_area("SQL Code Here")
