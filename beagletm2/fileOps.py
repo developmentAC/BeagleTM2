@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from rich.console import Console
-import csv, os, typer
+import csv, os, sqlite3, typer
 import streamlit as st # for grabfile()
 
 # globals
@@ -223,8 +223,11 @@ def getFileListing(corpusDir):
 
 
 
+
+
+
 @st.cache_data
-def load_big_data(myFile_str):
+def old_load_big_data(myFile_str):
     """Loads the inputted data file"""
     data = pd.read_csv(myFile_str, low_memory=False)
     # 	st.text("Please load data")
@@ -232,4 +235,5 @@ def load_big_data(myFile_str):
     data.rename(lowercase, axis="columns", inplace=True)
     return data
 
-# end of load_big_data()
+# end of old_load_big_data()
+

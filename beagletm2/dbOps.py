@@ -2,6 +2,7 @@
 import sqlite3, typer
 import pandas as pd
 from beagletm2 import fileOps
+import streamlit as st
 
 from rich.console import Console
 
@@ -84,3 +85,20 @@ def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 # select pmid,keyword from student where Keyword LIKE '%gene%';
 
 # end of builder()
+
+
+
+
+
+@st.cache_data
+def loadDbGetConn(myDBFile_str:str):
+    """ Function to load an sqlite3 file and then return conn."""
+    st.text("dbOps::loadDBGetConn()")
+    try:
+        conn = sqlite3.connect(myDBFile_str)
+        c = conn.cursor()
+    except Exception:
+        return None
+    return c
+    # end of loadDbGetConn()
+

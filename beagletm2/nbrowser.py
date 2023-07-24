@@ -3,6 +3,8 @@
 import streamlit as st
 import pandas as pd
 import fileOps as fo # for grabFile()
+import dbOps
+from sqlalchemy import ForeignKey
 # DB Mgmt
 import sqlite3
 
@@ -39,32 +41,42 @@ def sql_executor(myCommand_str):
 def main() -> None:
     """Driver function of the network browser. """
     st.title("BeagleTM2 Network Browser")
+    # st.subheader("SQL Database Managment")
     st.text(banner0_str)
+    myConn = "" # define variable for conn from database which is given later
 
-    myFile_str = fo.grabFile() # from fileOps as fo
-    try:
-        data = fo.load_big_data(myFile_str)
-        # create a dictionary having headers as keys and values as lists of column data.
-    except:
-        st.sidebar.error("No data entered...")
 
+    dbfile_str = fo.grabFile() # from fileOps as fo
+    with st.sidebar.form(key='loadDB'):
+        submit_button = st.form_submit_button("Load the database")
+
+        if submit_button:
+
+            try:
+                myConn = dbOps.loadDbGetConn(dbfile_str)
+                # create a dictionary having headers as keys and values as lists of column data.
+            except:
+                st.sidebar.error("No data entered...")
 
     # menu system
     doThis_sb = st.sidebar.selectbox(
         "What are we doing with this data?",
         [
-            "Show_data",
+            "Show_Tables",
             "Balloons",
+	        "Snow"
         ],
     )
     
-    if doThis_sb == "Show_data":
-        st.text("Loading an sqlite3 file")
-        
-
+    if doThis_sb == "Show_Tables":
+        st.text("Showing tables of database ...")
+        alltables=pd.read_sql('SHOW TABLES',myConn).values[:,0]
 
     if doThis_sb == "Balloons":
         st.balloons()
+
+    if doThis_sb == "Snow":
+        st.snow()
 
     # end of main()
 
