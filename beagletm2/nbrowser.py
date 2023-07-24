@@ -24,7 +24,7 @@ banner0_str = """
 # banner ref: https://manytools.org/hacker-tools/ascii-banner/
 
 
-myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
+# myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
 # conn = sqlite3.connect(myDBFile_str)
 # myConn = conn.cursor()
 
@@ -33,7 +33,7 @@ myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
 from io import StringIO
 
 
-
+# conn = None # global
 
 def main() -> None:
     """Driver function of the network browser. """
@@ -46,46 +46,78 @@ def main() -> None:
 
 ###
 
-    # st.sidebar.text("Open a file")
-    # uploaded_file = st.sidebar.file_uploader("Choose a file",accept_multiple_files=False)
-    # myConn = None
+    st.sidebar.text("Drag and Drop in a file to provide path information.")
+    f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
+    if f is not None:
+        path_in = f.name
+        # st.text(f"f.getvalue -> {f.getvalue()} ")
+	
+
+        c = dbOps.loadDbGetConn("0_out/"+path_in) # must add path information
+        # c = dbOps.loadDbGetConn(path_in)
+        print(path_in, c)
+        st.success(f"{path_in}")
+        myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+        # myQuery_str = 'select * from Teaches;'
+        result = c.execute(myQuery_str)
+        print(result)
+        result_str = result.fetchall()
+        st.success(result_str)
+
+
+
+
+    else:
+        path_in = None 
+    
+    # # myConn = None
     # if uploaded_file is not None:
     #     myDBFile_str = str(uploaded_file.name)
     #     st.success(f"{myDBFile_str}")
     #     st.success(f"main() file -> {uploaded_file.name}")
-    myConn = dbOps.loadDbGetConn(myDBFile_str)
-    #     st.text(f"myConn == {myConn}")
-    #     conn = sqlite3.connect(myDBFile_str)
-    #     st.text("loadDbGetConn() : returning cursor")
-    #     myConn = conn.cursor()
+    #     print(uploaded_file.name)
+    #     c = dbOps.loadDbGetConn(myDBFile_str) # this line by self seems to work in this block.
 
-    # menu system
-    doThis_sb = None
-    doThis_sb = st.sidebar.selectbox(
-        "What are we doing with this data?",
-        [
-            "Show_Tables",
-            "Balloons",
-	        "Snow"
-        ],
-    )
+    #     st.text(f"main() myConn == {c}")
+
+        
+        
+    #     myQuery_str = "SELECT name FROM sqlite_master WHERE type='table'"
+    #     # myQuery_str = 'select * from Teaches;'
+    #     result = c.execute(myQuery_str)
+    #     result_str = c.fetchall()
+    #     st.success(f"{result_str}")
+
+
+
+
+    #     # menu system
+    #     doThis_sb = None
+    #     doThis_sb = st.sidebar.selectbox(
+    #         "What are we doing with this data?",
+    #         [
+    #             "Show_Tables",
+    #             "Balloons",
+    #             "Snow"
+    #         ],
+    #     )
     
-    if doThis_sb == "Show_Tables":
-        st.text("Showing tables of database ...")
-        # result = dbOps.getTablesListing(myConn)
-        myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
-        result = myConn.execute(myQuery_str)
-        result_str = myConn.fetchall()
+    #     if doThis_sb == "Show_Tables":
+    #         st.text("Showing tables of database ...")
+    #         # result_str = dbOps.getTablesListing(conn)
+    #         # myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+    #         # result = myConn.execute(myQuery_str)
+    #         # result_str = myConn.fetchall()
 
-        st.text(f"myConn ::: {myConn}, result :::: {result_str}")
-	
+    #         # st.text(f"main() myConn ::: {conn}, result :::: {result_str}")
+        
 
 
-    if doThis_sb == "Balloons":
-        st.balloons()
+    #     if doThis_sb == "Balloons":
+    #         st.balloons()
 
-    if doThis_sb == "Snow":
-        st.snow()
+    #     if doThis_sb == "Snow":
+    #         st.snow()
 
     # end of main()
 

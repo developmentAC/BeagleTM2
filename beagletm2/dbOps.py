@@ -91,21 +91,24 @@ def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 
 
 # # @st.cache_data
-def loadDbGetConn(myDBFile_str:str):
+def loadDbGetConn(myDBFile_str):
     """ Function to load an sqlite3 file and then return conn."""
     # st.text("dbOps::loadDBGetConn()")
-    st.text(f"received filename :{myDBFile_str}")
+    st.text(f"loadDbGetConn() received filename :{myDBFile_str}")
+    # conn = sqlite3.connect(myDBFile_str)
     conn = sqlite3.connect(myDBFile_str)
-    st.text("loadDbGetConn() : returning cursor")
-    return(conn.cursor())
-
+    c = conn.cursor()
+    st.text(f"loadDbGetConn() : returning cursor ---> {c}")
+    return c
 #     # end of loadDbGetConn()
 
 def getTablesListing(myConn):
+    st.text("getTablesListing()")
     myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
-    st.text(f"getTablesListing()::: myConn ::::: {myConn}, query ::::: {myQuery_str}")
+    # st.text(f"getTablesListing()::: myConn ::::: {myConn}, query ::::: {myQuery_str}")
     result = sql_executor(myConn,myQuery_str)
-
+    # st.text(f"getTablesListing()::: result = {result}}")
+ 
     # end of getTablesListing()
 
 
@@ -115,8 +118,10 @@ def getTablesListing(myConn):
 def sql_executor(myConn,myCommand_str):
     """ function to complete the query and parse results from a query."""
     # if myCommand_str is None:
-    st.text(f"sql_executor() :: myCommand_str = <{myCommand_str}> ")
-    myConn.execute(myCommand_str)
+    st.text(f"sql_executor() :: conn ---> {myConn},  myCommand_str = <{myCommand_str}> ")
+    thisResult = myConn.execute(myCommand_str)
+    st.text(f"sql_executor() thisResult = {thisResult}")
     data = myConn.fetchall()
+    st.text(f"sql_executor() : {data}")
     return data
 # end of sql_executor()
