@@ -103,15 +103,13 @@ def loadDbGetConn(myDBFile_str):
 #     # end of loadDbGetConn()
 
 def getTablesListing(myConn):
-    st.text("getTablesListing()")
-    myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+    st.write("getTablesListing()")
+    myQuery_str = "SELECT name FROM sqlite_master WHERE type='table'"
     # st.text(f"getTablesListing()::: myConn ::::: {myConn}, query ::::: {myQuery_str}")
     result = sql_executor(myConn,myQuery_str)
     # st.text(f"getTablesListing()::: result = {result}}")
- 
+    return result
     # end of getTablesListing()
-
-
 
 
 # Fxn Make Execution

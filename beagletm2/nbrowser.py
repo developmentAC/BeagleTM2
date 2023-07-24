@@ -10,7 +10,7 @@ import sqlite3
 
 # # global variables
 # FILE_EXTENTION = "csv"
-# DATADIR = "data/"
+DATADIR = "0_out/"
 # OUTDATADIR = "0_outAnalysis/"  # output directory
 
 banner0_str = """
@@ -50,75 +50,49 @@ def main() -> None:
     f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
     if f is not None:
         path_in = f.name
-        # st.text(f"f.getvalue -> {f.getvalue()} ")
-	
+        # st.text(f"f.getvalue -> {f.getvalue()} ") #show the file as text
 
-        c = dbOps.loadDbGetConn("0_out/"+path_in) # must add path information
-        # c = dbOps.loadDbGetConn(path_in)
-        print(path_in, c)
-        st.success(f"{path_in}")
-        myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
-        # myQuery_str = 'select * from Teaches;'
-        result = c.execute(myQuery_str)
-        print(result)
-        result_str = result.fetchall()
-        st.success(result_str)
+        # We must add path information to filename (path_in), file_upload does not add this info!!!!
+        c = dbOps.loadDbGetConn(DATADIR+path_in) 
 
+        st.text(f"{path_in}, {c}")
+        st.write("Filename")
+        st.success(f"path_in ---> {path_in}")
+
+
+        # menu system
+        doThis_sb = None
+        doThis_sb = st.sidebar.selectbox(
+            "What are we doing with this data?",
+            [
+                "Show_Tables",
+                "Balloons",
+                "Snow"
+            ],
+        )
+    
+        if doThis_sb == "Show_Tables":
+            st.text("Showing tables of database ...")
+            result_str = dbOps.getTablesListing(c)
+            st.text(f"main() myConn ::: {c}, result :::: {result_str}")
+        
+
+            with st.expander("Pretty Table"):
+                query_df = pd.DataFrame(result_str)
+                st.dataframe(query_df)
+
+
+        if doThis_sb == "Balloons":
+            st.balloons()
+
+        if doThis_sb == "Snow":
+            st.snow()
 
 
 
     else:
         path_in = None 
     
-    # # myConn = None
-    # if uploaded_file is not None:
-    #     myDBFile_str = str(uploaded_file.name)
-    #     st.success(f"{myDBFile_str}")
-    #     st.success(f"main() file -> {uploaded_file.name}")
-    #     print(uploaded_file.name)
-    #     c = dbOps.loadDbGetConn(myDBFile_str) # this line by self seems to work in this block.
-
-    #     st.text(f"main() myConn == {c}")
-
-        
-        
-    #     myQuery_str = "SELECT name FROM sqlite_master WHERE type='table'"
-    #     # myQuery_str = 'select * from Teaches;'
-    #     result = c.execute(myQuery_str)
-    #     result_str = c.fetchall()
-    #     st.success(f"{result_str}")
-
-
-
-
-    #     # menu system
-    #     doThis_sb = None
-    #     doThis_sb = st.sidebar.selectbox(
-    #         "What are we doing with this data?",
-    #         [
-    #             "Show_Tables",
-    #             "Balloons",
-    #             "Snow"
-    #         ],
-    #     )
-    
-    #     if doThis_sb == "Show_Tables":
-    #         st.text("Showing tables of database ...")
-    #         # result_str = dbOps.getTablesListing(conn)
-    #         # myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
-    #         # result = myConn.execute(myQuery_str)
-    #         # result_str = myConn.fetchall()
-
-    #         # st.text(f"main() myConn ::: {conn}, result :::: {result_str}")
-        
-
-
-    #     if doThis_sb == "Balloons":
-    #         st.balloons()
-
-    #     if doThis_sb == "Snow":
-    #         st.snow()
-
     # end of main()
 
 
