@@ -57,7 +57,7 @@ def main(
 
     if client.lower() == "browser":
         console.print("\t browser:\n\t Running Command\n\t :smiley:")
-        os.system("poetry run streamlit run beagletm2/beagleTM2_browser2.py")
+        os.system("poetry run streamlit run beagletm2/beagleTM2_browser.py")
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")

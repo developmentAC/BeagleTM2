@@ -4,6 +4,14 @@ The Readme file
 ### Oliver Bonham-Carter, [Allegheny College](https://allegheny.edu/)
 ### email: obonhamcarter@allegheny.edu
 
+
+Special note: files containing code from the former BeagleTM have been temporarily added.
+The below files for browser are to be removed or reworked.
++ beagleTM_browser.py
++ beagleTM_browser_helperCode.py
++ statEval.py
+
+
 ---
 ![logo](graphics/beagletm2_logo.png)
 ---
