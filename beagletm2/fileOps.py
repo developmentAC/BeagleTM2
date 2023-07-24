@@ -3,9 +3,16 @@
 
 from rich.console import Console
 import csv, os, typer
+import streamlit as st # for grabfile()
 
 # globals
 dir_str = "0_out/"
+# global variables
+FILE_EXTENTION = "csv"
+# DATADIR = "data/"
+OUTDATADIR = "0_outAnalysis/"  # output directory
+
+
 
 cli = typer.Typer()
 console = Console()
@@ -181,3 +188,32 @@ def checkDataDir(dir_str):
 
 
 # end of checkDataDir()
+
+
+
+def grabFile():
+    """Function to allow user to pick data file"""
+
+    st.sidebar.text("Default data directory is :{}".format(dir_str))
+    dataDir_str = st.sidebar.text_input("Enter the path to data file.", dir_str)
+    files_list = getFileListing(dataDir_str)
+    myFile_str = st.sidebar.selectbox("Choose the ANALYSIS file to load", files_list)
+
+    return myFile_str
+    # end of grabFile()
+
+
+def getFileListing(corpusDir):
+    """function to load a list of files from a directory. returns a list."""
+    files_list = []  # holds each file and directory
+
+    for root, dirs, files in os.walk(corpusDir):
+        for file in files:
+            if file.endswith(FILE_EXTENTION):
+                dataFile = os.path.join(root, file)
+                files_list.append(dataFile)
+    # st.text(" getfileListing : files_list :{}".format(files_list))
+    return files_list
+
+
+# end of getFileListing
