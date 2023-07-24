@@ -61,9 +61,10 @@ def main(
 
 # new browser (under developement)
     if client.lower() == "nbrowser":
-        console.print("\t New browser:\n\t Preparing browser app\n\t :thumbsup:")
+        console.print("\t :thumbsup: [bold cyan]Preparing new browser app ...")
         # Change 200MB to larger size in parameter below as necessary.
-        os.system("poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200") 
+        console.print(f"\t [bold green]Command: [bold yellow]poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200")
+        # os.system("poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200") 
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")
