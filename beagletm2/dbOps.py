@@ -90,15 +90,33 @@ def builder(dbfname_str: str, csvFile_str:str, tableName_str : str) -> None:
 
 
 
-@st.cache_data
-def loadDbGetConn(myDBFile_str:str):
-    """ Function to load an sqlite3 file and then return conn."""
-    st.text("dbOps::loadDBGetConn()")
-    try:
-        conn = sqlite3.connect(myDBFile_str)
-        c = conn.cursor()
-    except Exception:
-        return None
-    return c
-    # end of loadDbGetConn()
+# # @st.cache_data
+# def loadDbGetConn(myDBFile_str:str):
+#     """ Function to load an sqlite3 file and then return conn."""
+#     # st.text("dbOps::loadDBGetConn()")
+#     st.text(f"received filename :{myDBFile_str}")
+#     conn = sqlite3.connect(myDBFile_str)
+#     st.text("loadDbGetConn() : returning cursor")
+#     return(conn.cursor())
 
+#     # end of loadDbGetConn()
+
+def getTablesListing(myConn):
+    myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+    st.text(f"getTablesListing()::: myConn ::::: {myConn}, query ::::: {myQuery_str}")
+    result = sql_executor(myConn,myQuery_str)
+
+    # end of getTablesListing()
+
+
+
+
+# Fxn Make Execution
+def sql_executor(myConn,myCommand_str):
+    """ function to complete the query and parse results from a query."""
+    # if myCommand_str is None:
+    st.text(f"sql_executor() :: myCommand_str = <{myCommand_str}> ")
+    myConn.execute(myCommand_str)
+    data = myConn.fetchall()
+    return data
+# end of sql_executor()

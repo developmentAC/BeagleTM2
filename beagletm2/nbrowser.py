@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 import fileOps as fo # for grabFile()
 import dbOps
-from sqlalchemy import ForeignKey
 # DB Mgmt
 import sqlite3
 
@@ -25,17 +24,15 @@ banner0_str = """
 # banner ref: https://manytools.org/hacker-tools/ascii-banner/
 
 
-# myDBFile_str = "myCampusDB.sqlite3"
-# conn = sqlite3.connect(myDBFile_str)
-# c = conn.cursor()
+myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
+conn = sqlite3.connect(myDBFile_str)
+myConn = conn.cursor()
 
 
-def sql_executor(myCommand_str):
-	""" function to complete the query and parse results from a query."""
-	c.execute(myCommand_str)
-	data = c.fetchall()
-	return data
-# end of sql_executor()
+
+from io import StringIO
+
+
 
 
 def main() -> None:
@@ -43,22 +40,27 @@ def main() -> None:
     st.title("BeagleTM2 Network Browser")
     # st.subheader("SQL Database Managment")
     st.text(banner0_str)
-    myConn = "" # define variable for conn from database which is given later
+
+    # myConn = None # define variable for conn from database which is given later
 
 
-    dbfile_str = fo.grabFile() # from fileOps as fo
-    with st.sidebar.form(key='loadDB'):
-        submit_button = st.form_submit_button("Load the database")
+###
 
-        if submit_button:
-
-            try:
-                myConn = dbOps.loadDbGetConn(dbfile_str)
-                # create a dictionary having headers as keys and values as lists of column data.
-            except:
-                st.sidebar.error("No data entered...")
+    # st.sidebar.text("Open a file")
+    # uploaded_file = st.sidebar.file_uploader("Choose a file",accept_multiple_files=False)
+    # myConn = None
+    # if uploaded_file is not None:
+    #     filename = str(uploaded_file.name)
+    #     st.success(f"{filename}")
+    #     st.success(f"main() file -> {uploaded_file.name}")
+    #     # myConn = dbOps.loadDbGetConn(filename)
+    #     st.text(f"myConn == {myConn}")
+    #     conn = sqlite3.connect(filename)
+    #     st.text("loadDbGetConn() : returning cursor")
+    #     myConn = conn.cursor()
 
     # menu system
+    doThis_sb = None
     doThis_sb = st.sidebar.selectbox(
         "What are we doing with this data?",
         [
@@ -70,7 +72,14 @@ def main() -> None:
     
     if doThis_sb == "Show_Tables":
         st.text("Showing tables of database ...")
-        alltables=pd.read_sql('SHOW TABLES',myConn).values[:,0]
+        # result = dbOps.getTablesListing(myConn)
+        myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+        result = myConn.execute(myQuery_str)
+        result_str = myConn.fetchall()
+
+        st.text(f"myConn ::: {myConn}, result :::: {result_str}")
+	
+
 
     if doThis_sb == "Balloons":
         st.balloons()
@@ -81,14 +90,40 @@ def main() -> None:
     # end of main()
 
 
-def showData(data):
-    """shows the data in a table"""
-    st.title("Dataframe")
-    query_df = pd.DataFrame(data)
-    st.dataframe(query_df)
+
+def getTablesListing(myConn)->None:
+    """ function to show tables on new page"""
+    st.title("Tables")
+    # myCursor=myConn.cursor()
+    # end of getTablesListing()
+    with st.form(key='query_form'):
+
+        myCommand_str = st.text_area("SQL Code Here")
+        submit_button = st.form_submit_button("Execute")
 
 
-# end fo showData()
+        if submit_button:
+            st.info("Query Submitted")
+            st.code(myCommand_str)
+
+            # Results
+            query_results = sql_executor(myConn, myCommand_str)
+            with st.expander("Results"):
+                st.write(query_results)
+
+            with st.expander("Pretty Table"):
+                query_df = pd.DataFrame(query_results)
+                st.dataframe(query_df)
+
+
+
+def getTablesListing(myConn):
+    myQuery_str = "SELECT name FROM sqlite_master WHERE type='table';"
+    return(sql_executor(myConn,myQuery_str))
+
+    # end of getTablesListing()
+
+
 
 
 
