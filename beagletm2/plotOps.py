@@ -41,30 +41,16 @@ def makeNetworkxPlot(filename_str, header_list):
 
     degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
     degree_df = degree_df.sort_values(by='degree', ascending=False)
-    # st.text(f"degree_df --> {degree_df}")
+    st.text(f"{degree_df}")
 
-# get nodes for which degree greater than 2.
-    highDegreeNodes_list=[]
-    lowDegreeNodes_list=[]
-    # print(degree_df)
-    for i in range(len(degree_df)):
-        print(f"# {degree_df[0]}, {degree_df[1]}")
-
-
-
-    whatIsThis_str = "Node Degrees"
-    dbOps.prettyTabler(degree_df, whatIsThis_str)
-
-
-
-
+# show full network
 
 # draw plot
     plt.figure(figsize=(8,8))
     # pos = nx.shell_layout(G)
     pos = nx.circular_layout(G)
     networkx.draw(G,
-                  label = "haha", 
+                  label = "labelGoesHere", 
                   with_labels=False, 
                   node_color='#1f78b4', # dark sky blue
                   width=0.5, # edges
@@ -78,6 +64,49 @@ def makeNetworkxPlot(filename_str, header_list):
     # node_color='skyblue'
 
     figFilename_str =   filename_str[:filename_str.find(".csv")] + ".png"
+    plt.savefig(figFilename_str)
+
+    openPage(figFilename_str)
+
+
+
+
+
+
+
+
+# get nodes for which degree greater than 2.
+    # highDegreeNodes_list=[]
+
+    highDegreeNodes_list = []
+    for index, row in degree_df.iterrows():
+        if row["degree"] > 1:
+            highDegreeNodes_list.append(row["node"])
+    print(f"highDegreeNodes_list --> {highDegreeNodes_list}")
+
+    whatIsThis_str = "Node Degrees"
+    dbOps.prettyTabler(degree_df, whatIsThis_str)
+
+# draw plot
+    plt.figure(figsize=(8,8))
+    # pos = nx.shell_layout(G)
+    pos = nx.circular_layout(G)
+    networkx.draw(G,
+                  nodelist = highDegreeNodes_list,
+                  label = "labelGoesHere", 
+                  with_labels=False, 
+                  node_color='#1f78b4', # dark sky blue
+                  width=0.5, # edges
+                  font_size=8, 
+                  node_shape ="8", 
+                  edge_color = "black",
+                  alpha = 0.7, 
+                  pos = pos
+                  )
+
+    # node_color='skyblue'
+
+    figFilename_str =   filename_str[:filename_str.find(".csv")] + "_highDegree.png"
     plt.savefig(figFilename_str)
 
     openPage(figFilename_str)

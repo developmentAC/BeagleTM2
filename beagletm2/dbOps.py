@@ -220,7 +220,7 @@ def saveDataAsCSV(pmids_list):
             ref_line = str(pmidValue_int) +","+ ref.strip().replace("[","").replace("]","") +","+str(1)
             CSV_str = CSV_str + ref_line + "\n"
 
-    print(CSV_str)
+    # print(CSV_str)
     # save the csv
     filename_str = "pmidsRefs.csv"
     filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
