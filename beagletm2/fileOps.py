@@ -232,7 +232,7 @@ def saveCSV(CSV_str,fname_str):
     f = open(myFname_str,"w")
     f.write(CSV_str)
     f.close()
-    print(f"saveCSV(): File saved {myFname_str}")
+    st.write(f"saveCSV(): File saved {myFname_str}")
     return myFname_str
     # end of saveCSV()
 

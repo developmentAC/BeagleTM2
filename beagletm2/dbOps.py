@@ -116,14 +116,15 @@ def getTablesListing(myConn):
     st.write("Query Code")
     st.code(myQuery_str, language = 'bash')
     results = sql_executor(myConn,myQuery_str)
-    prettyTabler(results)
+    whatIsThis_str = "Results of query"
+    prettyTabler(results, whatIsThis_str)
     return results
     # end of getTablesListing()
 
 
-def prettyTabler(results):
+def prettyTabler(results, whatIsThis_str):
     """Show results in pretty table formatting."""
-    st.write("Results of query")
+    st.write(f"{whatIsThis_str}")
     with st.expander("Pretty Table of database tables"):
         query_df = pd.DataFrame(results)
         st.dataframe(query_df)
@@ -149,7 +150,8 @@ def selectAllKwsInArticles(myConn):
     st.code(myQuery_str, language = 'bash')
 
     keyWords_list = sql_executor(myConn, myQuery_str)
-    prettyTabler(keyWords_list)
+    whatIsThis_str = "Results of query"
+    prettyTabler(keyWords_list, whatIsThis_str)
     keyWords_list = listCleaner(keyWords_list)
     # st.success(f"selectAllKwsInArticles() : keywords_list --> {keyWords_list}")
 
@@ -186,25 +188,22 @@ def selectAllKwsInArticles(myConn):
 
     pmids_list = sql_executor(myConn, myQuery_str)
     # pmids_list = listCleaner(pmids_list)
-    
-    prettyTabler(pmids_list) # show results of query
+    whatIsThis_str = "Results of query"
+
+    prettyTabler(pmids_list, whatIsThis_str) # show results of query
 
 
 
     if st.button('Make Networkx plot of results'):
-        st.write('Making plot')
-
+        # st.write('Making plot')
         saveDataAsCSV(pmids_list) # prep a csv dataframe of results
-#        # plotOps.makePlot(pmids_list,"Abstract","Pmid")
-    else:
-        st.write('ok')
+
         
     # end of selectAllKwsInArticles()
 
 def saveDataAsCSV(pmids_list):
     """ function to make a tidy csv quality dataframe"""
-    st.write("saveDataAsCSV()")
-    # print(pmids_list)
+    # st.write("saveDataAsCSV()")
 
     # line by line creation of csv file
     CSV_str = "Pmid,Reference,Weight\n" # line by line of all the csv lines here
@@ -227,18 +226,21 @@ def saveDataAsCSV(pmids_list):
     # save the csv
     filename_str = "pmidsRefs.csv"
     filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
-    st.write("saveDataAsCSV() filename = {filename_str}")
+    # st.write("saveDataAsCSV() filename = {filename_str}")
     # makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
     plotOps.makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
             
+### output from above
 
+    # print(f"1st line = {line[0]}\n")
+    # print(f"2nd line = {line[1]}, {type(line[1])}\n")
+    # print(f"3rd line = {line[2]}\n")
 
-### output
-# 1st line = 12975657.0
+    # 1st line = 12975657.0
 
-# 2nd line = [12219091, 9254694, 11752243, 9278503, 11102698, 11750686, 12560809, 11431701, 10555290, 12024217, 12097345, 12907801, 12142430, 10381871, 7542800, 9021275, 12446813, 12116432, 10952301, 12554446, 10097118, 1633570, 11443357, 9089078, 11248100, 11677609, 8610134, 12107590, 10360571, 11675594, 11118198, 10830951, 11586360, 11677608, 12705866, 11206551, 11934758, 10993077, 10910347, 11070046, 12572614, 10984043, 8805245, 7984417, 9799792, 9864315, 9244264, 2439888, 12175808, 10464188, 12228001]
+    # 2nd line = [12219091, 9254694, 11752243, 9278503, 11102698, 11750686, 12560809, 11431701, 10555290, 12024217, 12097345, 12907801, 12142430, 10381871, 7542800, 9021275, 12446813, 12116432, 10952301, 12554446, 10097118, 1633570, 11443357, 9089078, 11248100, 11677609, 8610134, 12107590, 10360571, 11675594, 11118198, 10830951, 11586360, 11677608, 12705866, 11206551, 11934758, 10993077, 10910347, 11070046, 12572614, 10984043, 8805245, 7984417, 9799792, 9864315, 9244264, 2439888, 12175808, 10464188, 12228001]
 
-# 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
+    # 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
 
     # end of saveDataAsCSV()
 

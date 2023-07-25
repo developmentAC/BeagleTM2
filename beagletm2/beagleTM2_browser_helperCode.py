@@ -54,7 +54,7 @@ import fileOps as phc  # for: checkDataDir()
 # global variables
 header_list = []  # initialize the header_list
 FILE_EXTENTION = "csv"
-DATADIR = "data/"
+DATADIR = "0_out/"
 # OUTDATADIR = "/tmp/" #output directory
 OUTDATADIR = "0_outAnalysis/"  # output directory
 

@@ -9,10 +9,11 @@ from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
 from bokeh.palettes import Spectral4
 from bokeh.plotting import from_networkx, show
 
+from beagletm2 import dbOps
+
 
 # globals
 dir_str = "0_out/"
-
 
 
 def makeNetworkxPlot(filename_str):
@@ -25,19 +26,58 @@ def makeNetworkxPlot(filename_str):
 
     G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
 
-    # G = networkx.read_edgelist(got_df, delimiter=",",nodetype=int)# data=[("Pmid", "Reference")])
-    # G = networkx.from_pandas_edgelist(got_df)#, 'Pmid', 'Reference')
-
     gotFilename_str = dir_str + "GOT-network.graphml"
     # networkx.write_graphml(G, gotFilename_str)
     networkx.draw(G)
 
-    plt.figure(figsize=(8,8))
-    networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8)
-    plt.show()
+    plt.figure(figsize=(10,10))
+    pos = nx.shell_layout(G)
+
+    networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8, pos = pos)
+
     plt.savefig("0_out/mygraph.png")
-    st.write("plot created?")
+    
+
+### degree calculations
+    networkx.degree(G)
+
+    degrees = dict(networkx.degree(G))
+    networkx.set_node_attributes(G, name='degree', values=degrees)
+
+    degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
+    degree_df = degree_df.sort_values(by='degree', ascending=False)
+    # st.text(f"degree_df --> {degree_df}")
+
+    whatIsThis_str = "Node Degrees"
+    dbOps.prettyTabler(degree_df, whatIsThis_str)
+
     # end of makeNetworkxPlot()
+
+
+    def old_getNodeDegrees(G): # note: I had some trouble passing G to this function from another. It was easier to paste this code into the makeNetWorkxPlot(). 
+        """function to calculate the degrees of nodes."""
+
+        networkx.degree(G)
+
+        degrees = dict(networkx.degree(G))
+        networkx.set_node_attributes(G, name='degree', values=degrees)
+
+        degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
+        degree_df = degree_df.sort_values(by='degree', ascending=False)
+        st.text(f"degree_df --> {degree_df}")
+
+    # end of old_getNodeDegrees()
+
+
+
+
+
+
+
+
+
+
+
 
 
 def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"

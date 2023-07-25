@@ -22,21 +22,13 @@ banner0_str = """
   ██████╔╝█████╗  ███████║██║  ███╗██║     █████╗     ██║   ██╔████╔██║
   ██╔══██╗██╔══╝  ██╔══██║██║   ██║██║     ██╔══╝     ██║   ██║╚██╔╝██║
   ██████╔╝███████╗██║  ██║╚██████╔╝███████╗███████╗   ██║   ██║ ╚═╝ ██║
-  ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝   ╚═╝     ╚═╝
+  ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝   ╚═╝   ╚═╝     ╚═╝ 2
 """
 # banner ref: https://manytools.org/hacker-tools/ascii-banner/
 
 
-# myDBFile_str = "/tmp/kw_short_analysis_out_save-less.sqlite3"
-# conn = sqlite3.connect(myDBFile_str)
-# myConn = conn.cursor()
-
-
-
 from io import StringIO
 
-
-# conn = None # global
 
 def main() -> None:
     """Driver function of the network browser. """
