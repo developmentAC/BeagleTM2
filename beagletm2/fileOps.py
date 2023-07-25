@@ -4,6 +4,7 @@
 from rich.console import Console
 import csv, os, sqlite3, typer
 import streamlit as st # for grabfile()
+from beagletm2 import nbrowser
 
 # globals
 dir_str = "0_out/"
@@ -194,10 +195,6 @@ def checkDataDir(dir_str):
 
 ######################### BROWSER #########################
 ######################### BROWSER #########################
-def grabFileUploadField():
-        f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
-        return f
-    # end of grabFileUploadField()
 
 
 def grabFile():
@@ -227,7 +224,14 @@ def getFileListing(corpusDir):
 # end of getFileListing
 
 
-
+def saveCSV(CSV_str,fname_str):
+    """Save csv-formatted string to csv file."""
+    myFname_str = nbrowser.DATADIR+fname_str
+    f = open(myFname_str,"w")
+    f.write(CSV_str)
+    f.close()
+    print(f"saveCSV(): File saved {myFname_str}")
+    # end of saveCSV()
 
 
 
@@ -242,3 +246,8 @@ def old_load_big_data(myFile_str):
 
 # end of old_load_big_data()
 
+def grabFileUploadField():
+        """ function for file_uploader"""
+        f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
+        return f
+    # end of grabFileUploadField()

@@ -1,13 +1,12 @@
 # Import required libraries
 import sqlite3, typer
 import pandas as pd
-from beagletm2 import fileOps
 import streamlit as st
 
 from rich.console import Console
 
-from beagletm2 import plotOps
-from beagletm2 import dbOps
+import plotOps
+import fileOps
 
 
 # globals
@@ -172,7 +171,7 @@ def selectAllKwsInArticles(myConn):
     myQuery_str = ""
     tmp_str = ""
     try:
-        myQuery_str =f"SELECT Pmid,\"References\" FROM main WHERE keyword LIKE '%{selectedKws_list[0]}%'"
+        myQuery_str =f"SELECT Pmid,\"References\", Title FROM main WHERE keyword LIKE '%{selectedKws_list[0]}%'"
         if len(selectedKws_list) > 1:# the list of selected words
             for i in range(1, len(selectedKws_list),1):
                 tmp_str = tmp_str + f" AND keyword LIKE '%{selectedKws_list[i]}%'"
@@ -186,21 +185,61 @@ def selectAllKwsInArticles(myConn):
 
     pmids_list = sql_executor(myConn, myQuery_str)
     # pmids_list = listCleaner(pmids_list)
-    pmids_list = prettyTabler(pmids_list)
-
-    # st.write("Hello, this is myCol1")
-    # with st.form(key='query_form'):
-    #     st.write("make a plot?")
-    #     # myCommand_str = st.text_area("Sql code goes here")
-    #     submit_button = st.form_submit_button("Execute")
+    
+    prettyTabler(pmids_list) # show results of query
 
 
 
-    if st.button('Make plot of results'):
+
+
+    if st.button('Make Networkx plot of results'):
         st.write('Making plot')
-        plotOps.makePlot(pmids_list,"Abstract","Pmid")
+
+        saveDataAsCSV(pmids_list) # prep a csv dataframe of results
+#        # plotOps.makePlot(pmids_list,"Abstract","Pmid")
+        plotOps.makeNetworkxPlot()
     else:
         st.write('ok')
         
     # end of selectAllKwsInArticles()
 
+def saveDataAsCSV(pmids_list):
+    """ function to make a tidy csv quality dataframe"""
+    st.write("saveDataAsCSV()")
+    # print(pmids_list)
+
+    # line by line creation of csv file
+    CSV_str = "Pmid, Reference\n" # line by line of all the csv lines here
+    for i in pmids_list:
+        line = i
+        # print(f"1st line = {line[0]}\n")
+        # print(f"2nd line = {line[1]}, {type(line[1])}\n")
+        # print(f"3rd line = {line[2]}\n")
+        pmidValue_int = int(line[0])
+
+        # convert string to list
+        references_list = "".join(list(line[1]))
+        references_list = list(references_list.split(","))
+
+        for ref in references_list:
+            ref_line = str(pmidValue_int) +","+ ref.strip().replace("[","").replace("]","")
+            CSV_str = CSV_str + ref_line + "\n"
+
+    print(CSV_str)
+    # save the csv
+    import fileOps
+
+    fileOps.saveCSV(CSV_str,"pmidsRefs.csv")
+            
+
+
+### output
+# 1st line = 12975657.0
+
+# 2nd line = [12219091, 9254694, 11752243, 9278503, 11102698, 11750686, 12560809, 11431701, 10555290, 12024217, 12097345, 12907801, 12142430, 10381871, 7542800, 9021275, 12446813, 12116432, 10952301, 12554446, 10097118, 1633570, 11443357, 9089078, 11248100, 11677609, 8610134, 12107590, 10360571, 11675594, 11118198, 10830951, 11586360, 11677608, 12705866, 11206551, 11934758, 10993077, 10910347, 11070046, 12572614, 10984043, 8805245, 7984417, 9799792, 9864315, 9244264, 2439888, 12175808, 10464188, 12228001]
+
+# 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
+
+
+
+    # end of saveDataAsCSV()

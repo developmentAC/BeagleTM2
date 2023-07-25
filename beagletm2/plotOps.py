@@ -5,9 +5,16 @@ from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
 from bokeh.palettes import Spectral4
 from bokeh.plotting import from_networkx, show
 
+import streamlit as st
+
+def makeNetworkxPlot():
+    """networkx network plotter function"""
+    st.write("make a networkx plot")
+    # end of makeNetworkxPlot()
+
 
 def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"
-    """ function to prepare network plots from inputted data"""
+    """ Bokah function to prepare network plots from inputted data"""
 
     G = nx.karate_club_graph()
 
@@ -39,7 +46,7 @@ def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"
 
 
 def bk_makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"
-    """ function to prepare network plots from inputted data"""
+    """ Bokah function to prepare network plots from inputted data"""
 
     G = nx.karate_club_graph()
 
