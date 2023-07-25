@@ -205,13 +205,17 @@ def saveDataAsCSV(pmids_list):
 
     # line by line creation of csv file
     CSV_str = "Pmid,Reference,Weight\n" # line by line of all the csv lines here
+    pmidCounter = 0
     for i in pmids_list:
         line = i
         # print(f"1st line = {line[0]}\n")
         # print(f"2nd line = {line[1]}, {type(line[1])}\n")
         # print(f"3rd line = {line[2]}\n")
-        pmidValue_int = int(line[0])
-
+        try:
+            pmidValue_int = int(line[0])
+        except ValueError: # missing pmid!
+            pmidValue_int = pmidCounter # assign temp name (int).
+            pmidCounter += pmidCounter
         # convert string to list
         references_list = "".join(list(line[1]))
         references_list = list(references_list.split(","))

@@ -80,7 +80,7 @@ def makeNetworkxPlot(filename_str, header_list):
 
     highDegreeNodes_list = []
     for index, row in degree_df.iterrows():
-        if row["degree"] > 1:
+        if row["degree"] > 3:
             highDegreeNodes_list.append(row["node"])
     # print(f"highDegreeNodes_list --> {highDegreeNodes_list}")
 
