@@ -206,13 +206,17 @@ def saveDataAsCSV(pmids_list):
     # line by line creation of csv file
     CSV_str = "Pmid,Reference,Weight\n" # line by line of all the csv lines here
     pmidCounter = 0
-# TODO: test progress bar; https://docs.streamlit.io/library/api-reference/status/st.progress
-    # my_bar = st.progress(0, text=progress_text)
 
+# TODO: test progress bar; https://docs.streamlit.io/library/api-reference/status/st.progress
+    # progress_text = "Operation in progress. Please wait."
+    # my_bar = st.progress(0, text=progress_text)
+    progressbarCounter = 0
+    len_pmids_list = len(pmids_list)
     for i in pmids_list:
-        # my_bar.progress(percent_complete + 1, text=progress_text)
-        
+        # my_bar.progress(progressbarCounter + 1, text=progress_text)
+        progressbarCounter += 1
         line = i
+        print(f"Records processed: {progressbarCounter} of {len_pmids_list}",end = "\r")
         # print(f"1st line = {line[0]}\n")
         # print(f"2nd line = {line[1]}, {type(line[1])}\n")
         # print(f"3rd line = {line[2]}\n")
