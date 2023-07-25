@@ -35,9 +35,12 @@ def makeNetworkxPlot(filename_str):
 
     networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8, pos = pos)
 
+
+
     plt.savefig("0_out/mygraph.png")
-    
-    
+
+    openPage("mygraph.png")
+    st.write("openpage")    
 
 ### degree calculations
     networkx.degree(G)
@@ -55,30 +58,38 @@ def makeNetworkxPlot(filename_str):
     # end of makeNetworkxPlot()
 
 
-    def old_getNodeDegrees(G): # note: I had some trouble passing G to this function from another. It was easier to paste this code into the makeNetWorkxPlot(). 
-        """function to calculate the degrees of nodes."""
+def openPage(fname):
+    """function to open a a web page in a browser"""
+    import webbrowser
+    from pathlib import Path
+    myPath_posixPath = Path.cwd()
+    # st.success(f"myPath = {myPath_posixPath}, {type(myPath_posixPath)}")
+    myUrl = str(myPath_posixPath) + "/" + dir_str + fname
+    st.write("Opening url", myUrl)
+    webbrowser.open(myUrl, new=0, autoraise=True)
 
-        networkx.degree(G)
 
-        degrees = dict(networkx.degree(G))
-        networkx.set_node_attributes(G, name='degree', values=degrees)
-
-        degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
-        degree_df = degree_df.sort_values(by='degree', ascending=False)
-        st.text(f"degree_df --> {degree_df}")
-
-    # end of old_getNodeDegrees()
-
+# end of openPage()
 
 
 
 
 
+# junk bin ####################################
 
+def old_getNodeDegrees(G): # note: I had some trouble passing G to this function from another. It was easier to paste this code into the makeNetWorkxPlot(). 
+    """function to calculate the degrees of nodes."""
 
+    networkx.degree(G)
 
+    degrees = dict(networkx.degree(G))
+    networkx.set_node_attributes(G, name='degree', values=degrees)
 
+    degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
+    degree_df = degree_df.sort_values(by='degree', ascending=False)
+    st.text(f"degree_df --> {degree_df}")
 
+# end of old_getNodeDegrees()
 
 
 def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"

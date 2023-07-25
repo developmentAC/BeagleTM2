@@ -55,7 +55,6 @@ import fileOps as phc  # for: checkDataDir()
 header_list = []  # initialize the header_list
 FILE_EXTENTION = "csv"
 DATADIR = "0_out/"
-# OUTDATADIR = "/tmp/" #output directory
 OUTDATADIR = "0_outAnalysis/"  # output directory
 
 @st.cache_data
