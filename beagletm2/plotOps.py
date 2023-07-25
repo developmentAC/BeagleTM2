@@ -18,7 +18,7 @@ dir_str = "0_out/"
 
 def makeNetworkxPlot(filename_str, header_list):
     """networkx network plotter function"""
-    st.write(f"Make a networkx plot for file :{filename_str}")
+    st.write(f"Creating a Networkx plot for file :{filename_str}")
 
 
     got_df = pd.read_csv(filename_str)
