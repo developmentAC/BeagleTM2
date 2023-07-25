@@ -37,6 +37,7 @@ def makeNetworkxPlot(filename_str):
 
     plt.savefig("0_out/mygraph.png")
     
+    
 
 ### degree calculations
     networkx.degree(G)
