@@ -16,13 +16,14 @@ from beagletm2 import dbOps
 dir_str = "0_out/"
 
 
-def makeNetworkxPlot(filename_str):
+def makeNetworkxPlot(filename_str, header_list):
     """networkx network plotter function"""
     st.write(f"Make a networkx plot for file :{filename_str}")
 
-    # filename_str = "0_out/got-edges.csv"
+
     got_df = pd.read_csv(filename_str)
-    print(got_df)
+    # print(got_df)
+
 
     G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
 
@@ -30,17 +31,7 @@ def makeNetworkxPlot(filename_str):
     # networkx.write_graphml(G, gotFilename_str)
     networkx.draw(G)
 
-    plt.figure(figsize=(10,10))
-    pos = nx.shell_layout(G)
 
-    networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8, pos = pos)
-
-
-
-    plt.savefig("0_out/mygraph.png")
-
-    openPage("mygraph.png")
-    st.write("openpage")    
 
 ### degree calculations
     networkx.degree(G)
@@ -52,8 +43,44 @@ def makeNetworkxPlot(filename_str):
     degree_df = degree_df.sort_values(by='degree', ascending=False)
     # st.text(f"degree_df --> {degree_df}")
 
+# get nodes for which degree greater than 2.
+    highDegreeNodes_list=[]
+    lowDegreeNodes_list=[]
+    # print(degree_df)
+    for i in range(len(degree_df)):
+        print(f"# {degree_df[0]}, {degree_df[1]}")
+
+
+
     whatIsThis_str = "Node Degrees"
     dbOps.prettyTabler(degree_df, whatIsThis_str)
+
+
+
+
+
+# draw plot
+    plt.figure(figsize=(8,8))
+    # pos = nx.shell_layout(G)
+    pos = nx.circular_layout(G)
+    networkx.draw(G,
+                  label = "haha", 
+                  with_labels=False, 
+                  node_color='#1f78b4', # dark sky blue
+                  width=0.5, # edges
+                  font_size=8, 
+                  node_shape ="8", 
+                  edge_color = "black", 
+                  alpha = 0.7, 
+                  pos = pos
+                  )
+
+    # node_color='skyblue'
+
+    figFilename_str =   filename_str[:filename_str.find(".csv")] + ".png"
+    plt.savefig(figFilename_str)
+
+    openPage(figFilename_str)
 
     # end of makeNetworkxPlot()
 
@@ -63,10 +90,10 @@ def openPage(fname):
     import webbrowser
     from pathlib import Path
     myPath_posixPath = Path.cwd()
-    # st.success(f"myPath = {myPath_posixPath}, {type(myPath_posixPath)}")
-    myUrl = "file://" + str(myPath_posixPath) + "/" + dir_str + fname
-    st.write("Opening url", myUrl)
-    webbrowser.open(myUrl, new=0, autoraise=True)
+    # myUrl_str = "file://" + str(myPath_posixPath) + "/" + dir_str + fname
+    myUrl_str = "file://" + str(myPath_posixPath) + "/" + fname
+    st.code(myUrl_str, language = 'bash')
+    webbrowser.open(myUrl_str, new=0, autoraise=True)
 
 
 # end of openPage()

@@ -125,7 +125,7 @@ def getTablesListing(myConn):
 def prettyTabler(results, whatIsThis_str):
     """Show results in pretty table formatting."""
     st.write(f"{whatIsThis_str}")
-    with st.expander("Pretty Table of database tables"):
+    with st.expander("Pretty Table"):
         query_df = pd.DataFrame(results)
         st.dataframe(query_df)
     # end of prettyTabler()
@@ -193,9 +193,7 @@ def selectAllKwsInArticles(myConn):
     prettyTabler(pmids_list, whatIsThis_str) # show results of query
 
 
-
     if st.button('Make Networkx plot of results'):
-        # st.write('Making plot')
         saveDataAsCSV(pmids_list) # prep a csv dataframe of results
 
         
@@ -228,7 +226,9 @@ def saveDataAsCSV(pmids_list):
     filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
     # st.write("saveDataAsCSV() filename = {filename_str}")
     # makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
-    plotOps.makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
+
+    header_list = list(CSV_str.replace("\n","").split(","))
+    plotOps.makeNetworkxPlot(filename_str, header_list) # call plotter, filename to open for plotting
             
 ### output from above
 
