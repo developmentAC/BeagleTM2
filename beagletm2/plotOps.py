@@ -1,16 +1,12 @@
 import networkx as nx
+import streamlit as st
+import networkx
 
 from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
                           NodesAndLinkedEdges, Plot, Range1d, TapTool)
 from bokeh.palettes import Spectral4
 from bokeh.plotting import from_networkx, show
 
-import streamlit as st
-
-def makeNetworkxPlot():
-    """networkx network plotter function"""
-    st.write("make a networkx plot")
-    # end of makeNetworkxPlot()
 
 
 def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"

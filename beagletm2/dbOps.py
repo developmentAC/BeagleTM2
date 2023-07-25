@@ -2,7 +2,9 @@
 import sqlite3, typer
 import pandas as pd
 import streamlit as st
-
+import networkx
+import matplotlib.pyplot as plt
+import nbrowser
 from rich.console import Console
 
 import plotOps
@@ -209,7 +211,7 @@ def saveDataAsCSV(pmids_list):
     # print(pmids_list)
 
     # line by line creation of csv file
-    CSV_str = "Pmid, Reference\n" # line by line of all the csv lines here
+    CSV_str = "Pmid,Reference,Weight\n" # line by line of all the csv lines here
     for i in pmids_list:
         line = i
         # print(f"1st line = {line[0]}\n")
@@ -222,14 +224,15 @@ def saveDataAsCSV(pmids_list):
         references_list = list(references_list.split(","))
 
         for ref in references_list:
-            ref_line = str(pmidValue_int) +","+ ref.strip().replace("[","").replace("]","")
+            ref_line = str(pmidValue_int) +","+ ref.strip().replace("[","").replace("]","") +","+str(1)
             CSV_str = CSV_str + ref_line + "\n"
 
     print(CSV_str)
     # save the csv
-    import fileOps
-
-    fileOps.saveCSV(CSV_str,"pmidsRefs.csv")
+    filename_str = "pmidsRefs.csv"
+    filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
+    st.write("saveDataAsCSV() filename = {filename_str}")
+    makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
             
 
 
@@ -240,6 +243,30 @@ def saveDataAsCSV(pmids_list):
 
 # 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
 
-
-
     # end of saveDataAsCSV()
+
+
+
+def makeNetworkxPlot(filename_str):
+    """networkx network plotter function"""
+    st.write(f"Make a networkx plot for file :{filename_str}")
+
+    # filename_str = "0_out/got-edges.csv"
+    got_df = pd.read_csv(filename_str)
+    print(got_df)
+
+    G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
+
+    # G = networkx.read_edgelist(got_df, delimiter=",",nodetype=int)# data=[("Pmid", "Reference")])
+    # G = networkx.from_pandas_edgelist(got_df)#, 'Pmid', 'Reference')
+
+    gotFilename_str = nbrowser.DATADIR + "GOT-network.graphml"
+    # networkx.write_graphml(G, gotFilename_str)
+    networkx.draw(G)
+
+    plt.figure(figsize=(8,8))
+    networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8)
+    plt.show()
+    plt.savefig("0_out/mygraph.png")
+    st.write("plot created?")
+    # end of makeNetworkxPlot()
