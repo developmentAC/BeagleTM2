@@ -245,11 +245,9 @@ def saveDataAsCSV(pmids_list,selectedKws_list):
 
 
     filename_str = "pmidsRefs_" + selectedKeys_str + ".csv"
-    st.error(f"saveDataAsCSV() filename = {filename_str}")
-    
-    filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
+    # st.write(f"saveDataAsCSV() filename = {filename_str}")
 
-    # makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
+    filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
 
     header_list = list(CSV_str.replace("\n","").split(","))
     plotOps.makeNetworkxPlot(filename_str, header_list) # call plotter, filename to open for plotting
