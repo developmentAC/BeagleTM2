@@ -2,10 +2,9 @@
 # Load libraries
 import streamlit as st
 import pandas as pd
-import fileOps as fo # for grabFile()
 from beagletm2 import plotOps
 from beagletm2 import dbOps
-from beagletm2 import fileOps
+from beagletm2 import fileOps # for grabFile()
 
 
 # DB Mgmt
@@ -52,7 +51,7 @@ def main() -> None:
     st.sidebar.text("Drag and Drop in a file to provide path information.")
     # f = st.sidebar.file_uploader("Upload a file", accept_multiple_files=False,type=(["sqlite3","csv","md"]))
 
-    dataFile = fo.grabFile()
+    dataFile = fileOps.grabFile()
 
     # st.subheader("Database Output")
 

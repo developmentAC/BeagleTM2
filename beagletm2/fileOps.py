@@ -8,7 +8,8 @@ from beagletm2 import nbrowser
 
 # globals
 dir_str = "0_out/"
-# global variables
+
+
 FILE_EXTENTION = "sqlite3"
 # DATADIR = "data/"
 OUTDATADIR = "0_outAnalysis/"  # output directory
@@ -226,7 +227,8 @@ def getFileListing(corpusDir):
 
 def saveCSV(CSV_str,fname_str):
     """Save csv-formatted string to csv file."""
-    myFname_str = nbrowser.DATADIR+fname_str
+    # myFname_str = nbrowser.DATADIR+fname_str
+    myFname_str = dir_str+fname_str
     f = open(myFname_str,"w")
     f.write(CSV_str)
     f.close()

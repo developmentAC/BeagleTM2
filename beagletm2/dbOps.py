@@ -4,16 +4,15 @@ import pandas as pd
 import streamlit as st
 import networkx
 import matplotlib.pyplot as plt
-import nbrowser
+from beagletm2 import nbrowser
 from rich.console import Console
 
-import plotOps
-import fileOps
-
+from beagletm2 import plotOps
+from beagletm2 import fileOps
+from beagletm2 import nbrowser
 
 # globals
-# dir_str = "0_out/"
-dir_str = fileOps.dir_str
+dir_str = "0_out/"
 
 # cli = typer.Typer()
 console = Console()
@@ -199,7 +198,7 @@ def selectAllKwsInArticles(myConn):
 
         saveDataAsCSV(pmids_list) # prep a csv dataframe of results
 #        # plotOps.makePlot(pmids_list,"Abstract","Pmid")
-        plotOps.makeNetworkxPlot()
+        makeNetworkxPlot()
     else:
         st.write('ok')
         
