@@ -11,10 +11,8 @@ from beagletm2 import fileOps # for grabFile()
 import sqlite3
 
 
-# # global variables
-# FILE_EXTENTION = "csv"
+# global variables
 DATADIR = "0_out/"
-# OUTDATADIR = "0_outAnalysis/"  # output directory
 
 banner0_str = """
   ██████╗ ███████╗ █████╗  ██████╗ ██╗     ███████╗████████╗███╗   ███╗

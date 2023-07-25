@@ -8,6 +8,7 @@ from beagletm2 import nbrowser
 
 # globals
 dir_str = "0_out/"
+plot_str = "0_out/plots/"
 
 
 FILE_EXTENTION = "sqlite3"

@@ -13,6 +13,7 @@ from beagletm2 import nbrowser
 
 # globals
 dir_str = "0_out/"
+plot_str = "0_out/plots/"
 
 # cli = typer.Typer()
 console = Console()
@@ -194,12 +195,12 @@ def selectAllKwsInArticles(myConn):
 
 
     if st.button('Make Networkx plot of results'):
-        saveDataAsCSV(pmids_list) # prep a csv dataframe of results
+        saveDataAsCSV(pmids_list, selectedKws_list) # prep a csv dataframe of results
 
         
     # end of selectAllKwsInArticles()
 
-def saveDataAsCSV(pmids_list):
+def saveDataAsCSV(pmids_list,selectedKws_list):
     """ function to make a tidy csv quality dataframe"""
     # st.write("saveDataAsCSV()")
 
@@ -235,9 +236,19 @@ def saveDataAsCSV(pmids_list):
 
     # print(CSV_str)
     # save the csv
-    filename_str = "pmidsRefs.csv"
+# add to file name to distinguish results
+    selectedKeys_str = ""
+    for i in range(len(selectedKws_list)):
+        selectedKeys_str += "_" + selectedKws_list[i]
+    selectedKeys_str = selectedKeys_str[1:]
+    # st.write(f"{selectedKeys_str}")
+
+
+    filename_str = "pmidsRefs_" + selectedKeys_str + ".csv"
+    st.error(f"saveDataAsCSV() filename = {filename_str}")
+    
     filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
-    # st.write("saveDataAsCSV() filename = {filename_str}")
+
     # makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
 
     header_list = list(CSV_str.replace("\n","").split(","))

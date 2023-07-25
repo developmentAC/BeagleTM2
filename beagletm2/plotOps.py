@@ -10,10 +10,13 @@ import matplotlib.pyplot as plt
 # from bokeh.plotting import from_networkx, show
 
 from beagletm2 import dbOps
+from beagletm2 import fileOps
+
 
 
 # globals
 dir_str = "0_out/"
+plot_str = "plots/"
 
 
 def makeNetworkxPlot(filename_str, header_list):
@@ -27,8 +30,10 @@ def makeNetworkxPlot(filename_str, header_list):
 
     G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
 
-    gotFilename_str = dir_str + "GOT-network.graphml"
-    # networkx.write_graphml(G, gotFilename_str)
+    fileOps.checkDataDir(dir_str+plot_str)  # does the data directory exist? If not make it exist.
+
+    gotFilename_str = dir_str+plot_str + "GOT-network.graphml"
+    networkx.write_graphml(G, gotFilename_str)
     networkx.draw(G)
 
 
@@ -61,8 +66,9 @@ def makeNetworkxPlot(filename_str, header_list):
                   pos = pos
                   )
 
+    filename_str = filename_str.replace(dir_str,"") # cleaning filename before adding new dir
     # node_color='skyblue'
-    figFilename_str =  filename_str[:filename_str.find(".csv")] + "_allKws.png"
+    figFilename_str =  dir_str + plot_str + filename_str[:filename_str.find(".csv")] + "_allKws.png"
     # figFilename_str =   filename_str[:filename_str.find(".csv")] + ".png"
     plt.savefig(figFilename_str)
 
@@ -106,7 +112,9 @@ def makeNetworkxPlot(filename_str, header_list):
 
     # node_color='skyblue'
 
-    figFilename_str =  filename_str[:filename_str.find(".csv")] + "_highDegree_allKws.png"
+    filename_str = filename_str.replace(dir_str,"") # cleaning filename before adding new dir
+    # node_color='skyblue'
+    figFilename_str =  dir_str + plot_str + filename_str[:filename_str.find(".csv")] + "_highDegree_allKws.png"
     plt.savefig(figFilename_str)
 
     openPage(figFilename_str)
