@@ -3,7 +3,10 @@
 import streamlit as st
 import pandas as pd
 import fileOps as fo # for grabFile()
-import dbOps
+from beagletm2 import plotOps
+from beagletm2 import dbOps
+
+
 # DB Mgmt
 import sqlite3
 

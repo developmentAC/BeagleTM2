@@ -6,6 +6,10 @@ import streamlit as st
 
 from rich.console import Console
 
+from beagletm2 import plotOps
+from beagletm2 import dbOps
+
+
 # globals
 # dir_str = "0_out/"
 dir_str = fileOps.dir_str
@@ -184,6 +188,19 @@ def selectAllKwsInArticles(myConn):
     # pmids_list = listCleaner(pmids_list)
     pmids_list = prettyTabler(pmids_list)
 
+    # st.write("Hello, this is myCol1")
+    # with st.form(key='query_form'):
+    #     st.write("make a plot?")
+    #     # myCommand_str = st.text_area("Sql code goes here")
+    #     submit_button = st.form_submit_button("Execute")
 
 
+
+    if st.button('Make plot of results'):
+        st.write('Making plot')
+        plotOps.makePlot(pmids_list,"Abstract","Pmid")
+    else:
+        st.write('ok')
+        
     # end of selectAllKwsInArticles()
+
