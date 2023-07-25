@@ -191,14 +191,11 @@ def selectAllKwsInArticles(myConn):
 
 
 
-
-
     if st.button('Make Networkx plot of results'):
         st.write('Making plot')
 
         saveDataAsCSV(pmids_list) # prep a csv dataframe of results
 #        # plotOps.makePlot(pmids_list,"Abstract","Pmid")
-        makeNetworkxPlot()
     else:
         st.write('ok')
         
