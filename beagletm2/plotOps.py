@@ -64,7 +64,7 @@ def openPage(fname):
     from pathlib import Path
     myPath_posixPath = Path.cwd()
     # st.success(f"myPath = {myPath_posixPath}, {type(myPath_posixPath)}")
-    myUrl = str(myPath_posixPath) + "/" + dir_str + fname
+    myUrl = "file://" + str(myPath_posixPath) + "/" + dir_str + fname
     st.write("Opening url", myUrl)
     webbrowser.open(myUrl, new=0, autoraise=True)
 
