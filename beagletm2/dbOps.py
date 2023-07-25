@@ -145,7 +145,7 @@ def listCleaner(in_list) -> list:
 def selectAllKwsInArticles(myConn):
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
     # write query to determine available keywords.
-    myQuery_str =  "SELECT keyword FROM 'counts';"
+    myQuery_str =  "SELECT keyword, count FROM 'counts';"
     st.write("Query Code")
     st.code(myQuery_str, language = 'bash')
 
