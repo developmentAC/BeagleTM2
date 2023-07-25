@@ -1,12 +1,43 @@
 import networkx as nx
 import streamlit as st
 import networkx
+import pandas as pd
+import matplotlib.pyplot as plt
 
 from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
                           NodesAndLinkedEdges, Plot, Range1d, TapTool)
 from bokeh.palettes import Spectral4
 from bokeh.plotting import from_networkx, show
 
+
+# globals
+dir_str = "0_out/"
+
+
+
+def makeNetworkxPlot(filename_str):
+    """networkx network plotter function"""
+    st.write(f"Make a networkx plot for file :{filename_str}")
+
+    # filename_str = "0_out/got-edges.csv"
+    got_df = pd.read_csv(filename_str)
+    print(got_df)
+
+    G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
+
+    # G = networkx.read_edgelist(got_df, delimiter=",",nodetype=int)# data=[("Pmid", "Reference")])
+    # G = networkx.from_pandas_edgelist(got_df)#, 'Pmid', 'Reference')
+
+    gotFilename_str = dir_str + "GOT-network.graphml"
+    # networkx.write_graphml(G, gotFilename_str)
+    networkx.draw(G)
+
+    plt.figure(figsize=(8,8))
+    networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8)
+    plt.show()
+    plt.savefig("0_out/mygraph.png")
+    st.write("plot created?")
+    # end of makeNetworkxPlot()
 
 
 def makePlot(a_list, b, c): # pmids_list,"Abstract","Pmid"

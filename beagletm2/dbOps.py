@@ -3,7 +3,7 @@ import sqlite3, typer
 import pandas as pd
 import streamlit as st
 import networkx
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from beagletm2 import nbrowser
 from rich.console import Console
 
@@ -228,7 +228,8 @@ def saveDataAsCSV(pmids_list):
     filename_str = "pmidsRefs.csv"
     filename_str = fileOps.saveCSV(CSV_str,filename_str) # save data for the plotter
     st.write("saveDataAsCSV() filename = {filename_str}")
-    makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
+    # makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
+    plotOps.makeNetworkxPlot(filename_str) # call plotter, filename to open for plotting
             
 
 
@@ -243,7 +244,7 @@ def saveDataAsCSV(pmids_list):
 
 
 
-def makeNetworkxPlot(filename_str):
+def old_makeNetworkxPlot(filename_str):
     """networkx network plotter function"""
     st.write(f"Make a networkx plot for file :{filename_str}")
 
