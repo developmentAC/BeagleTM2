@@ -41,7 +41,7 @@ def makeNetworkxPlot(filename_str, header_list):
 
     degree_df = pd.DataFrame(G.nodes(data='degree'), columns=['node', 'degree'])
     degree_df = degree_df.sort_values(by='degree', ascending=False)
-    st.text(f"{degree_df}")
+    # st.text(f"{degree_df}")
 
 # show full network
 
@@ -62,8 +62,8 @@ def makeNetworkxPlot(filename_str, header_list):
                   )
 
     # node_color='skyblue'
-
-    figFilename_str =   filename_str[:filename_str.find(".csv")] + ".png"
+    figFilename_str =  filename_str[:filename_str.find(".csv")] + "_allKws.png"
+    # figFilename_str =   filename_str[:filename_str.find(".csv")] + ".png"
     plt.savefig(figFilename_str)
 
     openPage(figFilename_str)
@@ -82,7 +82,7 @@ def makeNetworkxPlot(filename_str, header_list):
     for index, row in degree_df.iterrows():
         if row["degree"] > 1:
             highDegreeNodes_list.append(row["node"])
-    print(f"highDegreeNodes_list --> {highDegreeNodes_list}")
+    # print(f"highDegreeNodes_list --> {highDegreeNodes_list}")
 
     whatIsThis_str = "Node Degrees"
     dbOps.prettyTabler(degree_df, whatIsThis_str)
@@ -106,7 +106,7 @@ def makeNetworkxPlot(filename_str, header_list):
 
     # node_color='skyblue'
 
-    figFilename_str =   filename_str[:filename_str.find(".csv")] + "_highDegree.png"
+    figFilename_str =  filename_str[:filename_str.find(".csv")] + "_highDegree_allKws.png"
     plt.savefig(figFilename_str)
 
     openPage(figFilename_str)
