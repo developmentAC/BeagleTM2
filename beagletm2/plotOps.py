@@ -4,10 +4,10 @@ import networkx
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
-                          NodesAndLinkedEdges, Plot, Range1d, TapTool)
-from bokeh.palettes import Spectral4
-from bokeh.plotting import from_networkx, show
+# from bokeh.models import (BoxSelectTool, Circle, HoverTool, MultiLine,
+#                           NodesAndLinkedEdges, Plot, Range1d, TapTool)
+# from bokeh.palettes import Spectral4
+# from bokeh.plotting import from_networkx, show
 
 from beagletm2 import dbOps
 
