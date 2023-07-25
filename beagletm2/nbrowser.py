@@ -55,7 +55,7 @@ def main() -> None:
 
         # We must add path information to filename (path_in), file_upload does not add this info!!!!
         c = dbOps.loadDbGetConn(dataFile) 
-        st.subheader("File:")
+        # st.subheader("File:")
         st.success(f"{dataFile}")
 
         # menu system
