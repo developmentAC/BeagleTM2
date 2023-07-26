@@ -182,7 +182,7 @@ def bigHelp():
 
     console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
     # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv --client builder")
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv")
 
 
 # end of bigHelp()
