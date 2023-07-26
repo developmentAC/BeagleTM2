@@ -102,7 +102,6 @@ def goThruFiles(
 
     # load each files separately for parsing for information
     headers_list = []
-    pmidsubNumber = 0  # used for files having no pmid value
     fileCount_int = 0  # used to keep track of the number of processes files.
 
     for thisFile in file_list:
@@ -152,26 +151,7 @@ def goThruFiles(
 
             if type(tmp_list[2]) == list:  # (empty) list returned but no pmid value found in NXML!
                 console.print(f"[bold yellow] +++++++++++ {tmp_list[2]}")
-
-# todo #!!!!!!!!!!!!!!!!!!!!! pmidsubNumber
-
-                tag = "noPMID_" + str(pmidsubNumber) #!!!!!!!!!!!!!!!!!!!!!
-
-                master_dic[tag] = tmp_list  # place in dic; pmid as key, record as value
-                console.print(
-                    f"\n\t ---> [bold purple]{tmp_list[2]} renamed to [bold green] {tag}"
-                )
-
-
-# record a temp id for this record
-                master_dic[tag] = tmp_list  # place in dic; pmid as key, record as value
-
-
-                # console.print(f"[bold yellow] +++++++++++ {tmp_list[2]}")
-                # console.print(f"[bold yellow] +++++++++++ {master_dic}")
-                # input()
-                pmidsubNumber = pmidsubNumber + 1
-
+                pass
             else:
                 master_dic[
                     tmp_list[2]
