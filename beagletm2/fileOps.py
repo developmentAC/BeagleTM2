@@ -76,9 +76,7 @@ def saveResultsFromDic(
     # set up large list to dump into csv file
     data_list = []
 
-
-
-#   key() that are None Types crash here.
+    #   key() that are None Types crash here.
     for i in master_dic:
         # print(f"saveResultsFromDic() {i},{master_dic[i]}")
         data_list.append(master_dic[i])

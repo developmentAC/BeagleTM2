@@ -41,7 +41,7 @@ def main(dataFile_str: str, abs_only: bool, make_db: bool, save_less: bool) -> N
         dataFile_str, keyWord_list, abs_only, save_less
     )
 
-    master_dic = cleaner(master_dic) # remove empty records
+    master_dic = cleaner(master_dic)  # remove empty records
 
     # save the results from master_dic
     csv_file, wordCsv_file = fileOps.saveResultsFromDic(
@@ -68,6 +68,7 @@ def cleaner(in_dic):
     return tmp_dic
     # end of cleaner()
 
+
 def getFileListing() -> list:
     """method to grab all files with a particular extension"""
     files_list = []  # holds each file and directory
@@ -88,9 +89,9 @@ def goThruFiles(
 ) -> dict:
     """file collecting, loading and parsing Accepts a list of keyword (words in strings)"""
 
-
-    master_dic = {} # store all retrieved data from articles as lists in dictionary structure
-
+    master_dic = (
+        {}
+    )  # store all retrieved data from articles as lists in dictionary structure
 
     file_list = (
         getFileListing()
@@ -115,7 +116,6 @@ def goThruFiles(
             thisFile, contents_str, keyWord_list, abs_only, save_less
         )
 
-
         headers_list = p.getTitlesOfCols()
         # console.print(f"[bold green] headers_list is : {headers_list}")
         # for header in headers_list:
@@ -131,12 +131,11 @@ def goThruFiles(
 
         tmp_list = p.getInformationOfKwInDocs()
 
-        if tmp_list != None: # contains the information from article
-
+        if tmp_list != None:  # contains the information from article
             # console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
 
             console.print(
-                f"\n\t :dog: [bold cyan]{tmp_list[2]}[white],[bold green] {thisFile}" # pmid
+                f"\n\t :dog: [bold cyan]{tmp_list[2]}[white],[bold green] {thisFile}"  # pmid
             )
             console.print(
                 f"\t :sparkles: Parsed: {tmp_list[6]} <- [bold yellow] {tmp_list[7]}"
@@ -145,11 +144,13 @@ def goThruFiles(
                 f"\t   [bold cyan]   [bold cyan] {fileCount_int} of {len(file_list)}",
                 end="",
             )
-            console.print(f"[bold blue] tmp_list[2] --> {tmp_list[2]}, {type(tmp_list[2])}")
+            console.print(
+                f"[bold blue] tmp_list[2] --> {tmp_list[2]}, {type(tmp_list[2])}"
+            )
 
-
-
-            if type(tmp_list[2]) == list:  # (empty) list returned but no pmid value found in NXML!
+            if (
+                type(tmp_list[2]) == list
+            ):  # (empty) list returned but no pmid value found in NXML!
                 console.print(f"[bold yellow] +++++++++++ {tmp_list[2]}")
                 pass
             else:

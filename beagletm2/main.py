@@ -51,7 +51,7 @@ def main(
     abs_only: bool = True,  # scan only the abstracts?
     save_less: bool = True,  # save first 100 chars of the abstracts in the data?
     # map_maker: bool = False, # a command line driven network maker similar to the one in the streamlit app
-    # key_words_file: Path = typer.Option(None)  
+    # key_words_file: Path = typer.Option(None)
 ) -> None:
     """Driver of the program. The clientType allows the user to select parser version or the parser."""
     console = Console()
