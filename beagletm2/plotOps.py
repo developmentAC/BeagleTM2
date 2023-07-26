@@ -17,7 +17,7 @@ from beagletm2 import fileOps
 # globals
 dir_str = "0_out/"
 plot_str = "plots/"
-
+nodesDir_str = "nodes/"
 
 def makeNetworkxPlot(filename_str, header_list):
     """networkx network plotter function"""
@@ -85,13 +85,23 @@ def makeNetworkxPlot(filename_str, header_list):
     # highDegreeNodes_list=[]
 
     highDegreeNodes_list = []
+    highDegreeNodes_str = "node, degree\n" # save the degrees as csv format 
     for index, row in degree_df.iterrows():
         if row["degree"] > 3:
             highDegreeNodes_list.append(row["node"])
-    # print(f"highDegreeNodes_list --> {highDegreeNodes_list}")
+            highDegreeNodes_str = highDegreeNodes_str + str(row["node"]) + "," + str(row["degree"]) + "\n"
+
+    filenameNodesDegrees_str = nodesDir_str +"nodeDegs_" + filename_str
+    st.write(filenameNodesDegrees_str)
+    fileOps.checkDataDir(dir_str+nodesDir_str)  # does the data directory exist? If not make it exist.
+
+    fileOps.saveCSV(highDegreeNodes_str,filenameNodesDegrees_str)
+
+
 
     whatIsThis_str = "Node Degrees"
     dbOps.prettyTabler(degree_df, whatIsThis_str)
+
 
 # draw plot
     plt.figure(figsize=(8,8))
