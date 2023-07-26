@@ -7,7 +7,8 @@
 
 # from locale import dcgettext
 import streamlit as st
-#import beagleTM2_parser_helperCode as hc
+
+# import beagleTM2_parser_helperCode as hc
 import pandas as pd
 
 
@@ -24,7 +25,6 @@ def getStats(data_dic):
     myCol1, myCol2 = st.columns(2)
 
     with myCol1:
-
         myKey_list = st.multiselect(
             "Select keywords to determine unique occurrences.", data_dic.keys(), []
         )
@@ -186,6 +186,6 @@ def getStatsAtParser(data_list, inFile0):
             sortedKeywords_dic[wordGroup_str] = 1
 
     # print(hc.printWithColour(hc.BIGreen,f"sorted keywords : {sortedKeywords_dic}"))
-    #hc.saveStats(sortedKeywords_dic, inFile0 + "_KWGroups_")
+    # hc.saveStats(sortedKeywords_dic, inFile0 + "_KWGroups_")
 
     # end of getStatsAtParser()

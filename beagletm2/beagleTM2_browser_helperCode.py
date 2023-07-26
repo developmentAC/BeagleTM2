@@ -2,11 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-
-
 # SPECIAL NOTE: this code is from the old beagle project and will soon be replaced.
-
-
 
 
 banner0_str = """
@@ -57,6 +53,7 @@ FILE_EXTENTION = "csv"
 DATADIR = "0_out/"
 OUTDATADIR = "0_outAnalysis/"  # output directory
 
+
 @st.cache_data
 def load_big_data(myFile_str):
     """Loads the inputted data file"""
@@ -65,6 +62,7 @@ def load_big_data(myFile_str):
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis="columns", inplace=True)
     return data
+
 
 # end of load_big_data()
 
@@ -289,7 +287,6 @@ def newRefPlot(
     ):  # then show all pmids, all positions of the pmids in the pmid_list.
         pos_list = [i for i in range(len(data_dic["pmid"]))]
     else:  # the pmid_list has selected pmids in it...
-
         # 		st.write(" else: pmid_list :{}".format(pmid_list))
         # 		st.write(" type(data_dic['pmid']) {}".format(type(data_dic["pmid"])) )
         # 		st.write(" data_dic: {}".format(data_dic))
@@ -330,14 +327,19 @@ def createNetwork(in_dic, showNodesPanel_bol, showPhysicsPanel_bol):
     """
 
     # get the network ready
-    G = Network(height="1000px", width="95%", bgcolor="#222222", font_color="white", notebook = True)
+    G = Network(
+        height="1000px",
+        width="95%",
+        bgcolor="#222222",
+        font_color="white",
+        notebook=True,
+    )
     # Note: the above notebook = True is a fix from ref: https://stackoverflow.com/questions/75565224/in-pyvis-i-always-get-this-error-attributeerror-nonetype-object-has-no-attr
 
     # G.barnes_hut()
 
     # add the reference nodes
     for i in in_dic:
-
         # add a link to the article on pubmed
         myTitle_str = in_dic[i][1]
         # addToMyTitle_str = '<a href="https://pubmed.ncbi.nlm.nih.gov/{}" target="_blank"> Link:{}'.format(i,i)
@@ -354,7 +356,6 @@ def createNetwork(in_dic, showNodesPanel_bol, showPhysicsPanel_bol):
         # reference nodes
         # are there any refs for the node?
         if len(in_dic[i][0]) != 0:
-
             for j in in_dic[i][0]:  # [0] = ref nodes
                 # st.write("REF Node j :{}".format(j))
                 refNode_str = str(j)  # add main node
@@ -597,7 +598,6 @@ def articlesContainingALL(data_dic):
         for i in range(
             len(data_dic["keyword"])
         ):  # keywords of article at ith position in data_dic["keyword"]
-
             checkTheseKeywords_list = data_dic["keyword"][
                 i
             ]  # all keywords from this article
@@ -665,7 +665,6 @@ def simpleHeatmaps(data, data_dic):
         if (
             len(stringToList(data[myCol1][i])) >= keywordThreashold_sld
         ):  # an article has at least a nubmer of keywords
-
             # st.write("num:",i, data[myCol1][i],type(data[myCol1][i]), data[myCol2][i], type(data[myCol2][i]))
 
             itemCol1 = stringToList(data[myCol1][i])
@@ -707,7 +706,6 @@ def keywordSaturation(data_dic):
         "Find articles including ALL keywords in their abstracts. Click to default to all keywords."
     )
     if wordNetwork_btn == True:
-
         if len(myKeyWords_list) == 0:  # is empty
             myKeyWords_list = keyWords_list  # use all keywords
             st.text("Using all keywords ...")
@@ -738,7 +736,6 @@ def keywordSaturation(data_dic):
         # get titles
         title_list = []
         for i in range(len(pmid_list)):
-
             # add a link to the article on pubmed
             addToMyTitle_str = '<a href="https://pubmed.ncbi.nlm.nih.gov/{}" target="_blank"> Link:{}'.format(
                 pmid_list[i], pmid_list[i]
@@ -820,7 +817,6 @@ def giveUserLink(plotName_str):
     path_str = getPath()
     tmpAddress_str = ""
     if path_str != None:
-
         link_str = "file://" + f"{path_str}/{plotName_str}"
         st.markdown(f"Output file saved:\n ##### {link_str}")
 

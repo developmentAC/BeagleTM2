@@ -74,7 +74,9 @@ class parserEngine(object):
 
         abstract_str = self.getAbstract()
         if self.save_less:
-            abstract_str = searchabletext_str[:MAXCHARS]  # MAXCHARS defined as global above
+            abstract_str = searchabletext_str[
+                :MAXCHARS
+            ]  # MAXCHARS defined as global above
 
         journal_str = self.getJournal()
         refs_list = self.getReferences()
@@ -129,7 +131,6 @@ class parserEngine(object):
         return foundKeywords_list, foundKeywordCounts_list
         # end of getWordCount()
 
- 
     def getTitlesOfCols(self):
         """Method to call each of the information gathering methods to determine what the headers of the information should be called. Each method (i.e., getTitle()) has a task that will only return the header name. Note, be sure have header names in the order of the data."""
 
@@ -319,14 +320,11 @@ class parserEngine(object):
 
     # end of extractTextFromElement1()
 
-
-# end of parserEngine()
-
-
+    # end of parserEngine()
 
     # The following code is obsolete but is left in the project for reference.
     # *******************************************************************************************************
-    
+
     def old_getInformationOfKwInDocs(self):
         """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
 

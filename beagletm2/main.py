@@ -4,7 +4,7 @@
 from rich.console import Console
 import random, typer, os
 from beagletm2 import parser as p
-from beagletm2 import dbOps # database operations
+from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
 
@@ -59,12 +59,16 @@ def main(
         console.print("\t browser:\n\t Preparing browser app\n\t :smiley:")
         os.system("poetry run streamlit run beagletm2/beagleTM2_browser.py")
 
-# new browser (under developement)
+    # new browser (under developement)
     if client.lower() == "nbrowser":
         console.print("\t :thumbsup: [bold cyan]Preparing new browser app ...")
         # Change 200MB to larger size in parameter below as necessary.
-        console.print(f"\t [bold green]Command: [bold yellow]poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200")
-        os.system("poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200") 
+        console.print(
+            f"\t [bold green]Command: [bold yellow]poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200"
+        )
+        os.system(
+            "poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200"
+        )
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")
@@ -80,13 +84,13 @@ def main(
             exit()  # :thumbs_down:
 
         # csv_file is directory and filename.csv
-        csv_file,wordCsv_file  = p.main(
-            data_file, abs_only, make_db, save_less # csv_file is filename
+        csv_file, wordCsv_file = p.main(
+            data_file, abs_only, make_db, save_less  # csv_file is filename
         )  # pass word list and run parser, pass abstract or full journal scanning option
 
         # make a SQL DB file from the output?
         if make_db == True:
-            dbOps.main(csv_file,wordCsv_file )
+            dbOps.main(csv_file, wordCsv_file)
 
     elif bighelp:
         bigHelp()
@@ -140,13 +144,10 @@ def bigHelp():
     )
     console.print(f"\n\t [bold blue] Execute the former browser app")
 
-    console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client browser"
-    )
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client browser")
     console.print(f"\n\t [bold blue] Execute the new browser app")
 
-    console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client nbrowser"
-    )
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client nbrowser")
+
 
 # end of bigHelp()
