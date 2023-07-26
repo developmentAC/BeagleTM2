@@ -24,12 +24,16 @@ class parserEngine(object):
 
     # end of __init__()
 
-    def getInformationOfKwInDocs(self):
-        """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program"""
+    def getInformationOfKwInDocs(self) -> list:
+        """A Method to locate the keywords in the document abstracts. If any keyword is found, return all details to program. Returns a list"""
 
         # console.print(f"____ getInformationOfKwInDocs() _____")
 
         pmid_str = self.getPmid()
+        # console.print(f"[bold yellow] pmid --> {pmid_str} type: {type(pmid_str)}")
+        if type(pmid_str) == list: # no pmid number available, assign a temp one.
+            # console.print(f"\n\t :poop: Missing pmid value. [bold yellow] pmid assigned --> {pmid_str}")
+            return None # no pmid number, reject the record
 
         searchabletext_str = (
             ""  # variable to hold the text (abs or whole contents) to scan
@@ -44,9 +48,9 @@ class parserEngine(object):
         else:  # get full article. This text is all between <abstract> and the <references>.
             try:
                 searchabletext_str = self.contents_str[
-                    self.contents_str.find("<abstract>") : self.contents_str.find(
+                    self.contents_str.find("<abstract>") + 10: self.contents_str.find(
                         "<ref-list>"
-                    )
+                    )+10
                 ]
             except Exception:
                 searchabletext_str = None
@@ -55,14 +59,6 @@ class parserEngine(object):
             ## console.print(f"\t:poop: [bold red] Error in searchabletext_str = {searchabletext_str}")
             searchabletext_str = ""
 
-        #### for debugging
-        if len(searchabletext_str) != 0:
-            # console.print(f"\n\t:dog: [bold cyan] PMID: {pmid_str},[bold green] {self.filename_str},[bold yellow] Size: {len(searchabletext_str)}")
-            pass
-        else:
-            # console.print(f"\t :thumbsdown: Empty file...[bold green] {self.filename_str},")
-            return None
-        #### end of debugging output
 
         # check each keyWord against searchabletext_str
         foundKeywords_list, foundKeywordCounts_list = self.getWordCount(
@@ -70,7 +66,7 @@ class parserEngine(object):
         )
 
         title_str = self.getTitle()
-        # see above: pmid_str
+
 
         abstract_str = self.getAbstract()
         if self.save_less:

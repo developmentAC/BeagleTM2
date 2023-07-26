@@ -41,6 +41,8 @@ def main(dataFile_str: str, abs_only: bool, make_db: bool, save_less: bool) -> N
         dataFile_str, keyWord_list, abs_only, save_less
     )
 
+    master_dic = cleaner(master_dic) # remove empty records
+
     # save the results from master_dic
     csv_file, wordCsv_file = fileOps.saveResultsFromDic(
         master_dic, dataFile_str, headers_list, abs_only, save_less
@@ -50,6 +52,21 @@ def main(dataFile_str: str, abs_only: bool, make_db: bool, save_less: bool) -> N
 
 # end of main()
 
+
+def cleaner(in_dic):
+    """A function to remove empty records and pmid none types from inputted dictionary."""
+    # console.print(f"[bold blue] cleaner() dictionary keys -> {in_dic.keys()} ")
+
+    # remove None keys
+
+    target_key = None
+    tmp_dic = {}
+
+    for i in in_dic:
+        if i != target_key:
+            tmp_dic[i] = in_dic[i]
+    return tmp_dic
+    # end of cleaner()
 
 def getFileListing() -> list:
     """method to grab all files with a particular extension"""
@@ -71,9 +88,10 @@ def goThruFiles(
 ) -> dict:
     """file collecting, loading and parsing Accepts a list of keyword (words in strings)"""
 
-    master_dic = (
-        {}
-    )  # store all retrieved data from articles as lists in dictionary structure
+
+    master_dic = {} # store all retrieved data from articles as lists in dictionary structure
+
+
     file_list = (
         getFileListing()
     )  # get a listing of the files out there in the corpus dir.
@@ -84,7 +102,7 @@ def goThruFiles(
 
     # load each files separately for parsing for information
     headers_list = []
-    pmidsubNumber = 0  # used for files having no pmid
+    pmidsubNumber = 0  # used for files having no pmid value
     fileCount_int = 0  # used to keep track of the number of processes files.
 
     for thisFile in file_list:
@@ -97,6 +115,8 @@ def goThruFiles(
         p = extractor.parserEngine(
             thisFile, contents_str, keyWord_list, abs_only, save_less
         )
+
+
         headers_list = p.getTitlesOfCols()
         # console.print(f"[bold green] headers_list is : {headers_list}")
         # for header in headers_list:
@@ -111,13 +131,13 @@ def goThruFiles(
         #     # Counts <class 'str'> [7]
 
         tmp_list = p.getInformationOfKwInDocs()
-        # tmp_list = p.getInformationOfKwInDocs()
 
-        if tmp_list != None:
+        if tmp_list != None: # contains the information from article
+
             # console.print(f"[bold red] goThruFiles() tmp_list  = {tmp_list }")
 
             console.print(
-                f"\n\t :dog: [bold cyan]{tmp_list[2]}[white],[bold green] {thisFile}"
+                f"\n\t :dog: [bold cyan]{tmp_list[2]}[white],[bold green] {thisFile}" # pmid
             )
             console.print(
                 f"\t :sparkles: Parsed: {tmp_list[6]} <- [bold yellow] {tmp_list[7]}"
@@ -126,21 +146,39 @@ def goThruFiles(
                 f"\t   [bold cyan]   [bold cyan] {fileCount_int} of {len(file_list)}",
                 end="",
             )
+            console.print(f"[bold blue] tmp_list[2] --> {tmp_list[2]}, {type(tmp_list[2])}")
 
-            if type(tmp_list[2]) == list:  # no PMID value found in NXML!
-                tag = "noPMID_" + str(pmidsubNumber)
+
+
+            if type(tmp_list[2]) == list:  # (empty) list returned but no pmid value found in NXML!
+                console.print(f"[bold yellow] +++++++++++ {tmp_list[2]}")
+
+# todo #!!!!!!!!!!!!!!!!!!!!! pmidsubNumber
+
+                tag = "noPMID_" + str(pmidsubNumber) #!!!!!!!!!!!!!!!!!!!!!
+
                 master_dic[tag] = tmp_list  # place in dic; pmid as key, record as value
                 console.print(
                     f"\n\t ---> [bold purple]{tmp_list[2]} renamed to [bold green] {tag}"
                 )
 
+
+# record a temp id for this record
+                master_dic[tag] = tmp_list  # place in dic; pmid as key, record as value
+
+
+                # console.print(f"[bold yellow] +++++++++++ {tmp_list[2]}")
+                # console.print(f"[bold yellow] +++++++++++ {master_dic}")
+                # input()
                 pmidsubNumber = pmidsubNumber + 1
+
             else:
                 master_dic[
                     tmp_list[2]
                 ] = tmp_list  # place in dic; pmid as key, record as value
 
             # console.print(f"[bold purple] tmp_list ==> {tmp_list}")
+    # console.print(f"[bold purple] master_dic ==> {master_dic}")
 
     return master_dic, headers_list
 
