@@ -1,10 +1,10 @@
 # Import required libraries
-import sqlite3, typer
+import sqlite3
+import typer
 import pandas as pd
 import streamlit as st
 import networkx
 
-# import matplotlib.pyplot as plt
 from beagletm2 import nbrowser
 from rich.console import Console
 

@@ -32,8 +32,8 @@ def makeNetworkxPlot(filename_str, header_list):
         dir_str + plot_str
     )  # does the data directory exist? If not make it exist.
 
-    gotFilename_str = dir_str + plot_str + "GOT-network.graphml"
-    networkx.write_graphml(G, gotFilename_str)
+    # gotFilename_str = dir_str + plot_str + "GOT-network.graphml"
+    # networkx.write_graphml(G, gotFilename_str)
     networkx.draw(G)
 
     ### degree calculations
@@ -78,7 +78,6 @@ def makeNetworkxPlot(filename_str, header_list):
     openPage(figFilename_str)
 
     # get nodes for which degree greater than 2.
-    # highDegreeNodes_list=[]
 
     highDegreeNodes_list = []
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format

@@ -4,6 +4,7 @@
 from rich.console import Console
 import random, typer, os
 from beagletm2 import parser as p
+from beagletm2 import networkBuilder as nb
 from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
@@ -46,23 +47,47 @@ console = Console()
 def main(
     client: str = "",
     bighelp: bool = False,
-    data_file: Path = typer.Option(None),
+    data_file: Path = typer.Option(None), # incoming data file for different purposes
     make_db: bool = True,
     abs_only: bool = True,  # scan only the abstracts?
     save_less: bool = True,  # save first 100 chars of the abstracts in the data?
-    # map_maker: bool = False, # a command line driven network maker similar to the one in the streamlit app
-    # key_words_file: Path = typer.Option(None)
+    # networkBuilder: str = "", # a command line driven network maker similar to the one in the streamlit app
+    query_words_file: Path = typer.Option(None) # list of words from which to build a network 
 ) -> None:
     """Driver of the program. The clientType allows the user to select parser version or the parser."""
     console = Console()
     # console.print(f"\t [bold cyan] Client type is <<{client}>>")
 
-    if client.lower() == "browser":
+#################
+# NetworkBuilder
+#################
+
+    if client.lower() == "builder":
+        console.print("\t networkBuilder:\n\t Preparing stand-alone network building app\n\t :smiley:")
+
+        if data_file is None:
+            console.print("\t :scream: No data file specified!")
+            raise typer.Abort()
+        # --> the file was specified and it is valid so we should read and check it
+        if data_file.is_file() == False:
+            console.print(
+                f"\t [bold red]Oh :poop:! Error with data-file loading. Exiting..."
+            )
+            exit()  # :thumbs_down:
+
+
+        nb.main(data_file) # call the stand-alone network builder
+        exit()
+
+##########
+# Browser
+##########
+
+    elif client.lower() == "browser":
         console.print("\t browser:\n\t Preparing browser app\n\t :smiley:")
         os.system("poetry run streamlit run beagletm2/beagleTM2_browser.py")
 
-    # new browser (under developement)
-    if client.lower() == "nbrowser":
+    elif client.lower() == "nbrowser":
         console.print("\t :thumbsup: [bold cyan]Preparing new browser app ...")
         # Change 200MB to larger size in parameter below as necessary.
         console.print(
@@ -71,6 +96,10 @@ def main(
         os.system(
             "poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200"
         )
+
+#########
+# Parser
+#########
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")
@@ -145,11 +174,15 @@ def bigHelp():
         f"\t :smiley: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less"
     )
     console.print(f"\n\t [bold blue] Execute the former browser app")
-
     console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client browser")
-    console.print(f"\n\t [bold blue] Execute the new browser app")
 
+    console.print(f"\n\t [bold blue] Execute the new browser app")
     console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client nbrowser")
+
+
+    console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
+    # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv --client builder")
 
 
 # end of bigHelp()
