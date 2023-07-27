@@ -111,6 +111,45 @@ To run the file using a unix OS, use the following command.
 sh command.sh
 ```
 
+
+
+## XML Data
+
+NCBI offers bulk downloads of literature in two types of  packages: _commercial_ and _non-commercial_. Please see https://ftp.ncbi.nlm.nih.gov/pub/pmc/readme.txt for more information.
+
+BeagleTM has been designed to work with the xml files which are found in the `*.tar.gz` files. These `tar.gz` files files may be found at the below online repositories.
+
++ _Commercially_ available
+ + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/
+
++ _Non-Commercially_ availably
+ + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_noncomm/xml/
+
++ _FTP_ site
+ + ftp://ftp.ncbi.nlm.nih.gov/pub/pmc
+
+## Setting up the corpus
+
++ Make a directory to store your downloaded files such as `src/myDownloadedCorpusFiles/` and use your browser to download the tar.gz data files from one of the above links. Be sure to store these files in a place where you can conveniently work with them. In addition, bash commands such as the below example may be employed to automate a download. This process cannot be easily automated due to changing filenames at the NCBI.
+
+```
+wget https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/oa_comm_xml.incr.2022-03-07.tar.gz
+```
+
+If using Linux or MacOS, Another way to untar the files in bulk is by the following script. This script code can be placed into a file (`bulkUntar.sh`) and run using the command, `sh bulkUntar.sh` at the (Unix) terminal and will place the files into separate directories which must be placed into the `corpus/` directory.
+
+```
+for x in `ls *.tar.gz`
+do
+	tar -vxf $x
+done
+```
+
+
++ Once these files have been downloaded, the `xml` files must be extracted (i.e., an untarring step). The command, `tar -zxvf filename.tar.gx` can handle this step. If there are several files, then wildcards may be used: `tar -zxvf *.tar.gz`. This untarring step can be run in the Docker container which is automatically setup with `untar`.
+
++ Once the xml files have been extracted, move/copy them to `beagleTM/src/corpus/` so that BeagleTM will be able to find them. This path to the corpus directory has been hardcoded in the `beagleTM2_parser_helperCode.py`, however, if using an external hard drive or similar, the corpus path could be altered by updating the global variable, `CORPUS_DIR` as shown below.
+
 ## A work in progress
 
 Check back often to see the evolution of the project!! BeagleTM is a work-in-progress. Updates to the methods and tests for the code will come soon and I will continue to update the repository with updates. If you would like to contribute to this project, __then please do!__ For instance, if you see some low-hanging fruit or task that you could easily complete, that could add value to the project, then I would love to have your insight.
