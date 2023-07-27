@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "beagletm2"
-version = "0.28.4"
+version = "0.28.0"
 description = ""
 authors = ["Oliver Bonham-Carter <obonhamcarter@allegheny.edu>"]
 readme = "README.md"
