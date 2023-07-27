@@ -22,12 +22,18 @@ console = Console()
 
 def main(csvFilename_str : str) -> None:
     """Main driver function to build networks from output files without having to use streamlit"""
-    console.print(f"\t[bold green] Welcome! This is the CLI for building network models without the Streamlit app.")
+    # console.print(f"\t[bold green] Welcome! This is the CLI for building network models without the Streamlit app.")
     makeNetworkxPlot_nonSTREAMLIT(csvFilename_str)
 
     # end of main()
 
-
+def cleanFilename(in_str):
+    """Remove all path information but the filename itself."""
+    in_str = in_str[::-1] # reverse
+    in_str = in_str[:in_str.find("/")] # look first for path forward line (which is last in fill path+file)
+    in_str = in_str[::-1]
+    return in_str
+    # end of cleanFilename()
 
 
 def makeNetworkxPlot_nonSTREAMLIT(filename_str):
@@ -37,6 +43,8 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     # console.print(f"\t[bold cyan] Creating a Networkx plot for file :{filename_str}")
 
     thisFileName_str = str(filename_str)
+
+    thisFileName_str = cleanFilename(thisFileName_str)
 
     got_df = pd.read_csv(filename_str)
     # print(got_df)
@@ -107,11 +115,11 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
 
     # get nodes for which degree greater than 2.
 
-    highDegreeNodes_list = []
+    highDegreeNodes_list = [] # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format
     for index, row in degree_df.iterrows():
         if row["degree"] > 3:
-            highDegreeNodes_list.append(row["node"])
+            highDegreeNodes_list.append(row["node"]) 
             highDegreeNodes_str = (
                 highDegreeNodes_str + str(row["node"]) + "," + str(row["degree"]) + "\n"
             )
@@ -120,8 +128,12 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     )  # does the data directory exist? If not make it exist.
 
     filenameNodesDegrees_str = nodesDir_str + "nodeDegs_" + filename_str
+    
     fileOps.saveCSV_cli(highDegreeNodes_str, filenameNodesDegrees_str)
+
+
     console.print(f"[bold green]\t Saved nodes file : [bold yellow]{filenameNodesDegrees_str}")
+    # console.print(f"[bold green]\t NODES : [bold yellow]{highDegreeNodes_str}")
 
 
     # draw plot

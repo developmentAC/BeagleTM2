@@ -79,7 +79,7 @@ def makeNetworkxPlot(filename_str, header_list):
 
     # get nodes for which degree greater than 2.
 
-    highDegreeNodes_list = []
+    highDegreeNodes_list = [] # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format
     for index, row in degree_df.iterrows():
         if row["degree"] > 3:

@@ -9,8 +9,8 @@ from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
 
-DATE = "22 July 2023"
-VERSION = "0.22.0"
+DATE = "26 July 2023"
+VERSION = "0.26.4"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
@@ -63,7 +63,7 @@ def main(
 #################
 
     if client.lower() == "builder":
-        console.print("\t networkBuilder:\n\t Preparing stand-alone network building app\n\t :smiley:")
+        console.print("\t[bold cyan] NetworkBuilder:\n\t Preparing stand-alone network building app")
 
         if data_file is None:
             console.print("\t :scream: No data file specified!")
@@ -77,7 +77,6 @@ def main(
 
 
         nb.main(data_file) # call the stand-alone network builder
-        exit()
 
 ##########
 # Browser
@@ -86,6 +85,7 @@ def main(
     elif client.lower() == "browser":
         console.print("\t browser:\n\t Preparing browser app\n\t :smiley:")
         os.system("poetry run streamlit run beagletm2/beagleTM2_browser.py")
+        exit()
 
     elif client.lower() == "nbrowser":
         console.print("\t :thumbsup: [bold cyan]Preparing new browser app ...")
@@ -122,10 +122,11 @@ def main(
         # make a SQL DB file from the output?
         if make_db == True:
             dbOps.main(csv_file, wordCsv_file)
+        exit()
 
     elif bighelp:
         bigHelp()
-
+        exit()
         # console.print(f"\t :skull:[bold red] Enter command")
 
 
