@@ -109,7 +109,7 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     # except Exception:
     #     pass
 
-    # get nodes for which degree greater than 2.
+    # get nodes for which degree greater than a value.
 
     highDegreeNodes_list = []  # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format

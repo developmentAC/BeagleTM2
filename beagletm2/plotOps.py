@@ -77,7 +77,7 @@ def makeNetworkxPlot(filename_str, header_list):
 
     openPage(figFilename_str)
 
-    # get nodes for which degree greater than 2.
+    # get nodes for which degree greater than a value.
 
     highDegreeNodes_list = []  # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format
