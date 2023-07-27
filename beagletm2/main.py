@@ -184,6 +184,9 @@ def bigHelp():
     console.print(f"\t :poodle: [bold cyan] poetry run beagletm2 --client nbrowser")
 
     console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
+    console.print(
+        f"\t [bold blue] Note the input files from this are the query files which are outputted from the Streamlit app. "
+    )
     # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
     console.print(
         f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
