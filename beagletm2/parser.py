@@ -144,9 +144,9 @@ def goThruFiles(
                 f"\t   [bold cyan]   [bold cyan] {fileCount_int} of {len(file_list)}",
                 end="",
             )
-            console.print(
-                f"[bold blue] tmp_list[2] --> {tmp_list[2]}, {type(tmp_list[2])}"
-            )
+            # console.print(
+            #     f"[bold blue] tmp_list[2] --> {tmp_list[2]}, {type(tmp_list[2])}"
+            # )
 
             if (
                 type(tmp_list[2]) == list
