@@ -4,7 +4,7 @@ from beagletm2 import fileOps
 
 
 import networkx
-import networkx as nx
+# import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -22,7 +22,7 @@ console = Console()
 
 def main(csvFilename_str : str) -> None:
     """Main driver function to build networks from output files without having to use streamlit"""
-    console.print("Welcome! This is the CLI for building network models without the Streamlit app.")
+    console.print(f"\t[bold green] Welcome! This is the CLI for building network models without the Streamlit app.")
     makeNetworkxPlot_nonSTREAMLIT(csvFilename_str)
 
     # end of main()
@@ -34,7 +34,7 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     # This function is almost the same one in plotOps.py. Here we do not use Streamlit as this
     # part of the software is to be used from the command.
     """ Networkx network plotter function. filename_str is the csvfile """
-    console.print(f"\t[bold cyan] Creating a Networkx plot for file :{filename_str}")
+    # console.print(f"\t[bold cyan] Creating a Networkx plot for file :{filename_str}")
 
     thisFileName_str = str(filename_str)
 
@@ -65,8 +65,8 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
 
     # draw plot
     plt.figure(figsize=(8, 8))
-    # pos = nx.shell_layout(G)
-    pos = nx.circular_layout(G)
+    # pos = networkx.shell_layout(G)
+    pos = networkx.circular_layout(G)
     networkx.draw(
         G,
         label="labelGoesHere",
@@ -81,18 +81,16 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     )
 
 
-    console.print(f"[bold green] Saved file : {filename_str}")
-    filename_str = thisFileName_str.replace(dir_str, "")  # cleaning filename before adding new dir
 
-    figFilename_str = dir_str + plot_str + thisFileName_str[:thisFileName_str.find(".csv")] + ".png"
-    console.print(f"[bold green] Saved figfile : {filename_str} ")
 
     fileOps.checkDataDir(
         dir_str + nodesDir_str
     )  # does the data directory exist? If not make it exist.
 
+    filename_str = thisFileName_str.replace(dir_str, "")  # cleaning filename before adding new dir
+    figFilename_str = dir_str + plot_str + thisFileName_str[:thisFileName_str.find(".csv")] + ".png"
     plt.savefig(figFilename_str)
-
+    console.print(f"[bold green]\n\t Saved figfile : [bold yellow]{figFilename_str} ")
 
 
 
@@ -117,21 +115,19 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
             highDegreeNodes_str = (
                 highDegreeNodes_str + str(row["node"]) + "," + str(row["degree"]) + "\n"
             )
-
-    filenameNodesDegrees_str = nodesDir_str + "nodeDegs_" + filename_str
-    console.print(f"[bold purple] {filenameNodesDegrees_str}")
     fileOps.checkDataDir(
         dir_str + nodesDir_str
     )  # does the data directory exist? If not make it exist.
 
-    fileOps.saveCSV(highDegreeNodes_str, filenameNodesDegrees_str)
+    filenameNodesDegrees_str = nodesDir_str + "nodeDegs_" + filename_str
+    fileOps.saveCSV_cli(highDegreeNodes_str, filenameNodesDegrees_str)
+    console.print(f"[bold green]\t Saved nodes file : [bold yellow]{filenameNodesDegrees_str}")
 
-    whatIsThis_str = "Node Degrees"
 
     # draw plot
     plt.figure(figsize=(8, 8))
-    # pos = nx.shell_layout(G)
-    pos = nx.circular_layout(G)
+    # pos = networkx.shell_layout(G)
+    pos = networkx.circular_layout(G)
     networkx.draw(
         G,
         nodelist=highDegreeNodes_list,
@@ -159,7 +155,7 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
         + "_highDegree_allKws.png"
     )
     plt.savefig(figFilename_str)
-
+    console.print(f"[bold green]\t Saved figfile : [bold yellow]{figFilename_str} ")
 
 
 

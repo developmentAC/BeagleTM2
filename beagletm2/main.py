@@ -152,37 +152,37 @@ def bigHelp():
 
     console.print(f"\n\t [bold blue] Execute, process abstracts only")
     console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --abs-only"
+        f"\t :dog: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --abs-only"
     )
 
     console.print(
         f"\n\t [bold blue] Execute, process abstracts only and create db from results."
     )
     console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --make-db --abs-only"
+        f"\t :dog: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --make-db --abs-only"
     )
 
     console.print(f"\n\t [bold blue] Execute, process whole articles.")
     console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --no-abs-only"
+        f"\t :dog: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --no-abs-only"
     )
 
     console.print(
         f"\n\t [bold blue] Execute, process whole articles and create db from results of smaller size."
     )
     console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less"
+        f"\t :dog: [bold cyan] poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less"
     )
     console.print(f"\n\t [bold blue] Execute the former browser app")
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client browser")
+    console.print(f"\t :poodle: [bold cyan] poetry run beagletm2 --client browser")
 
     console.print(f"\n\t [bold blue] Execute the new browser app")
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --client nbrowser")
+    console.print(f"\t :poodle: [bold cyan] poetry run beagletm2 --client nbrowser")
 
 
     console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
     # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv")
+    console.print(f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv")
 
 
 # end of bigHelp()

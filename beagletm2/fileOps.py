@@ -241,6 +241,17 @@ def saveCSV(CSV_str, fname_str):
     return myFname_str
     # end of saveCSV()
 
+def saveCSV_cli(CSV_str, fname_str):
+    # This produces no errors from streamlit when used at command line.
+    """Save csv-formatted string to csv file."""
+    # myFname_str = nbrowser.DATADIR+fname_str
+    myFname_str = dir_str + fname_str
+    f = open(myFname_str, "w")
+    f.write(CSV_str)
+    f.close()
+    return myFname_str
+    # end of saveCSV()
+
 
 @st.cache_data
 def old_load_big_data(myFile_str):

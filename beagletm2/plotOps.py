@@ -1,4 +1,4 @@
-import networkx as nx
+import networkx
 import streamlit as st
 import networkx
 import pandas as pd
@@ -50,8 +50,8 @@ def makeNetworkxPlot(filename_str, header_list):
 
     # draw plot
     plt.figure(figsize=(8, 8))
-    # pos = nx.shell_layout(G)
-    pos = nx.circular_layout(G)
+    # pos = networkx.shell_layout(G)
+    pos = networkx.circular_layout(G)
     networkx.draw(
         G,
         label="labelGoesHere",
@@ -101,8 +101,8 @@ def makeNetworkxPlot(filename_str, header_list):
 
     # draw plot
     plt.figure(figsize=(8, 8))
-    # pos = nx.shell_layout(G)
-    pos = nx.circular_layout(G)
+    # pos = networkx.shell_layout(G)
+    pos = networkx.circular_layout(G)
     networkx.draw(
         G,
         nodelist=highDegreeNodes_list,
@@ -175,7 +175,7 @@ def old_getNodeDegrees(
 def makePlot(a_list, b, c):  # pmids_list,"Abstract","Pmid"
     """Bokah function to prepare network plots from inputted data"""
 
-    G = nx.karate_club_graph()
+    G = networkx.karate_club_graph()
 
     plot = Plot(
         width=400, height=400, x_range=Range1d(-1.1, 1.1), y_range=Range1d(-1.1, 1.1)
@@ -184,7 +184,7 @@ def makePlot(a_list, b, c):  # pmids_list,"Abstract","Pmid"
 
     plot.add_tools(HoverTool(tooltips=None), TapTool(), BoxSelectTool())
 
-    graph_renderer = from_networkx(G, nx.circular_layout, scale=1, center=(0, 0))
+    graph_renderer = from_networkx(G, networkx.circular_layout, scale=1, center=(0, 0))
 
     graph_renderer.node_renderer.glyph = Circle(size=15, fill_color=Spectral4[0])
     graph_renderer.node_renderer.selection_glyph = Circle(
@@ -215,7 +215,7 @@ def makePlot(a_list, b, c):  # pmids_list,"Abstract","Pmid"
 def bk_makePlot(a_list, b, c):  # pmids_list,"Abstract","Pmid"
     """Bokah function to prepare network plots from inputted data"""
 
-    G = nx.karate_club_graph()
+    G = networkx.karate_club_graph()
 
     plot = Plot(
         width=400, height=400, x_range=Range1d(-1.1, 1.1), y_range=Range1d(-1.1, 1.1)
@@ -224,7 +224,7 @@ def bk_makePlot(a_list, b, c):  # pmids_list,"Abstract","Pmid"
 
     plot.add_tools(HoverTool(tooltips=None), TapTool(), BoxSelectTool())
 
-    graph_renderer = from_networkx(G, nx.circular_layout, scale=1, center=(0, 0))
+    graph_renderer = from_networkx(G, networkx.circular_layout, scale=1, center=(0, 0))
 
     graph_renderer.node_renderer.glyph = Circle(size=15, fill_color=Spectral4[0])
     graph_renderer.node_renderer.selection_glyph = Circle(
