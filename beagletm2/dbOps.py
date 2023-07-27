@@ -164,6 +164,9 @@ def selectAllKwsInArticles(myConn):
         [],
     )  # the selected keywords from the user.
 
+    # sort the keywords to create convenient files from later tasks
+    selectedKws_list = sorted(selectedKws_list)
+
     # what are the keywords to select from?
     wordNetwork_btn = st.button(
         "Find articles containing ALL selected keywords in abstracts. Click for all keywords in set."
