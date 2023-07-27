@@ -4,6 +4,7 @@ from beagletm2 import fileOps
 
 
 import networkx
+
 # import networkx as nx
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -19,18 +20,20 @@ cli = typer.Typer()
 console = Console()
 
 
-
-def main(csvFilename_str : str) -> None:
+def main(csvFilename_str: str) -> None:
     """Main driver function to build networks from output files without having to use streamlit"""
     # console.print(f"\t[bold green] Welcome! This is the CLI for building network models without the Streamlit app.")
     makeNetworkxPlot_nonSTREAMLIT(csvFilename_str)
 
     # end of main()
 
+
 def cleanFilename(in_str):
     """Remove all path information but the filename itself."""
-    in_str = in_str[::-1] # reverse
-    in_str = in_str[:in_str.find("/")] # look first for path forward line (which is last in fill path+file)
+    in_str = in_str[::-1]  # reverse
+    in_str = in_str[
+        : in_str.find("/")
+    ]  # look first for path forward line (which is last in fill path+file)
     in_str = in_str[::-1]
     return in_str
     # end of cleanFilename()
@@ -39,7 +42,7 @@ def cleanFilename(in_str):
 def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     # This function is almost the same one in plotOps.py. Here we do not use Streamlit as this
     # part of the software is to be used from the command.
-    """ Networkx network plotter function. filename_str is the csvfile """
+    """Networkx network plotter function. filename_str is the csvfile"""
     # console.print(f"\t[bold cyan] Creating a Networkx plot for file :{filename_str}")
 
     thisFileName_str = str(filename_str)
@@ -48,7 +51,6 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
 
     got_df = pd.read_csv(filename_str)
     # print(got_df)
-
 
     G = networkx.from_pandas_edgelist(got_df, "Pmid", "Reference", "Weight")
 
@@ -88,20 +90,18 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
         pos=pos,
     )
 
-
-
-
     fileOps.checkDataDir(
         dir_str + nodesDir_str
     )  # does the data directory exist? If not make it exist.
 
-    filename_str = thisFileName_str.replace(dir_str, "")  # cleaning filename before adding new dir
-    figFilename_str = dir_str + plot_str + thisFileName_str[:thisFileName_str.find(".csv")] + ".png"
+    filename_str = thisFileName_str.replace(
+        dir_str, ""
+    )  # cleaning filename before adding new dir
+    figFilename_str = (
+        dir_str + plot_str + thisFileName_str[: thisFileName_str.find(".csv")] + ".png"
+    )
     plt.savefig(figFilename_str)
     console.print(f"[bold green]\n\t Saved figfile : [bold yellow]{figFilename_str} ")
-
-
-
 
     # try:
     #     openPage(figFilename_str)
@@ -109,17 +109,13 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     # except Exception:
     #     pass
 
-
-
-
-
     # get nodes for which degree greater than 2.
 
-    highDegreeNodes_list = [] # used for plotting
+    highDegreeNodes_list = []  # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format
     for index, row in degree_df.iterrows():
         if row["degree"] > 3:
-            highDegreeNodes_list.append(row["node"]) 
+            highDegreeNodes_list.append(row["node"])
             highDegreeNodes_str = (
                 highDegreeNodes_str + str(row["node"]) + "," + str(row["degree"]) + "\n"
             )
@@ -128,13 +124,13 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     )  # does the data directory exist? If not make it exist.
 
     filenameNodesDegrees_str = nodesDir_str + "nodeDegs_" + filename_str
-    
+
     fileOps.saveCSV_cli(highDegreeNodes_str, filenameNodesDegrees_str)
 
-
-    console.print(f"[bold green]\t Saved nodes file : [bold yellow]{filenameNodesDegrees_str}")
+    console.print(
+        f"[bold green]\t Saved nodes file : [bold yellow]{filenameNodesDegrees_str}"
+    )
     # console.print(f"[bold green]\t NODES : [bold yellow]{highDegreeNodes_str}")
-
 
     # draw plot
     plt.figure(figsize=(8, 8))
@@ -169,13 +165,10 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     plt.savefig(figFilename_str)
     console.print(f"[bold green]\t Saved figfile : [bold yellow]{figFilename_str} ")
 
-
-
     # try:
     #     openPage(figFilename_str)
 
     # except Exception:
     #     pass
-
 
     # end of makeNetworkxPlot()

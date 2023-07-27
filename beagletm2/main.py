@@ -47,23 +47,27 @@ console = Console()
 def main(
     client: str = "",
     bighelp: bool = False,
-    data_file: Path = typer.Option(None), # incoming data file for different purposes
+    data_file: Path = typer.Option(None),  # incoming data file for different purposes
     make_db: bool = True,
     abs_only: bool = True,  # scan only the abstracts?
     save_less: bool = True,  # save first 100 chars of the abstracts in the data?
     # networkBuilder: str = "", # a command line driven network maker similar to the one in the streamlit app
-    query_words_file: Path = typer.Option(None) # list of words from which to build a network 
+    query_words_file: Path = typer.Option(
+        None
+    ),  # list of words from which to build a network
 ) -> None:
     """Driver of the program. The clientType allows the user to select parser version or the parser."""
     console = Console()
     # console.print(f"\t [bold cyan] Client type is <<{client}>>")
 
-#################
-# NetworkBuilder
-#################
+    #################
+    # NetworkBuilder
+    #################
 
     if client.lower() == "builder":
-        console.print("\t[bold cyan] NetworkBuilder:\n\t Preparing stand-alone network building app")
+        console.print(
+            "\t[bold cyan] NetworkBuilder:\n\t Preparing stand-alone network building app"
+        )
 
         if data_file is None:
             console.print("\t :scream: No data file specified!")
@@ -75,12 +79,11 @@ def main(
             )
             exit()  # :thumbs_down:
 
+        nb.main(data_file)  # call the stand-alone network builder
 
-        nb.main(data_file) # call the stand-alone network builder
-
-##########
-# Browser
-##########
+    ##########
+    # Browser
+    ##########
 
     elif client.lower() == "browser":
         console.print("\t browser:\n\t Preparing browser app\n\t :smiley:")
@@ -97,9 +100,9 @@ def main(
             "poetry run streamlit run beagletm2/nbrowser.py -- server.maxUploadSize 200"
         )
 
-#########
-# Parser
-#########
+    #########
+    # Parser
+    #########
 
     elif client.lower() == "parser":
         console.print("\t :sparkles: Parser selected ...")
@@ -180,10 +183,11 @@ def bigHelp():
     console.print(f"\n\t [bold blue] Execute the new browser app")
     console.print(f"\t :poodle: [bold cyan] poetry run beagletm2 --client nbrowser")
 
-
     console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
     # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
-    console.print(f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv")
+    console.print(
+        f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
+    )
 
 
 # end of bigHelp()

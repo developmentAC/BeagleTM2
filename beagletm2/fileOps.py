@@ -241,6 +241,7 @@ def saveCSV(CSV_str, fname_str):
     return myFname_str
     # end of saveCSV()
 
+
 def saveCSV_cli(CSV_str, fname_str):
     # This produces no errors from streamlit when used at command line.
     """Save csv-formatted string to csv file."""
