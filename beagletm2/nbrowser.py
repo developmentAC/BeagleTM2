@@ -64,7 +64,7 @@ def main() -> None:
 
         if (
             doThis_sb == menu_list[0]
-        ):  # putting munu options in this format makes it easier to customize menu option language
+        ):  # putting menu options in this format makes it easier to customize menu option language
             st.title("Showing tables of database ...")
             # st.header(f"{menu_list[0]}")
 

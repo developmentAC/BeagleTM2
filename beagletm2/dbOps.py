@@ -248,6 +248,7 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
     selectedKeys_str = ""
     for i in range(len(selectedKws_list)):
         selectedKeys_str += "_" + selectedKws_list[i]
+    selectedKeys_str = selectedKeys_str.replace(" ","-")    
     selectedKeys_str = selectedKeys_str[1:]
     # st.write(f"{selectedKeys_str}")
 
