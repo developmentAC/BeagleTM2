@@ -1,3 +1,0 @@
-observed
-patterns
-ethic
