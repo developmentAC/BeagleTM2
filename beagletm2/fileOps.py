@@ -7,8 +7,9 @@ import streamlit as st  # for grabfile()
 from beagletm2 import nbrowser
 
 # globals
-dir_str = "0_out/"
-plot_str = "0_out/plots/"
+data_str = "data/" # all input
+dir_str = "0_out/" # all output
+plot_str = "0_out/plots/" # plot output
 
 
 FILE_EXTENTION = "sqlite3"
@@ -205,8 +206,8 @@ def checkDataDir(dir_str):
 def grabFile():
     """Function to allow user to pick data file"""
 
-    st.sidebar.text("Default data directory is :{}".format(dir_str))
-    dataDir_str = st.sidebar.text_input("Enter the path to data file.", dir_str)
+    st.sidebar.text("Default data directory is :{}".format(data_str))
+    dataDir_str = st.sidebar.text_input("Enter the path to data file.", data_str)
     files_list = getFileListing(dataDir_str)
     myFile_str = st.sidebar.selectbox("Load an sqlite3 file", files_list)
 
