@@ -229,4 +229,5 @@ data/
 0_outAnalysis/
 0_out/
 data/
+log/
 poetry.lock
