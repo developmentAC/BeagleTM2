@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "beagletm2"
 version = "0.30.0"
-description = ""
+description = "An analyical system to parse articles and browse created data for the determination of common ideas."
 authors = ["Oliver Bonham-Carter <obonhamcarter@allegheny.edu>"]
 readme = "README.md"
 
