@@ -166,15 +166,7 @@ def selectAllKwsInArticles(myConn):
 
     # sort the keywords to create convenient files from later tasks
     selectedKws_list = sorted(selectedKws_list)
-
-    # what are the keywords to select from?
-    wordNetwork_btn = st.button(
-        "Find articles containing ALL selected keywords in abstracts. Click for all keywords in set."
-    )
-
-    # query pmids from entered keywords
-
-    # st.success(f"Selected keywords :'%{selectedKws_list}%' ")
+    
     myQuery_str = ""
     tmp_str = ""
     try:
@@ -276,28 +268,3 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
 # 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
 
 # end of saveDataAsCSV()
-
-
-# def old_makeNetworkxPlot(filename_str):
-#     """networkx network plotter function"""
-#     st.write(f"Make a networkx plot for file :{filename_str}")
-
-#     # filename_str = "0_out/got-edges.csv"
-#     got_df = pd.read_csv(filename_str)
-#     print(got_df)
-
-#     G = networkx.from_pandas_edgelist(got_df, 'Pmid', 'Reference', 'Weight')
-
-#     # G = networkx.read_edgelist(got_df, delimiter=",",nodetype=int)# data=[("Pmid", "Reference")])
-#     # G = networkx.from_pandas_edgelist(got_df)#, 'Pmid', 'Reference')
-
-#     gotFilename_str = nbrowser.DATADIR + "GOT-network.graphml"
-#     # networkx.write_graphml(G, gotFilename_str)
-#     networkx.draw(G)
-
-#     plt.figure(figsize=(8,8))
-#     networkx.draw(G, with_labels=True, node_color='skyblue', width=.3, font_size=8)
-#     plt.show()
-#     plt.savefig("0_out/mygraph.png")
-#     st.write("plot created?")
-#     # end of makeNetworkxPlot()

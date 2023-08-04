@@ -235,6 +235,7 @@ def saveCSV(CSV_str, fname_str):
     """Save csv-formatted string to csv file."""
     # myFname_str = nbrowser.DATADIR+fname_str
     myFname_str = dir_str + fname_str
+    checkDataDir(dir_str)
     f = open(myFname_str, "w")
     f.write(CSV_str)
     f.close()
@@ -248,6 +249,7 @@ def saveCSV_cli(CSV_str, fname_str):
     """Save csv-formatted string to csv file."""
     # myFname_str = nbrowser.DATADIR+fname_str
     myFname_str = dir_str + fname_str
+    checkDataDir(dir_str)
     f = open(myFname_str, "w")
     f.write(CSV_str)
     f.close()
