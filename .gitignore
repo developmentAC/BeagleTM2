@@ -223,7 +223,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
 # Other files from BeagleTM
 data/
 0_outAnalysis/

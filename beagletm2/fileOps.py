@@ -119,7 +119,6 @@ def saveResultsFromDic(
     except IOError:
         console.print("\t :scream: [bold red] Input/Output error")
         exit()
-    console.print(f"\n\n\n\t :Rocket:[bold yellow] File saved to: {csv_file}")
 
     # word count dic -> csv file
     wordCount_dic = buildWordCountBase(master_dic)
@@ -137,7 +136,7 @@ def saveResultsFromDic(
     except IOError:
         console.print("\t :scream: [bold red] Input/Output error")
         exit()
-    console.print(f"\t :Rocket:[bold yellow] File saved to: {csv_file}")
+    console.print(f"\n\n\t :Rocket:[bold yellow] File saved to: {csv_file}")
 
     return csv_file, wordCsv_file  # return filenames for database maker
 
