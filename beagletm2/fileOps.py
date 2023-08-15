@@ -7,9 +7,9 @@ import streamlit as st  # for grabfile()
 from beagletm2 import nbrowser
 
 # globals
-data_str = "data/" # all input
-dir_str = "0_out/" # all output
-plot_str = "0_out/plots/" # plot output
+data_str = "data/"  # all input
+dir_str = "0_out/"  # all output
+plot_str = "0_out/plots/"  # plot output
 
 
 FILE_EXTENTION = "sqlite3"
@@ -226,8 +226,7 @@ def getFileListing(corpusDir):
     # st.text(" getfileListing : files_list :{}".format(files_list))
     return files_list
 
-
-# end of getFileListing
+    # end of getFileListing
 
 
 def saveCSV(CSV_str, fname_str):
