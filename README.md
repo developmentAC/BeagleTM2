@@ -111,6 +111,17 @@ To run the file using a unix OS, use the following command.
 sh command.sh
 ```
 
+## Creating Network Plots
+BeagleTM2 builds networks from the Streamlit app or by the command line. To build a automated system to make ring plots of the `csv`output files located in `0_out/`, use the following bash script.
+
+``` bash
+for x in `ls 0_out/*.csv`
+
+do
+        echo Processing File: $x
+	poetry run beagletm2  --client builder --data-file $x
+done
+```
 
 
 ## XML Data
