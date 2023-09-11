@@ -118,7 +118,7 @@ BeagleTM2 builds networks from the Streamlit app or by the command line. To buil
 for x in `ls 0_out/*.csv`
 
 do
-        echo Processing File: $x
+    echo Processing File: $x
 	poetry run beagletm2  --client builder --data-file $x
 done
 ```
@@ -149,7 +149,7 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/oa_comm_xml.incr.2
 
 If using Linux or MacOS, Another way to untar the files in bulk is by the following script. This script code can be placed into a file (`bulkUntar.sh`) and run using the command, `sh bulkUntar.sh` at the (Unix) terminal and will place the files into separate directories which must be placed into the `corpus/` directory.
 
-```
+``` bash
 for x in `ls *.tar.gz`
 do
 	tar -vxf $x
