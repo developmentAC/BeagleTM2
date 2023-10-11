@@ -75,13 +75,14 @@ def main() -> None:
             st.text(f"Option: {menu_list[1]}")
             result_str = dbOps.selectAllKwsInArticles(c)
 
-        if doThis_sb == menu_list[2]:
-            st.text(f"Option: {menu_list[2]}")
-            st.balloons()
+        # if doThis_sb == menu_list[2]:
+        #     st.text(f"Option: {menu_list[2]}")
+        #     st.balloons()
 
-        if doThis_sb == menu_list[3]:
-            st.text(f"Option: {menu_list[3]}")
-            st.snow()
+        # if doThis_sb == menu_list[3]:
+        #     st.text(f"Option: {menu_list[3]}")
+        #     st.snow()
+
     else:
         path_in = None
 

@@ -145,6 +145,57 @@ def listCleaner(in_list) -> list:
     # end of listCleaner()
 
 
+
+def CLI_selectAllKwsInArticles(myConn):
+    """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
+    # write query to determine available keywords.
+    myQuery_str = "SELECT keyword, count FROM 'counts';"
+    st.write("Query Code")
+    st.code(myQuery_str, language="bash")
+
+    keyWords_list = sql_executor(myConn, myQuery_str)
+    whatIsThis_str = "Results of query"
+    prettyTabler(keyWords_list, whatIsThis_str)
+    keyWords_list = listCleaner(keyWords_list)
+    # st.success(f"selectAllKwsInArticles() : keywords_list --> {keyWords_list}")
+
+    selectedKws_list = st.multiselect(
+        "Check and Build network",
+        keyWords_list,
+        [],
+    )  # the selected keywords from the user.
+
+    # sort the keywords to create convenient files from later tasks
+    selectedKws_list = sorted(selectedKws_list)
+
+    myQuery_str = ""
+    tmp_str = ""
+    try:
+        myQuery_str = f"SELECT Pmid,\"References\", Title FROM main WHERE keyword LIKE '%{selectedKws_list[0]}%'"
+        if len(selectedKws_list) > 1:  # the list of selected words
+            for i in range(1, len(selectedKws_list), 1):
+                tmp_str = tmp_str + f" AND keyword LIKE '%{selectedKws_list[i]}%'"
+    except Exception:
+        pass
+
+    # myQuery_str =  "SELECT Pmid,keyword FROM main WHERE keyword like "%mRNA%" and keyword like "%observe%";"
+    myQuery_str = myQuery_str + tmp_str
+    st.write("Query Code")
+    st.code(myQuery_str, language="bash")
+
+    pmids_list = sql_executor(myConn, myQuery_str)
+    # pmids_list = listCleaner(pmids_list)
+    whatIsThis_str = "Results of query"
+
+    prettyTabler(pmids_list, whatIsThis_str)  # show results of query
+
+    if st.button("Make Networkx plot of results"):
+        saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
+
+    # end of CLI_selectAllKwsInArticles()
+
+
+
 def selectAllKwsInArticles(myConn):
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
     # write query to determine available keywords.

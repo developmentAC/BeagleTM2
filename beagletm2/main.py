@@ -5,6 +5,7 @@ from rich.console import Console
 import random, typer, os
 from beagletm2 import parser as p
 from beagletm2 import networkBuilder as nb
+from beagletm2 import queryData as qd
 from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
@@ -59,6 +60,32 @@ def main(
     """Driver of the program. The clientType allows the user to select parser version or the parser."""
     console = Console()
     # console.print(f"\t [bold cyan] Client type is <<{client}>>")
+
+
+    #################
+    # Query data
+    #################
+
+    if client.lower() == "query":
+        console.print("\t[bold cyan] Query: \n\t Preparing to complete query. "
+        )
+        console.print("\t Note: the query file is")
+        if data_file is None:
+            console.print("\t :scream: No data file specified!")
+            raise typer.Abort()
+
+        if query_words_file is None:
+            console.print("\t :scream: No word file specified!")
+            raise typer.Abort()
+        
+        # --> the file was specified and it is valid so we should read and check it
+        if data_file.is_file() == False or query_words_file.is_file() == False:
+            console.print(
+                f"\t [bold red]Oh :poop:! Error with data-file loading. Exiting..."
+            )
+            exit()  # :thumbs_down:
+        qd.main(data_file, query_words_file)  # call the stand-alone network builder
+
 
     #################
     # NetworkBuilder
@@ -185,12 +212,13 @@ def bigHelp():
 
     console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
     console.print(
-        f"\t [bold blue] Note the input files from this are the query files which are outputted from the Streamlit app. "
+        f"\t [bold blue] Build plots: Note the input csv files from this are the query files which are outputted\n\t  from the Streamlit app. This option produces files containing nodes\n\t  analysis and figures."
     )
-    # console.print(f"\t :smiley: [bold cyan] poetry run beagletm2 --data-file pmidsRefs_observed_patterns.csv  --query-words-file wordsToQuery_i.md   --client builder")
     console.print(
         f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
     )
+    console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes and plots using the builder option.")
 
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --query-words-file wordsToQuery_i.md ")
 
 # end of bigHelp()
