@@ -146,7 +146,7 @@ def listCleaner(in_list) -> list:
 
 
 
-def CLI_selectAllKwsInArticles(words_df, dataFile_str):
+def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords. This function has to open the database to get the conn."""
     # write query to determine available keywords.
 
@@ -159,12 +159,9 @@ def CLI_selectAllKwsInArticles(words_df, dataFile_str):
     # keyWords_list = sql_executor(myConn, myQuery_str)
     # whatIsThis_str = "Results of query"
 
-    print(f"keyWords_list")
-    input("words ...")
     # sort the keywords to create convenient files from later tasks
     selectedKws_list = sorted(keyWords_list)
     console.print(f"[bold cyan] {selectedKws_list}")
-    input()
     myQuery_str = ""
     tmp_str = ""
     try:
