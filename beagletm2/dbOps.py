@@ -151,7 +151,7 @@ def CLI_selectAllKwsInArticles(myConn):
     # write query to determine available keywords.
     myQuery_str = "SELECT keyword, count FROM 'counts';"
     console.print("[bold cyan] Query Code: ")
-    st.code(myQuery_str, language="bash")
+    console.print(f"[bold yellow] {myQuery_str}")
 
     keyWords_list = sql_executor(myConn, myQuery_str)
     whatIsThis_str = "Results of query"

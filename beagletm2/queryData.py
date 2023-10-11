@@ -26,6 +26,11 @@ def main(dataFile_str: str, wordsToQuery_str : str) -> None:
 
     console.print(f"\t[bold green] Welcome! This is the CLI for querying inputted database files to create the csv output files. These CSV files may be used with the builder option to build node and plot files without using the Streamlit app.")
 
+    console.print(f"\t[bold blue] Data File: {dataFile_str}")
+    console.print(f"\t[bold blue] File of words to query: {wordsToQuery_str}")
+
+
+
     wordsToQuery_str = str(wordsToQuery_str)
 
     got_df = pd.read_csv(wordsToQuery_str)

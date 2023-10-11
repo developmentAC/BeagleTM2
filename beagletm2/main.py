@@ -53,7 +53,7 @@ def main(
     abs_only: bool = True,  # scan only the abstracts?
     save_less: bool = True,  # save first 100 chars of the abstracts in the data?
     # networkBuilder: str = "", # a command line driven network maker similar to the one in the streamlit app
-    query_words_file: Path = typer.Option(
+    words_to_query_file: Path = typer.Option(
         None
     ),  # list of words from which to build a network
 ) -> None:
@@ -69,22 +69,23 @@ def main(
     if client.lower() == "query":
         console.print("\t[bold cyan] Query: \n\t Preparing to complete query. "
         )
-        console.print("\t Note: the query file is")
+        console.print(f"\t[bold yellow] Data File: {data_file}")
         if data_file is None:
             console.print("\t :scream: No data file specified!")
             raise typer.Abort()
 
-        if query_words_file is None:
+        console.print(f"\t[bold yellow] File of words to query: {words_to_query_file}")
+        if words_to_query_file is None:
             console.print("\t :scream: No word file specified!")
             raise typer.Abort()
         
         # --> the file was specified and it is valid so we should read and check it
-        if data_file.is_file() == False or query_words_file.is_file() == False:
+        if data_file.is_file() == False or words_to_query_file.is_file() == False:
             console.print(
                 f"\t [bold red]Oh :poop:! Error with data-file loading. Exiting..."
             )
             exit()  # :thumbs_down:
-        qd.main(data_file, query_words_file)  # call the stand-alone network builder
+        qd.main(data_file, words_to_query_file)  # call the stand-alone network builder
 
 
     #################
@@ -219,6 +220,6 @@ def bigHelp():
     )
     console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes and plots using the builder option.")
 
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --query-words-file wordsToQuery_i.md ")
+    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --words-to-query_file  wordsToQuery_i.md ")
 
 # end of bigHelp()
