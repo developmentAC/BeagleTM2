@@ -48,6 +48,7 @@ console = Console()
 @cli.command()
 def main(
     client: str = "",
+    makePlots: bool = True,
     bighelp: bool = False,
     data_file: Path = typer.Option(None),  # incoming data file for different purposes
     make_db: bool = True,
@@ -86,7 +87,7 @@ def main(
                 f"\t [bold red]Oh :poop:! Error with data-file loading. Exiting..."
             )
             exit()  # :thumbs_down:
-        qd.main(data_file, words_to_query_file)  # call the stand-alone network builder
+        qd.main(data_file, words_to_query_file, makePlots)  # call the stand-alone network builder
 
 
     #################
@@ -221,6 +222,6 @@ def bigHelp():
     )
     console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes\n\t  and plots using the builder option.")
 
-    console.print(f"\t :smiley: [bold red] poetry run beagletm2  --client query --data-file ./data/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file  wordsToQuery_i.md ")
+    console.print(f"\t :smiley: [bold red] poetry run beagletm2  --client query --data-file ./data/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots")
 
 # end of bigHelp()

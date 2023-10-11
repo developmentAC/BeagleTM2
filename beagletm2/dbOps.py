@@ -146,7 +146,7 @@ def listCleaner(in_list) -> list:
 
 
 
-def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
+def CLI_selectAllKwsInArticles(keyWords_list:list, dataFile_str:str, makePlots:bool) -> None:
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords. This function has to open the database to get the conn."""
     # write query to determine available keywords.
 
@@ -161,7 +161,9 @@ def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
 
     # sort the keywords to create convenient files from later tasks
     selectedKws_list = sorted(keyWords_list)
-    console.print(f"[bold cyan] {selectedKws_list}")
+
+    # console.print(f"[bold cyan] {selectedKws_list}")
+
     myQuery_str = ""
     tmp_str = ""
     try:
@@ -175,7 +177,7 @@ def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
     # myQuery_str =  "SELECT Pmid,keyword FROM main WHERE keyword like "%mRNA%" and keyword like "%observe%";"
     myQuery_str = myQuery_str + tmp_str
     console.print("[bold purple] Query Code")
-    console.print(f"myQuery : {myQuery_str}")
+    console.print(f"[bold purple] {myQuery_str}")
 
     pmids_list = sql_executor(myConn, myQuery_str)
     # pmids_list = listCleaner(pmids_list)
@@ -183,13 +185,11 @@ def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
 
     # console.print(f"[bold cyan] {pmids_list}")
 
-    # prettyTabler(pmids_list, whatIsThis_str)  # show results of query
-
-    console.print(f"[bold green] Making a Networkx plot of results")
-    saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
+    if makePlots:
+        console.print(f"[bold green] Making a Networkx plot of results")
+        saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
 
     # end of CLI_selectAllKwsInArticles()
-
 
 
 def selectAllKwsInArticles(myConn):

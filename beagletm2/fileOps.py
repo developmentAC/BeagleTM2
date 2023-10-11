@@ -45,7 +45,7 @@ def listCleaner(in_list:list) -> list:
     """ removes line feeds from list elements, returns a list"""
     my_list = []
     for i in in_list:
-        print(f"listCleaner : {i}")
+        # console.print(f"[bold purple] Now cleaning listCleaner element: {i}")
         my_list.append(i.replace("\n",""))
     return my_list
 
