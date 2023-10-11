@@ -36,7 +36,7 @@ def main(dataFile_str: str, wordsToQuery_str : str) -> None:
     got_df = pd.read_csv(wordsToQuery_str)
     console.print(f"[bold cyan]{got_df}")
 
-    # dbOps.CLI_selectAllKwsInArticles(words)
+    dbOps.CLI_selectAllKwsInArticles(words)
 
 
     # end of main()
