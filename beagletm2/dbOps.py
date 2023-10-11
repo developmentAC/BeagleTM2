@@ -181,12 +181,12 @@ def CLI_selectAllKwsInArticles(keyWords_list, dataFile_str):
     # pmids_list = listCleaner(pmids_list)
     whatIsThis_str = "Results of query"
 
-    console.print(f"[bold cyan] {pmids_list}")
+    # console.print(f"[bold cyan] {pmids_list}")
 
     # prettyTabler(pmids_list, whatIsThis_str)  # show results of query
 
-    # if st.button("Make Networkx plot of results"):
-    #     saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
+    console.print(f"[bold green] Making a Networkx plot of results")
+    saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
 
     # end of CLI_selectAllKwsInArticles()
 
