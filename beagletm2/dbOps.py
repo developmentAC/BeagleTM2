@@ -146,27 +146,30 @@ def listCleaner(in_list) -> list:
 
 
 
-def CLI_selectAllKwsInArticles(myConn):
-    """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
+def CLI_selectAllKwsInArticles(got_df, dataFile_str):
+    """Function to prepare networks of articles which have simultaneous presence of one or more keywords. This function has to open the database to get the conn."""
     # write query to determine available keywords.
+
+    myConn = loadDbGetConn(dataFile_str)
+
     myQuery_str = "SELECT keyword, count FROM 'counts';"
     console.print("[bold cyan] Query Code: ")
     console.print(f"[bold yellow] {myQuery_str}")
 
     keyWords_list = sql_executor(myConn, myQuery_str)
     whatIsThis_str = "Results of query"
-    prettyTabler(keyWords_list, whatIsThis_str)
+    # prettyTabler(keyWords_list, whatIsThis_str)
     keyWords_list = listCleaner(keyWords_list)
     # st.success(f"selectAllKwsInArticles() : keywords_list --> {keyWords_list}")
 
-    selectedKws_list = st.multiselect(
-        "Check and Build network",
-        keyWords_list,
-        [],
-    )  # the selected keywords from the user.
+    # selectedKws_list = st.multiselect(
+    #     "Check and Build network",
+    #     keyWords_list,
+    #     [],
+    # )  # the selected keywords from the user.
 
     # sort the keywords to create convenient files from later tasks
-    selectedKws_list = sorted(selectedKws_list)
+    selectedKws_list = sorted(keyWords_list)
 
     myQuery_str = ""
     tmp_str = ""
@@ -180,17 +183,17 @@ def CLI_selectAllKwsInArticles(myConn):
 
     # myQuery_str =  "SELECT Pmid,keyword FROM main WHERE keyword like "%mRNA%" and keyword like "%observe%";"
     myQuery_str = myQuery_str + tmp_str
-    st.write("Query Code")
-    st.code(myQuery_str, language="bash")
+    console.print("[bold purple] Query Code")
+    console.print(f"{myQuery_str}")
 
-    pmids_list = sql_executor(myConn, myQuery_str)
-    # pmids_list = listCleaner(pmids_list)
-    whatIsThis_str = "Results of query"
+    # pmids_list = sql_executor(myConn, myQuery_str)
+    # # pmids_list = listCleaner(pmids_list)
+    # whatIsThis_str = "Results of query"
 
-    prettyTabler(pmids_list, whatIsThis_str)  # show results of query
+    # prettyTabler(pmids_list, whatIsThis_str)  # show results of query
 
-    if st.button("Make Networkx plot of results"):
-        saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
+    # if st.button("Make Networkx plot of results"):
+    #     saveDataAsCSV(pmids_list, selectedKws_list)  # prep a csv dataframe of results
 
     # end of CLI_selectAllKwsInArticles()
 
