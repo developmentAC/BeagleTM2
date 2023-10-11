@@ -221,6 +221,6 @@ def bigHelp():
     )
     console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes\n\t  and plots using the builder option.")
 
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --words-to-query_file  wordsToQuery_i.md ")
+    console.print(f"\t :smiley: [bold red] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --words-to-query_file  wordsToQuery_i.md ")
 
 # end of bigHelp()
