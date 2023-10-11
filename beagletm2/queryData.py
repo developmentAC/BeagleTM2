@@ -1,6 +1,7 @@
 import typer
 from rich.console import Console
 from beagletm2 import fileOps
+from beagletm2 import dbOps  # database operations
 import pandas as pd
 
 
@@ -28,9 +29,9 @@ def main(dataFile_str: str, wordsToQuery_str : str) -> None:
     wordsToQuery_str = str(wordsToQuery_str)
 
     got_df = pd.read_csv(wordsToQuery_str)
-    print(f"{got_df}")
-    # print(f"type: {type(got_df)}:{got_df}")
+    console.print(f"[bold cyan]{got_df}")
 
+    # dbOps.CLI_selectAllKwsInArticles(words)
 
 
     # end of main()

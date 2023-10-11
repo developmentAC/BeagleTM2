@@ -150,7 +150,7 @@ def CLI_selectAllKwsInArticles(myConn):
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords."""
     # write query to determine available keywords.
     myQuery_str = "SELECT keyword, count FROM 'counts';"
-    st.write("Query Code")
+    console.print("[bold cyan] Query Code: ")
     st.code(myQuery_str, language="bash")
 
     keyWords_list = sql_executor(myConn, myQuery_str)
