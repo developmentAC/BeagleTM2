@@ -111,7 +111,7 @@ def loadDbGetConn(myDBFile_str):
     return c
 
 
-#     # end of loadDbGetConn()
+#   end of loadDbGetConn()
 
 
 def getTablesListing(myConn):
