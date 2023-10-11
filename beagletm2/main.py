@@ -7,6 +7,7 @@ from beagletm2 import parser as p
 from beagletm2 import networkBuilder as nb
 from beagletm2 import queryData as qd
 from beagletm2 import dbOps  # database operations
+
 from pathlib import Path
 
 
@@ -218,7 +219,7 @@ def bigHelp():
     console.print(
         f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
     )
-    console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes and plots using the builder option.")
+    console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes\n\t  and plots using the builder option.")
 
     console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file kw_short_analysis_out_save-less.sqlite3 --words-to-query_file  wordsToQuery_i.md ")
 

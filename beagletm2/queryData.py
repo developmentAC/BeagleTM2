@@ -28,13 +28,18 @@ def main(dataFile_str: str, wordsToQuery_str : str) -> None:
 
     console.print(f"\t[bold blue] Data File: {dataFile_str}")
     console.print(f"\t[bold blue] File of words to query: {wordsToQuery_str}")
+    
 
-    wordsToQuery_str = str(wordsToQuery_str)
+    # wordsToQuery_str = str(wordsToQuery_str)
 
-    got_df = pd.read_csv(wordsToQuery_str)
-    console.print(f"[bold cyan]{got_df}")
+    # got_df = pd.read_csv(wordsToQuery_str)
+    # console.print(f"[bold cyan]{got_df}")
 
-    dbOps.CLI_selectAllKwsInArticles(got_df, dataFile_str)
+    wordsToQuery_str = open(wordsToQuery_str,"r").readlines()
+    wordsToQuery_str = fileOps.listCleaner(wordsToQuery_str)
+
+    console.print(f"[bold yellow] word list is :{wordsToQuery_str}")
+    # dbOps.CLI_selectAllKwsInArticles(got_df, dataFile_str)
 
 
     # end of main()
