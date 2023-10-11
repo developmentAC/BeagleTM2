@@ -148,16 +148,8 @@ def listCleaner(in_list) -> list:
 
 def CLI_selectAllKwsInArticles(keyWords_list:list, dataFile_str:str, makePlots:bool) -> None:
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords. This function has to open the database to get the conn."""
-    # write query to determine available keywords.
 
     myConn = loadDbGetConn(dataFile_str)
-
-    # myQuery_str = "SELECT keyword, count FROM 'counts';"
-    # console.print("[bold cyan] Query Code: ")
-    # console.print(f"[bold yellow] {myQuery_str}")
-
-    # keyWords_list = sql_executor(myConn, myQuery_str)
-    # whatIsThis_str = "Results of query"
 
     # sort the keywords to create convenient files from later tasks
     selectedKws_list = sorted(keyWords_list)

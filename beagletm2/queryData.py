@@ -24,7 +24,11 @@ console = Console()
 def main(dataFile_str: str, wordsToQuery_str : str, makePlots_bool: bool) -> None:
     """Main driver function to query main database to create the csv output files which are used to build networks without having to use Streamlit. Note the data_file is a sqlite3 database file and the file wordsToQuery_str is a file of words (going line by line) to be queried to the database. """
 
-    console.print(f"\t[bold green] Welcome! This is the CLI for querying inputted database files to create the csv output files. These CSV files may be used with the builder option to build node and plot files without using the Streamlit app.")
+    console.print(f"""
+                  \t[bold green] Welcome! This is the CLI for querying inputted database files
+                   to create the csv output files. These CSV files may be used with the builder 
+                   option to build node and plot files without using the Streamlit app.
+                  """)
 
     # console.print(f"\t[bold blue] Data File: {dataFile_str}")
     # console.print(f"\t[bold blue] File of words to query: {wordsToQuery_str}")
