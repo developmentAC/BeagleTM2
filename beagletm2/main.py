@@ -63,14 +63,12 @@ def main(
     console = Console()
     # console.print(f"\t [bold cyan] Client type is <<{client}>>")
 
-
     #################
     # Query data
     #################
 
     if client.lower() == "query":
-        console.print("\t[bold cyan] Query: \n\t Preparing to complete query. "
-        )
+        console.print("\t[bold cyan] Query: \n\t Preparing to complete query. ")
         console.print(f"\t[bold yellow] Data File: {data_file}")
         if data_file is None:
             console.print("\t :scream: No data file specified!")
@@ -80,15 +78,16 @@ def main(
         if words_to_query_file is None:
             console.print("\t :scream: No word file specified!")
             raise typer.Abort()
-        
+
         # --> the file was specified and it is valid so we should read and check it
         if data_file.is_file() == False or words_to_query_file.is_file() == False:
             console.print(
                 f"\t [bold red]Oh :poop:! Error with data-file loading. Exiting..."
             )
             exit()  # :thumbs_down:
-        qd.main(data_file, words_to_query_file, makePlots)  # call the stand-alone network builder
-
+        qd.main(
+            data_file, words_to_query_file, makePlots
+        )  # call the stand-alone network builder
 
     #################
     # NetworkBuilder
@@ -220,8 +219,13 @@ def bigHelp():
     console.print(
         f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
     )
-    console.print(f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes\n\t  and plots using the builder option.")
+    console.print(
+        f"\n\t [bold blue] Query keywords in database -- builds the csv files used to produce nodes\n\t  and plots using the builder option."
+    )
 
-    console.print(f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file ./data/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots")
+    console.print(
+        f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file ./data/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots"
+    )
+
 
 # end of bigHelp()

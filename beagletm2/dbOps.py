@@ -145,8 +145,9 @@ def listCleaner(in_list) -> list:
     # end of listCleaner()
 
 
-
-def CLI_selectAllKwsInArticles(keyWords_list:list, dataFile_str:str, makePlots:bool) -> None:
+def CLI_selectAllKwsInArticles(
+    keyWords_list: list, dataFile_str: str, makePlots: bool
+) -> None:
     """Function to prepare networks of articles which have simultaneous presence of one or more keywords. This function has to open the database to get the conn."""
 
     myConn = loadDbGetConn(dataFile_str)

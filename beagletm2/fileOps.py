@@ -41,15 +41,17 @@ def openFile(data_file: str) -> list:
 
 # end of openFile()
 
-def listCleaner(in_list:list) -> list:
-    """ removes line feeds from list elements, returns a list"""
+
+def listCleaner(in_list: list) -> list:
+    """removes line feeds from list elements, returns a list"""
     my_list = []
     for i in in_list:
         # console.print(f"[bold purple] Now cleaning listCleaner element: {i}")
-        my_list.append(i.replace("\n",""))
+        my_list.append(i.replace("\n", ""))
     return my_list
 
     # end of listcleaner()
+
 
 def openArticleFile(inFile1):
     """open a text file, return string"""
