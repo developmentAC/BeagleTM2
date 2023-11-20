@@ -1,31 +1,23 @@
 The Readme file
 # BeagleTM2: PubMed Interactive Knowledge Discovery
-## Date: 1 Sept 2023
+## Date: 20 November 2023
 ### Oliver Bonham-Carter, [Allegheny College](https://allegheny.edu/)
 ### email: obonhamcarter@allegheny.edu
 
-
-Special note: files containing code from the former BeagleTM have been temporarily added.
-The below files for browser are to be removed or reworked.
-+ beagleTM_browser.py
-+ beagleTM_browser_helperCode.py
-+ statEval.py
-
-
 ---
+
 ![logo](graphics/beagletm2_logo.png)
----
 
+---
 
 ## Table of contents
 
 * [Overview](#overview)
-* + [Relationship Networks](#relationship-networks)
+    * [Relationship Networks](#relationship-networks)
 
 ## Overview
 
 BeagleTM is an interactive text mining tool to facilitate discovery of knowledge in [PubMed](https://pubmed.ncbi.nlm.nih.gov/) peer-reviewed articles. In addition to locating the articles according to their abstracts, BeagleTM also connects articles based by the common language between them. The results of BeagleTM are connected networks which could be used as a starting place for a literature review at the beginning of the project.
-
 
 BeagleTM Named after my puppy Beagle, Flint, who spends all his time rooting all around with his nose to the ground. By an exhaustive study of seemingly all words of the abstracts of articles, connections and discoveroies can be made between references.
 
