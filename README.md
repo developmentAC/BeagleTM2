@@ -5,6 +5,7 @@ The Readme file
 ### email: obonhamcarter@allegheny.edu
 
 ---
+*Automatically read the works of thousands of researchers to connect their ideas!*
 
 ![logo](graphics/beagletm2_logo.png)
 
@@ -14,6 +15,7 @@ The Readme file
 
 * [Overview](#overview)
     * [Relationship Networks](#relationship-networks)
+    * [Connectivity Networks](connectivity-networks)
 
 ## Overview
 
@@ -21,11 +23,9 @@ BeagleTM is an interactive text mining tool to facilitate discovery of knowledge
 
 BeagleTM Named after my puppy Beagle, Flint, who spends all his time rooting all around with his nose to the ground. By an exhaustive study of seemingly all words of the abstracts of articles, connections and discoveroies can be made between references.
 
-
 BeagleTM has been designed to discover knowledge in PubMed articles and supporting references for the convenient creation of sophisticated literature reviews. The data for BeagleTM comes from curated article data made available from PubMed's [ftp site at ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/](ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/).
 
 Text mining article information with BeagleTM involves two steps: _Parsing_ and _Analyzing_. During _parsing_, abstracts from the corpus documents are checked for their keyword content. Results are saved in an output document which undergo _analysis_ to find relationship networks (i.e., the interconnections between the knowledge of articles according to keyword content). These inter-relationships concern common themes of studies, articles of similar keywords, articles which are connected by common references and other types of bridges that serve to combine the intricate facts of knowledge areas.
-
 
 ### Relationship Networks
 
@@ -45,6 +45,21 @@ Figure 2: A screenshot of the red (main articles) and blue (supporting reference
 
 Heatmaps are also available in which articles may be discovered according to their counts of supplied keywords, as shown in Figure 3.
 
+---
+
+### Connectivity Networks
+
+We use *Connectivity Networks* to get a birds eye view of the numbers of connections that exist between articles conforming to particular searches. Shown in Figure 3, there is a Connectivity Network in which the whole circle is aligned with articles in which search keys were found. The nodes are the articles where several keywords were found simulataneously, and are therefore more influential articles in terms of their utilization of the keywords.
+
+We may use these Connectivity Networks to gain an understanding about the amount of material and coverage there is in the literature concerning the keywords.
+
+
+![Small Connection Network](graphics/connectionnetwork1_small.png)
+Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. Te nodes represent the articles having at least five (change this value from the code) keywords from the search present in them. These nodes therefore represent those articles which are more closely tied to the searchable keywords.
+
+
+![Small Connection Network](graphics/connection-network1_large.png)
+Figure 4: Here we note a larger, more connected Connectivity Network wih respect to their associated search keywords across the literature. The number of edges suggests that there are many more articles which share usage of keywords. 
 
 ## Command Summary
 
