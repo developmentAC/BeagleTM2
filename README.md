@@ -45,7 +45,6 @@ Figure 1: The articles relating to keywords create a body of knowledge. Main art
 
 Shown in Figure 2, a mouse-over action of each node shows some metadata behind the nodes. In the case of red nodes (main articles), a title may be displayed which also serves as a link to the article at PubMed. In the case of blue nodes (reference articles), only a link to the article at PubMed may be obtained; the title information was not available during the text-mining process of the articles.
 
-
 ![Titles may be found in the networks, File mouseOver.png](graphics/mouseOver.png)
 Figure 2: A screenshot of the red (main articles) and blue (supporting references). A mouse-over gives a title and link for red nodes and only a link for blue nodes.
 
@@ -58,7 +57,6 @@ Heatmaps are also available in which articles may be discovered according to the
 We may use Connectivity Networks to gain an understanding about the amount of common material that exists between articles in terms of the utilization of their keywords. While, we do not get the titles of the articles themselves (see Relationship Networks for this information), we are able to estimate the amount of coverage there is for selected keywords. Note: in many cases, the fewer keywords allow for more specific focus with these kinds of networks.
 
 We use *Connectivity Networks* to get a birds eye view of the numbers of keywords that are present in an article. Other articles with the same keywords share an edge. A Connectivity Network is shown in Figure 3. In the plot, each article in the corpus that contains keywords from the search align the circle. The nodes are the articles where several keywords were found simultaneously, and are therefore more influential articles due to their abundance of selected keywords.
-
 
 ![Small Connection Network](graphics/connectionnetwork1_small.png)
 Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. The nodes represent the articles having at least a specified number keywords in the article, and the edges connect these articles to other articles with the same keywords. Note: node degree threshold can be changed in the `networkBuilder.py` on the line beginning with, `row["degree"] > 3:`. These nodes therefore represent the articles which are more closely tied to the searchable keywords and each other.
@@ -75,9 +73,9 @@ There are three main functions of the software.
 ### Functions
 
 * *Parser* to find keywords in articles and create own data files for later analysis 
-    + Parser: App for searching for keywords in articles. Note: you must include a file containing keywords (where each keyword is on own line of the text file).
+    * Parser: App for searching for keywords in articles. Note: you must include a file containing keywords (where each keyword is on own line of the text file).
 * Data *Browser*
-    + Browser: Streamlit App to visualize data after parsing jobs
+    * Browser: Streamlit App to visualize data after parsing jobs
 * Stand alone network builder to complete the same networks as the browser but without *having to use* the browser. This feature allows network-building jobs to be automatically run in a pipeline from the command line.
 
 ### Initial Installations
@@ -89,7 +87,6 @@ After cloning this repository to your computer, please complete the following in
   - [Python 3 Installation and Setup Guide](https://realpython.com/installing-python/)
   - [How to Install Python 3 and Set Up a Local Programming Environment on Windows 10](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)
 - Install `VSCode` or another editor, as necessary. See [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)
-
 
 ### Command Summary
 
@@ -231,6 +228,6 @@ done
 
 ## A work in progress
 
-Check back often to see the evolution of the project!! BeagleTM is a work-in-progress. Updates to the methods and tests for the code will come soon and I will continue to update the repository with updates. If you would like to contribute to this project, __then please do!__ For instance, if you see some low-hanging fruit or task that you could easily complete, that could add value to the project, then I would love to have your insight.
+Check back often to see the evolution of the project!! BeagleTM2 is a work-in-progress. Updates to the methods and tests for the code will come soon and I will continue to update the repository with updates. If you would like to contribute to this project, __then please do!__ For instance, if you see some low-hanging fruit or task that you could easily complete, that could add value to the project, then I would love to have your insight.
 
 Otherwise, please create an Issue for bugs or errors. Since I am a teaching faculty member at Allegheny College, I may not have all the time necessary to quickly fix the bugs and so I would be very happy to have any help that I can get from the OpenSource community for any technological insight. Much thanks in advance. I hope that this project helps you find the knowledge from PubMed that you require for your project. :-)
