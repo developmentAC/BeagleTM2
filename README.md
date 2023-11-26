@@ -21,7 +21,7 @@ The Readme file
     * [Functions](#functions)
     * [Command Summary](#command-summary)
     * [Corpus](#corpus)
-    *[Setting up the Corpus](#Setting-up-the-corpus)
+    * [Setting up the Corpus](#Setting-up-the-corpus)
 
 ## Overview
 
