@@ -22,7 +22,7 @@ The Readme file
     * [Command Summary](#command-summary)
     * [Corpus](#corpus)
     * [Setting up the Corpus](#Setting-up-the-corpus)
-
+    * [Citations](#citations)
 ## Overview
 
 BeagleTM is an interactive text mining tool to facilitate discovery of knowledge in [PubMed](https://pubmed.ncbi.nlm.nih.gov/) peer-reviewed articles. In addition to locating the articles according to their abstracts, BeagleTM also connects articles based by the common language between them. The results of BeagleTM are connected networks which could be used as a starting place for a literature review at the beginning of the project.
@@ -222,6 +222,12 @@ done
 * Once these files have been downloaded, the `xml` files must be extracted (i.e., an untarring step). The command, `tar -zxvf filename.tar.gx` can handle this step. If there are several files, then wildcards may be used: `tar -zxvf *.tar.gz`. This untarring step can be run in the Docker container which is automatically setup with `untar`.
 
 * Once the xml files have been extracted, move/copy them to `beagleTM2/src/corpus/` so that BeagleTM2 will be able to find the corpus of articles. Note: This path to the corpus directory has been hardcoded in the `parser.py`, can can be changed as necessary (see `CORPUS_DIR` variable).
+
+## Citations
+
+* Bonham-Carter, Oliver. "BeagleTM: An adaptable text mining method for relationship discovery in literature." Advances in Information and Communication: Proceedings of the 2020 Future of Information and Communication Conference (FICC), Volume 2. Springer International Publishing, 2020.
+
+* (Accepted) Bonham-Carter, Oliver. "Text Analysis of Ethical Influence in Bioinformatics and its Related Disciplines." Advances in Information and Communication: Proceedings of the 2024 Future of Information and Communication Conference (FICC), Springer International Publishing, 2024.
 
 ## A work in progress
 
