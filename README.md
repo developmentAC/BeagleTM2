@@ -5,7 +5,7 @@ The Readme file
 ### email: obonhamcarter@allegheny.edu
 
 ---
-*Automatically read the works of thousands of researchers to connect their ideas!*
+*Automatically read the works of hundreds of thousands of researchers to see how their ideas connect to other researchers!*
 
 ![logo](graphics/beagletm2_logo.png)
 
@@ -49,13 +49,12 @@ Heatmaps are also available in which articles may be discovered according to the
 
 ### Connectivity Networks
 
-We use *Connectivity Networks* to get a birds eye view of the numbers of connections that exist between articles conforming to particular searches. Shown in Figure 3, there is a Connectivity Network in which the whole circle is aligned with articles in which search keys were found. The nodes are the articles where several keywords were found simulataneously, and are therefore more influential articles in terms of their utilization of the keywords.
+We use *Connectivity Networks* to get a birds eye view of the numbers of keywords that are present in an article. Other articles with the same keywords share an edge. A Connectivity Network is shown in Figure 3. In the plot, each article in the corpus that contains keywords from the search align the circle. The nodes are the articles where several keywords were found simultaneously, and are therefore more influential articles due to their abundance of selected keywords.
 
 We may use these Connectivity Networks to gain an understanding about the amount of material and coverage there is in the literature concerning the keywords.
 
-
 ![Small Connection Network](graphics/connectionnetwork1_small.png)
-Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. Te nodes represent the articles having at least five (change this value from the code) keywords from the search present in them. These nodes therefore represent those articles which are more closely tied to the searchable keywords.
+Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. The nodes represent the articles having at least a specified number keywords in the article, and the edges connect these articles to other articles with the same keywords. Note: node degree threshold can be changed in the `networkBuilder.py` on the line beginning with, `row["degree"] > 3:`. These nodes therefore represent the articles which are more closely tied to the searchable keywords and each other.
 
 
 ![Small Connection Network](graphics/connection-network1_large.png)
