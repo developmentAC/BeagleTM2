@@ -49,9 +49,10 @@ Heatmaps are also available in which articles may be discovered according to the
 
 ### Connectivity Networks
 
+We may use Connectivity Networks to gain an understanding about the amount of common material that exists between articles in terms of the utilization of their keywords. While, we do not get the titles of the articles themselves (see Relationship Networks for this information), we are able to estimate the amount of coverage there is for selected keywords. Note: in many cases, the fewer keywords allow for more specific focus with these kinds of networks.
+
 We use *Connectivity Networks* to get a birds eye view of the numbers of keywords that are present in an article. Other articles with the same keywords share an edge. A Connectivity Network is shown in Figure 3. In the plot, each article in the corpus that contains keywords from the search align the circle. The nodes are the articles where several keywords were found simultaneously, and are therefore more influential articles due to their abundance of selected keywords.
 
-We may use these Connectivity Networks to gain an understanding about the amount of material and coverage there is in the literature concerning the keywords.
 
 ![Small Connection Network](graphics/connectionnetwork1_small.png)
 Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. The nodes represent the articles having at least a specified number keywords in the article, and the edges connect these articles to other articles with the same keywords. Note: node degree threshold can be changed in the `networkBuilder.py` on the line beginning with, `row["degree"] > 3:`. These nodes therefore represent the articles which are more closely tied to the searchable keywords and each other.
