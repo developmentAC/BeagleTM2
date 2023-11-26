@@ -103,18 +103,10 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     plt.savefig(figFilename_str)
     console.print(f"[bold green]\n\t Saved figfile : [bold yellow]{figFilename_str} ")
 
-    # try:
-    #     openPage(figFilename_str)
-
-    # except Exception:
-    #     pass
-
-    # get nodes for which degree greater than a value.
-
     highDegreeNodes_list = []  # used for plotting
     highDegreeNodes_str = "node, degree\n"  # save the degrees as csv format
     for index, row in degree_df.iterrows():
-        if row["degree"] > 3:
+        if row["degree"] > 3: # Focus on all nodes having at least 3 (here, for example) degrees
             highDegreeNodes_list.append(row["node"])
             highDegreeNodes_str = (
                 highDegreeNodes_str + str(row["node"]) + "," + str(row["degree"]) + "\n"
@@ -164,11 +156,5 @@ def makeNetworkxPlot_nonSTREAMLIT(filename_str):
     )
     plt.savefig(figFilename_str)
     console.print(f"[bold green]\t Saved figfile : [bold yellow]{figFilename_str} ")
-
-    # try:
-    #     openPage(figFilename_str)
-
-    # except Exception:
-    #     pass
 
     # end of makeNetworkxPlot()
