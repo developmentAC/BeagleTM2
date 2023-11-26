@@ -59,7 +59,7 @@ Figure 3: Aligning the circle are all found articles from the literature in whic
 
 
 ![Small Connection Network](graphics/connection-network1_large.png)
-Figure 4: Here we note a larger, more connected Connectivity Network wih respect to their associated search keywords across the literature. The number of edges suggests that there are many more articles which share usage of keywords. 
+Figure 4: Here we note a larger, more tied-up Connectivity Network wih respect to their associated search keywords across the literature. The number of edges suggests that there are many more articles which share a common usage of keywords. 
 
 ## Command Summary
 
@@ -70,7 +70,7 @@ There are two main functions of the software.
     + Browser: App to visualize data after parsing job.
 
 
-Below are commands to run BeagleTM using a Docker container which houses all necessary libraries and software for BeagleTM.
+Below are commands to run BeagleTM2 using a Docker container which houses all necessary libraries and software for BeagleTM.
 
 
 * Get help to run the program
