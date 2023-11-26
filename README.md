@@ -15,7 +15,13 @@ The Readme file
 
 * [Overview](#overview)
     * [Relationship Networks](#relationship-networks)
-    * [Connectivity Networks](connectivity-networks)
+    * [Connectivity Networks](#connectivity-networks)
+    * [Overview](#overview)
+    * [Running the Software](#running-the-software)
+    * [Functions](#functions)
+    * [Command Summary](#command-summary)
+    * [Corpus](#corpus)
+    *[Setting up the Corpus](#Setting-up-the-corpus)
 
 ## Overview
 
@@ -57,47 +63,100 @@ We use *Connectivity Networks* to get a birds eye view of the numbers of keyword
 ![Small Connection Network](graphics/connectionnetwork1_small.png)
 Figure 3: Aligning the circle are all found articles from the literature in which keywords from the search were found. The nodes represent the articles having at least a specified number keywords in the article, and the edges connect these articles to other articles with the same keywords. Note: node degree threshold can be changed in the `networkBuilder.py` on the line beginning with, `row["degree"] > 3:`. These nodes therefore represent the articles which are more closely tied to the searchable keywords and each other.
 
-
 ![Small Connection Network](graphics/connection-network1_large.png)
-Figure 4: Here we note a larger, more tied-up Connectivity Network wih respect to their associated search keywords across the literature. The number of edges suggests that there are many more articles which share a common usage of keywords. 
+Figure 4: Here we note a larger, more tied-up Connectivity Network wih respect to their associated search keywords across the literature. The number of edges suggests that there are many more articles which share a common usage of keywords.
 
-## Command Summary
+---
 
-There are two main functions of the software.
+## Running the Software
 
-* Client: Parser or Browser
-    + Parser: App for searching for keywords in articles. Note: you must include a keyword file.
-    + Browser: App to visualize data after parsing job.
+There are three main functions of the software.
 
+### Functions
+
+* *Parser* to find keywords in articles and create own data files for later analysis 
+    + Parser: App for searching for keywords in articles. Note: you must include a file containing keywords (where each keyword is on own line of the text file).
+* Data *Browser*
+    + Browser: Streamlit App to visualize data after parsing jobs
+* Stand alone network builder to complete the same networks as the browser but without *having to use* the browser. This feature allows network-building jobs to be automatically run in a pipeline from the command line.
+
+### Initial Installations
+
+After cloning this repository to your computer, please complete the following installations, if not done previously, before starting the work on the assignment:
+
+- Install Python. Please see:
+  - [Setting Up Python on Windows](https://realpython.com/lessons/python-windows-setup/)
+  - [Python 3 Installation and Setup Guide](https://realpython.com/installing-python/)
+  - [How to Install Python 3 and Set Up a Local Programming Environment on Windows 10](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)
+- Install `VSCode` or another editor, as necessary. See [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)
+
+
+### Command Summary
+
+* The whole project was written in poetry. To engage poetry initially, use the following command from the root of the project. Note: the *root of the project* is the directory where the file, `pyproject.toml` resides.
+
+`poetry install`
 
 Below are commands to run BeagleTM2 using a Docker container which houses all necessary libraries and software for BeagleTM.
 
+* Help to run the project.
 
-* Get help to run the program
+``` bash
+poetry run beagletm2 --help
 ```
+
+* See commands with example parameters with a demo data file
+
+``` bash
 poetry run beagletm2 --bighelp
 ```
 
 * Execute, process abstracts only
 
-    ```
-    poetry run beagletm2 --client parser --data-file kw_short.md --abs-only
-    ```
+``` bash
+poetry run beagletm2 --client parser --data-file kw_short.md --abs-only
+```
 
 * Execute, process abstracts only and create db from results.
-    ```
-    poetry run beagletm2 --client parser --data-file kw_short.md --make-db --abs-only
-    ```
+
+``` bash
+poetry run beagletm2 --client parser --data-file kw_short.md --make-db --abs-only
+```
 
 * Execute, process whole articles.
-    ```
-    poetry run beagletm2 --client parser --data-file kw_short.md --no-abs-only
-    ```
+
+``` bash
+poetry run beagletm2 --client parser --data-file kw_short.md --no-abs-only
+```
 
 * Execute, process whole articles and create db from results of smaller size. (Most commonly used 😃)
-    ```
-    poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less
-    ```
+
+``` bash
+poetry run beagletm2 --client parser --data-file kw_short.md --make-db --no-abs-only --save-less
+```
+
+* Execute the former browser app
+
+``` bash
+poetry run beagletm2 --client browser
+```
+
+* Execute the new browser app
+``` bash
+poetry run beagletm2 --client nbrowser
+```
+
+* Network builder -- builds maps without Streamlit. Build plots: Note the input csv files from this are the query files which are outputted from the Streamlit app. This option produces files containing nodes, analysis and figures.
+
+``` bash
+poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv
+```
+
+* Query keywords in database -- builds the csv files used to produce nodes and plots using the builder option.
+
+``` bash
+poetry run beagletm2  --client query --data-file ./data kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots
+```
 
 ## Run a series of tasks
 
@@ -105,20 +164,18 @@ If you want to run several different jobs using the same corpus, create a batch 
 
 File: __command.sh__
 
-```
+``` bash 
 mkdir log
+
 mkdir 0_out
+
 poetry run beagletm2 --client parser --data-file kw_genPurposeEthics.md --make-db --no-abs-only --save-less  1>log/1_gen.md 2>log/2_gen.md &
+
 poetry run beagletm2 --client parser --data-file kwClimateChange_i.md --make-db --no-abs-only --save-less 1>log/1_climate.md 2>log/2_climate.md &
 ```
 
-To run the file using a unix OS, use the following command.
-
-```
-sh command.sh
-```
-
 ## Creating Network Plots
+
 BeagleTM2 builds networks from the Streamlit app or by the command line. To build a automated system to make ring plots of the `csv`output files located in `0_out/`, use the following bash script.
 
 ``` bash
@@ -130,27 +187,26 @@ do
 done
 ```
 
+## Corpus
 
-## XML Data
-
-NCBI offers bulk downloads of literature in two types of  packages: _commercial_ and _non-commercial_. Please see https://ftp.ncbi.nlm.nih.gov/pub/pmc/readme.txt for more information.
+NCBI offers bulk downloads of literature in two types of packages: _commercial_ and _non-commercial_. Please see https://ftp.ncbi.nlm.nih.gov/pub/pmc/readme.txt for more information.
 
 BeagleTM has been designed to work with the xml files which are found in the `*.tar.gz` files. These `tar.gz` files files may be found at the below online repositories.
 
-+ _Commercially_ available
- + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/
+* _Commercially_ available
+  + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/
 
-+ _Non-Commercially_ availably
- + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_noncomm/xml/
+* _Non-Commercially_ availably
+  + https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_noncomm/xml/
 
-+ _FTP_ site
- + ftp://ftp.ncbi.nlm.nih.gov/pub/pmc
+* _FTP_ site
+  + ftp://ftp.ncbi.nlm.nih.gov/pub/pmc
 
-## Setting up the corpus
+## Setting up the Corpus
 
-+ Make a directory to store your downloaded files such as `src/myDownloadedCorpusFiles/` and use your browser to download the tar.gz data files from one of the above links. Be sure to store these files in a place where you can conveniently work with them. In addition, bash commands such as the below example may be employed to automate a download. This process cannot be easily automated due to changing filenames at the NCBI.
++ Make a directory to store your downloaded files such as `src/myDownloadedCorpusFiles/` and use your browser to download the `tar.gz` data files from one of the above links. Be sure to store these files in a place where you can conveniently work with them. In addition, bash commands such as the below example may be employed to automate a download. This process cannot be easily automated due to changing filenames at the NCBI, but it might resemble the following
 
-```
+``` bash
 wget https://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/oa_comm/xml/oa_comm_xml.incr.2022-03-07.tar.gz
 ```
 
@@ -163,10 +219,9 @@ do
 done
 ```
 
+* Once these files have been downloaded, the `xml` files must be extracted (i.e., an untarring step). The command, `tar -zxvf filename.tar.gx` can handle this step. If there are several files, then wildcards may be used: `tar -zxvf *.tar.gz`. This untarring step can be run in the Docker container which is automatically setup with `untar`.
 
-+ Once these files have been downloaded, the `xml` files must be extracted (i.e., an untarring step). The command, `tar -zxvf filename.tar.gx` can handle this step. If there are several files, then wildcards may be used: `tar -zxvf *.tar.gz`. This untarring step can be run in the Docker container which is automatically setup with `untar`.
-
-+ Once the xml files have been extracted, move/copy them to `beagleTM/src/corpus/` so that BeagleTM will be able to find them. This path to the corpus directory has been hardcoded in the `beagleTM2_parser_helperCode.py`, however, if using an external hard drive or similar, the corpus path could be altered by updating the global variable, `CORPUS_DIR` as shown below.
+* Once the xml files have been extracted, move/copy them to `beagleTM2/src/corpus/` so that BeagleTM2 will be able to find the corpus of articles. Note: This path to the corpus directory has been hardcoded in the `parser.py`, can can be changed as necessary (see `CORPUS_DIR` variable).
 
 ## A work in progress
 

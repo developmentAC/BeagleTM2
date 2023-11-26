@@ -11,8 +11,8 @@ from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
 
-DATE = "11 October 2023"
-VERSION = "0.40.1"
+DATE = "25 November 2023"
+VERSION = "0.42.1"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
@@ -212,9 +212,9 @@ def bigHelp():
     console.print(f"\n\t [bold blue] Execute the new browser app")
     console.print(f"\t :poodle: [bold cyan] poetry run beagletm2 --client nbrowser")
 
-    console.print(f"\n\t [bold blue] Network builder -- builds maps without streamlit")
+    console.print(f"\n\t [bold blue] Network builder -- builds maps without Streamlit")
     console.print(
-        f"\t [bold blue] Build plots: Note the input csv files from this are the query files which are outputted\n\t  from the Streamlit app. This option produces files containing nodes\n\t  analysis and figures."
+        f"\t [bold blue] Build plots: Note the input csv files from this are the query files which are outputted\n\t  from the Streamlit app. This option produces files containing nodes,\n\t  analysis and figures."
     )
     console.print(
         f"\t :wolf: [bold cyan] poetry run beagletm2  --client builder --data-file pmidsRefs_observed_patterns.csv"
