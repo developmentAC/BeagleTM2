@@ -116,6 +116,7 @@ def main(
 
     elif client.lower() == "browser":
         console.print("\t browser:\n\t Preparing browser app\n\t :smiley:")
+        os.system(" pwd > mypath.txt") # 28Feb2024
         os.system("poetry run streamlit run beagletm2/beagleTM2_browser.py")
         exit()
 
