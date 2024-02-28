@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 DATE = "28 February 2024"
-VERSION = "0.42.1"
+VERSION = "0.42.3"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
