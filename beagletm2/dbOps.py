@@ -24,11 +24,18 @@ def main(csv_file: str, wordCsv_file: str) -> None:
     """driver function"""
     dbfname_str = csv_file.replace(".csv", ".sqlite3")  # database filename
 
+    # create the database; add "main" table
     tableName_str = "main"
     builder(dbfname_str, csv_file, tableName_str)  # build the first database
 
+    # add the "counts" table to the created database
     tableName_str = "counts"
     builder(dbfname_str, wordCsv_file, tableName_str)  # build the first database
+
+    console.print(
+        f"\n\t :package:[bold green] Completed creation of SQL database from cvs file :{dbfname_str}"
+    )
+
 
     # end of main()
 
@@ -36,12 +43,6 @@ def main(csv_file: str, wordCsv_file: str) -> None:
 def builder(dbfname_str: str, csvFile_str: str, tableName_str: str) -> None:
     """driver function"""
     # console.print(f"\n\t :sparkles:[bold cyan] Making a SQL database from results.")
-
-    console.print(
-        f"\n\t :package:[bold green] Making a SQL database from cvs file :{dbfname_str}"
-    )
-
-    # fname = input("Enter name of the analysis file: ")
 
     fileOps.checkDataDir(
         dir_str
