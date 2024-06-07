@@ -180,9 +180,9 @@ def bigHelp():
     console.print("\n\t[bold yellow] Client: Parser or Browser")
 
     console.print(
-        "\t [bold blue] * Parser: App for searching for keywords in articles. Note: you must include a keyword file."
+        "\t *[bold yellow] Parser:[bold blue] App for searching for keywords in articles. Note: you must include a keyword file."
     )
-    console.print("\t [bold blue] * Browser: App to visualize data after parsing job.")
+    console.print("\t *[bold yellow] Browser: [bold blue] App to visualize data after parsing job.")
 
     console.print(f"\n\t [bold blue] Execute, process abstracts only")
     console.print(
@@ -225,8 +225,8 @@ def bigHelp():
     )
 
     console.print(
-        f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file ./data/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots"
+        f"\t :smiley: [bold cyan] poetry run beagletm2  --client query --data-file ./0_out/kw_short_analysis_out_save-less.sqlite3 --words-to-query-file wordsToQuery.md --makeplots"
     )
-
+    console.print("\t :hand: [bold yellow] Note: Each command from above is to be entered on one line.[/bold yellow]")
 
 # end of bigHelp()
