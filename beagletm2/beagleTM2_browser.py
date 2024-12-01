@@ -33,7 +33,7 @@ import beagleTM2_browser_helperCode as hc
 import statEval as myStats
 
 DATE = "1 December 2024"
-VERSION = "0.2.9"
+VERSION = "v1.0.0"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
