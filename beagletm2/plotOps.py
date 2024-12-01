@@ -23,6 +23,9 @@ def makeNetworkxPlot(filename_str, header_list):
     """networkx network plotter function"""
     st.write(f"Creating a Networkx plot for file :{filename_str}")
 
+    # st.write(f"HEADER LIST :{header_list}")
+    # HEADER LIST :['Pmid', 'Reference', 'Weight17183658', '14242501', '117183658', '10916682', '117183658', '8807088', '117183658', '12023819', '117183658', '8571957', '117183658', '
+              
     got_df = pd.read_csv(filename_str)
     # print(got_df)
 

@@ -31,7 +31,7 @@ def main() -> None:
     """Driver function of the network browser."""
     st.title("BeagleTM2 Network Browser")
     # st.subheader("SQL Database Managment")
-    st.text(banner0_str)
+    # st.text(banner0_str)
 
     # myConn = None # define variable for conn from database which is given later
 
@@ -57,8 +57,8 @@ def main() -> None:
         menu_list = [
             "Show_Tables",
             "Find_articles_containing_ALL_selected_keywords",
-            "Balloons",
-            "Snow",
+            # "Balloons",
+            # "Snow",
         ]
         doThis_sb = st.sidebar.selectbox("What are we doing with this data?", menu_list)
 

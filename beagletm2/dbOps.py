@@ -240,7 +240,7 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
     # st.write("saveDataAsCSV()")
 
     # line by line creation of csv file
-    CSV_str = "Pmid,Reference,Weight\n"  # line by line of all the csv lines here
+    CSV_str = "Pmid,Reference,Weight,"  # line by line of all the csv lines here
     pmidCounter = 0
 
     # TODO: test progress bar; https://docs.streamlit.io/library/api-reference/status/st.progress
@@ -275,9 +275,8 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
             )
             CSV_str = CSV_str + ref_line + "\n"
 
-    # print(CSV_str)
     # save the csv
-    # add to file name to distinguish results
+    # add on to the filename to specify type of results
     selectedKeys_str = ""
     for i in range(len(selectedKws_list)):
         selectedKeys_str += "_" + selectedKws_list[i]
@@ -291,11 +290,13 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
     filename_str = fileOps.saveCSV(CSV_str, filename_str)  # save data for the plotter
 
     header_list = list(CSV_str.replace("\n", "").split(","))
+
     plotOps.makeNetworkxPlot(
         filename_str, header_list
     )  # call plotter, filename to open for plotting
 
 
+#######################################################
 ### output from above
 
 # print(f"1st line = {line[0]}\n")
@@ -303,9 +304,7 @@ def saveDataAsCSV(pmids_list, selectedKws_list):
 # print(f"3rd line = {line[2]}\n")
 
 # 1st line = 12975657.0
-
-# 2nd line = [12219091, 9254694, 11752243, 9278503, 11102698, 11750686, 12560809, 11431701, 10555290, 12024217, 12097345, 12907801, 12142430, 10381871, 7542800, 9021275, 12446813, 12116432, 10952301, 12554446, 10097118, 1633570, 11443357, 9089078, 11248100, 11677609, 8610134, 12107590, 10360571, 11675594, 11118198, 10830951, 11586360, 11677608, 12705866, 11206551, 11934758, 10993077, 10910347, 11070046, 12572614, 10984043, 8805245, 7984417, 9799792, 9864315, 9244264, 2439888, 12175808, 10464188, 12228001]
-
+# 2nd line = [12219091, 9254694, 11752243, 9278503, 11102698, 11750686, ... 12560809
 # 3rd line = From Gene Trees to Organismal Phylogeny in Prokaryotes:The Case of the &#947;-Proteobacteria
 
 # end of saveDataAsCSV()
