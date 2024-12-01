@@ -32,7 +32,7 @@ from spacy.lang.en.stop_words import STOP_WORDS  # needed to work with stop word
 import beagleTM2_browser_helperCode as hc
 import statEval as myStats
 
-DATE = "6 June 2023"
+DATE = "1 December 2024"
 VERSION = "0.2.9"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
@@ -43,7 +43,7 @@ AUTHORMAIL = "obonhamcarter@allegheny.edu"
 def begin():
     """Driver function"""
 
-    st.text(hc.banner0_str)
+    # st.text(hc.banner0_str)
     st.sidebar.title("BeagleTM Data Analysis")
     st.sidebar.subheader(f"Date: {hc.DATE}, Ver: {hc.VERSION}")
     st.sidebar.text("\U0001F415 \U0001F631 \U0001f5ff \U0001F608 \U0001f600 ")
@@ -63,20 +63,20 @@ def begin():
     doThis_sb = st.sidebar.selectbox(
         "What are we doing with this data?",
         [
-            "ReadMe",
+            # "ReadMe",
             "Show_data",
             "Article inter-connectivity",
             "Articles containing ANY of the selected keywords",
             "Articles containing ALL of the selected keywords",
             "Heatmaps of keyword saturation",
-            "Make Simple Heatmaps",
+            # "Make Simple Heatmaps",
             "Statistics",
         ],
     )
-    if doThis_sb == "ReadMe":
-        with open("README.md") as readme_file:
-            # Note : the FILE README.MD is assumed to be in the directory behind this one.
-            st.markdown(readme_file.read())
+    # if doThis_sb == "ReadMe":
+    #     with open("README.md") as readme_file:
+    #         # Note : the FILE README.MD is assumed to be in the directory behind this one.
+    #         st.markdown(readme_file.read())
 
     if doThis_sb == "Show_data":
         hc.showData(data)

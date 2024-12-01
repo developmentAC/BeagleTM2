@@ -1,11 +1,10 @@
-The Readme file
 # BeagleTM2: PubMed Interactive Knowledge Discovery
-## Date: 23 September 2024
-### Oliver Bonham-Carter, [Allegheny College](https://allegheny.edu/)
+## Date: 1st December 2024
+### Oliver Bonham-Carter, [Web](https://www.oliverbonhamcarter.com/)
 ### email: obonhamcarter@allegheny.edu
 
 ---
-*Automatically read the works of hundreds of thousands of researchers to see how their ideas connect to other researchers!*
+*Automatically read the works of hundreds of thousands of researchers to follow their collective ideas!*
 
 ![logo](graphics/beagletm2_logo.png)
 
@@ -13,16 +12,24 @@ The Readme file
 
 ## Table of contents
 
-* [Overview](#overview)
-    * [Relationship Networks](#relationship-networks)
-    * [Connectivity Networks](#connectivity-networks)
-    * [Overview](#overview)
-    * [Running the Software](#running-the-software)
-    * [Functions](#functions)
-    * [Command Summary](#command-summary)
-    * [Corpus](#corpus)
-    * [Setting up the Corpus](#Setting-up-the-corpus)
-    * [Citations](#citations)
+- [BeagleTM2: PubMed Interactive Knowledge Discovery](#beagletm2-pubmed-interactive-knowledge-discovery)
+  - [Date: 1st December 2024](#date-1st-december-2024)
+    - [Oliver Bonham-Carter, Web](#oliver-bonham-carter-web)
+    - [email: obonhamcarter@allegheny.edu](#email-obonhamcarteralleghenyedu)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Relationship Networks](#relationship-networks)
+    - [Connectivity Networks](#connectivity-networks)
+  - [Running the Software](#running-the-software)
+    - [Functions](#functions)
+    - [Initial Installations](#initial-installations)
+    - [Command Summary](#command-summary)
+  - [Run a series of tasks](#run-a-series-of-tasks)
+  - [Creating Network Plots](#creating-network-plots)
+  - [Corpus](#corpus)
+  - [Setting up the Corpus](#setting-up-the-corpus)
+  - [Citations](#citations)
+  - [A work in progress](#a-work-in-progress)
 ## Overview
 
 BeagleTM is an interactive text mining tool to facilitate discovery of knowledge in [PubMed](https://pubmed.ncbi.nlm.nih.gov/) peer-reviewed articles. In addition to locating the articles according to their abstracts, BeagleTM also connects articles based by the common language between them. The results of BeagleTM are connected networks which could be used as a starting place for a literature review at the beginning of the project.
