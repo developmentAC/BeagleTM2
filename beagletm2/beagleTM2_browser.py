@@ -32,7 +32,7 @@ from spacy.lang.en.stop_words import STOP_WORDS  # needed to work with stop word
 import beagleTM2_browser_helperCode as hc
 import statEval as myStats
 
-DATE = "1 December 2024"
+DATE = "2 December 2024"
 VERSION = "v1.0.0"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"

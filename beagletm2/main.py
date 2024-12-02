@@ -11,8 +11,8 @@ from beagletm2 import dbOps  # database operations
 from pathlib import Path
 
 
-DATE = "28 February 2024"
-VERSION = "0.42.3"
+DATE = "2 Dec 2024"
+VERSION = "v1.0.0"
 AUTHOR = "Oliver Bonham-Carter"
 AUTHORMAIL = "obonhamcarter@allegheny.edu"
 
